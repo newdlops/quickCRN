@@ -1,7 +1,7 @@
-import React from 'react'
 import { View, Text } from 'native-base'
+import React from 'react'
 
-function HomeScreen(): JSX.Element{
+function UserInformationScreen(): JSX.Element{
   return (
     <View>
       <Text>Home Screen</Text>
@@ -9,4 +9,4 @@ function HomeScreen(): JSX.Element{
   )
 }
 
-export default HomeScreen
+export default UserInformationScreen

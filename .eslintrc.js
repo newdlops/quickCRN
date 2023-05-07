@@ -28,6 +28,9 @@ module.exports = {
         usePrettierrc: false,
       }
     ],
+    '@typescript-eslint/no-unsafe-assignment': 'warn',
+    '@typescript-eslint/no-unsafe-member-access': 'warn',
+    '@typescript-eslint/no-unsafe-call': 'warn',
     'no-console': 'error',
     'no-loop-func': 'error',
     'no-shadow': 'error',
