@@ -25,12 +25,21 @@ function RootNavigator(): JSX.Element{
   return (
     <NavigationContainer ref={navigationRef}>
       <RootStack.Navigator>
-        <RootStack.Screen name="Root" component={MainTabNavigator}></RootStack.Screen>
-        <RootStack.Screen name="Login" component={LoginScreen}></RootStack.Screen>
-        <RootStack.Screen name="ChatBot" component={ChatBotScreen}></RootStack.Screen>
-        <RootStack.Screen name="SearchProduct" component={SearchProductScreen}></RootStack.Screen>
-        <RootStack.Screen name="SearchProductList" component={SearchProductListScreen}></RootStack.Screen>
-        <RootStack.Screen name="SearchProductDetail" component={SearchProductDetailScreen}></RootStack.Screen>
+        <RootStack.Screen name="Login" component={LoginScreen} />
+        <RootStack.Screen name="Root" component={MainTabNavigator} />
+        <RootStack.Screen name="ChatBot" component={ChatBotScreen} />
+        <RootStack.Screen
+          name="SearchProduct"
+          component={SearchProductScreen}
+        />
+        <RootStack.Screen
+          name="SearchProductList"
+          component={SearchProductListScreen}
+        />
+        <RootStack.Screen
+          name="SearchProductDetail"
+          component={SearchProductDetailScreen}
+        />
       </RootStack.Navigator>
     </NavigationContainer>
   )

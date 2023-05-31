@@ -20,9 +20,11 @@ describe('MainTabNavigator', () => {
         </NavigationContainer>
       </NativeBaseProvider>
     )
-    const chatbotScreen = UNSAFE_queryByProps({label:'ChatBot'})
-    const homeScreen = UNSAFE_queryByProps({label:'Home'})
-    const searchProductDetailScreen = UNSAFE_queryByProps({label:'SearchProductDetail'})
+    const chatbotScreen = UNSAFE_queryByProps({ label: 'ChatBot' })
+    const homeScreen = UNSAFE_queryByProps({ label: 'Home' })
+    const searchProductDetailScreen = UNSAFE_queryByProps({
+      label: 'SearchProductDetail',
+    })
     expect(chatbotScreen).toBeTruthy()
     expect(chatbotScreen?.props.focused).toBeTruthy()
     expect(homeScreen).toBeTruthy()
@@ -39,15 +41,17 @@ describe('MainTabNavigator', () => {
         </NavigationContainer>
       </NativeBaseProvider>
     )
-    const chatbotScreen = UNSAFE_queryByProps({label:'ChatBot'})
-    const homeScreen = UNSAFE_queryByProps({label:'Home'})
-    const searchProductDetailScreen = UNSAFE_queryByProps({label:'SearchProductDetail'})
+    const chatbotScreen = UNSAFE_queryByProps({ label: 'ChatBot' })
+    const homeScreen = UNSAFE_queryByProps({ label: 'Home' })
+    const searchProductDetailScreen = UNSAFE_queryByProps({
+      label: 'SearchProductDetail',
+    })
 
-    homeScreen&&fireEvent.press(homeScreen)
+    homeScreen && fireEvent.press(homeScreen)
     expect(homeScreen?.props.focused).toBeTruthy()
-    searchProductDetailScreen&&fireEvent.press(searchProductDetailScreen)
+    searchProductDetailScreen && fireEvent.press(searchProductDetailScreen)
     expect(searchProductDetailScreen?.props.focused).toBeTruthy()
-    chatbotScreen&&fireEvent.press(chatbotScreen)
+    chatbotScreen && fireEvent.press(chatbotScreen)
     expect(chatbotScreen?.props.focused).toBeTruthy()
   })
 })
