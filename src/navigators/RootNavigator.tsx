@@ -1,5 +1,5 @@
 import React from 'react'
-
+import { Box } from 'native-base'
 import {
   NavigationContainer,
   useNavigationContainerRef,
@@ -16,32 +16,48 @@ import SearchProductDetailScreen from '@screens/SearchProductScreen/SearchProduc
 //bottom tab
 import MainTabNavigator from './MainTabNavigator'
 
+//RootHeader
+import RootHeader from './RootHeader/RootHeader'
+
 const RootStack = createNativeStackNavigator()
 
-function RootNavigator(): JSX.Element{
+function RootNavigator(): JSX.Element {
   const navigationRef = useNavigationContainerRef()
   useFlipper(navigationRef)
 
   return (
-    <NavigationContainer ref={navigationRef}>
-      <RootStack.Navigator>
-        <RootStack.Screen name="Login" component={LoginScreen} />
-        <RootStack.Screen name="Root" component={MainTabNavigator} />
-        <RootStack.Screen name="ChatBot" component={ChatBotScreen} />
-        <RootStack.Screen
-          name="SearchProduct"
-          component={SearchProductScreen}
-        />
-        <RootStack.Screen
-          name="SearchProductList"
-          component={SearchProductListScreen}
-        />
-        <RootStack.Screen
-          name="SearchProductDetail"
-          component={SearchProductDetailScreen}
-        />
-      </RootStack.Navigator>
-    </NavigationContainer>
+    <Box flex={1} safeArea>
+      <NavigationContainer ref={navigationRef}>
+        <RootStack.Navigator
+          initialRouteName="Root"
+          screenOptions={{ header: RootHeader }}
+        >
+          <RootStack.Screen
+            name="Login"
+            component={LoginScreen}
+            options={{ headerShown: false }}
+          />
+          <RootStack.Screen
+            name="Root"
+            component={MainTabNavigator}
+            options={{ headerShown: false }}
+          />
+          <RootStack.Screen name="ChatBot" component={ChatBotScreen} />
+          <RootStack.Screen
+            name="SearchProduct"
+            component={SearchProductScreen}
+          />
+          <RootStack.Screen
+            name="SearchProductList"
+            component={SearchProductListScreen}
+          />
+          <RootStack.Screen
+            name="SearchProductDetail"
+            component={SearchProductDetailScreen}
+          />
+        </RootStack.Navigator>
+      </NavigationContainer>
+    </Box>
   )
 }
 

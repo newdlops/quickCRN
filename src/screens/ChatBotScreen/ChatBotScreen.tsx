@@ -1,11 +1,23 @@
-import { View, Text } from 'native-base'
+import {
+  Center,
+  Input,
+  Button,
+  Box,
+  KeyboardAvoidingView,
+  ITextProps,
+  Pressable,
+  HStack,
+  Icon,
+} from 'native-base'
 import React from 'react'
 
-function ChatBotScreen(): JSX.Element{
+function ChatBotScreen(): JSX.Element {
   return (
-    <View>
-      <Text>ChatBotScreen</Text>
-    </View>
+    <Center flex={1} bg="red.100">
+      <Center h="500" w="300" bgColor="primary.100">
+        Chatbot
+      </Center>
+    </Center>
   )
 }
 

@@ -43,7 +43,6 @@ module.exports = {
     'no-trailing-spaces': 'error',
     'no-tabs': 'error',
     'semi': ['error', 'never'],
-    'space-before-blocks': ['error', 'never'],
     'space-in-parens': ['error', 'never'],
     'arrow-body-style': ['error', 'as-needed'],
     'no-confusing-arrow': 'error',
