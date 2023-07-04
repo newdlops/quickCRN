@@ -1,25 +1,36 @@
-import { Center, HStack, Pressable, PresenceTransition } from 'native-base'
+import {
+  Center,
+  HStack,
+  Pressable,
+  PresenceTransition,
+  Icon,
+} from 'native-base'
+import type { BottomTabBarProps } from '@react-navigation/bottom-tabs'
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import React from 'react'
 
-export default function MainTabBar({ state, descriptors, navigation }) {
+export default function MainTabBar({
+  state,
+  descriptors,
+  navigation,
+}: BottomTabBarProps) {
+  const colorFocused = `blue.500`
+  const colorNotFocused = `gray.400`
+
   return (
     <HStack
-      space={'10%'}
+      space={'15%'}
       pt="10px"
       pb="10px"
-      bg="yellow.100"
-      h="120"
+      bg="white"
+      h="20"
       justifyContent="center"
+      shadow={4}
     >
       {state.routes.map((route, index: number) => {
         const { options } = descriptors[route.key]
-        const label =
-          options.tabBarLabel !== undefined
-            ? options.tabBarLabel
-            : options.title !== undefined
-            ? options.title
-            : route.name
-
+        const label = options.title !== undefined ? options.title : route.name
+        const iconName = options.tabBarLabel?.toString()
         const isFocused = state.index === index
         const onPress = () => {
           const event = navigation.emit({
@@ -29,7 +40,11 @@ export default function MainTabBar({ state, descriptors, navigation }) {
           })
 
           if (!isFocused && !event.defaultPrevented) {
-            navigation.navigate({ name: route.name, merge: true })
+            navigation.navigate({
+              name: route.name,
+              merge: true,
+              params: undefined,
+            })
           }
         }
 
@@ -42,7 +57,7 @@ export default function MainTabBar({ state, descriptors, navigation }) {
 
         return (
           <Pressable
-            size="100"
+            size="16"
             key={index}
             onPress={onPress}
             onLongPress={onLongPress}
@@ -50,17 +65,21 @@ export default function MainTabBar({ state, descriptors, navigation }) {
             {({ isPressed }) => (
               <PresenceTransition
                 visible={isFocused}
-                initial={{ scale: 0.8 }}
+                initial={{ scale: 1 }}
                 animate={{ scale: 1, transition: { duration: 100 } }}
               >
                 <Center
-                  size="100"
-                  bg={
-                    isPressed
-                      ? `primary.${index + 1}00`
-                      : `green.${index + 1}00`
-                  }
+                  size="16"
+                  _text={{
+                    color: isFocused ? colorFocused : colorNotFocused,
+                  }}
                 >
+                  <Icon
+                    as={MaterialCommunityIcons}
+                    name={iconName}
+                    size="10"
+                    color={isFocused ? colorFocused : colorNotFocused}
+                  />
                   {label}
                 </Center>
               </PresenceTransition>

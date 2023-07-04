@@ -9,14 +9,14 @@ import {
 import React from 'react'
 import { Platform } from 'react-native'
 
-function LoginScreen({navigation: {navigate}}): JSX.Element{
+function LoginScreen({ navigation: { navigate } }): JSX.Element {
   const goToHome = () => {
     navigate('Root')
   }
   return (
     <KeyboardAvoidingView
       flex={1}
-      behavior={ Platform.OS === 'ios' ? 'height' : 'height'}
+      behavior={Platform.OS === 'ios' ? 'height' : 'height'}
     >
       <Center flex={1} bgColor="yellow.100">
         <Box w="80%">
@@ -27,7 +27,9 @@ function LoginScreen({navigation: {navigate}}): JSX.Element{
           <Button mb="3" _text={buttonStyle}>
             유료전화 상담
           </Button>
-          <Button _text={buttonStyle} onPress={goToHome}>홈으로</Button>
+          <Button _text={buttonStyle} onPress={goToHome}>
+            홈으로
+          </Button>
         </Box>
       </Center>
     </KeyboardAvoidingView>

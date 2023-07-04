@@ -1,17 +1,4 @@
-import {
-  Center,
-  Input,
-  Button,
-  Box,
-  KeyboardAvoidingView,
-  ITextProps,
-  Pressable,
-  HStack,
-  Icon,
-  Fab,
-  VStack,
-  FlatList,
-} from 'native-base'
+import { Center, Box, FlatList } from 'native-base'
 import React from 'react'
 
 function SearchProductListScreen(): JSX.Element {

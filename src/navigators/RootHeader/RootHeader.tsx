@@ -18,6 +18,9 @@ export default function RootHeader({ navigation, route, options }) {
   const goBack = () => {
     navigation.goBack()
   }
+  const excuteSearch = () => {
+    alert('excuteSearch')
+  }
   return (
     <HStack bg="green.300" alignItems="center">
       <Pressable bg="red.200" flex={1 / 9} onPress={goBack}>
@@ -39,7 +42,7 @@ export default function RootHeader({ navigation, route, options }) {
           <Pressable
             size="10"
             bg="primary.100"
-            onPress={() => alert('s')}
+            onPress={excuteSearch}
             justifyContent="center"
             alignItems="center"
           >

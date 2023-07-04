@@ -13,23 +13,27 @@ function MainTabNavigator() {
   return (
     <Tab.Navigator
       tabBar={MainTabBar}
-      initialRouteName="SearchProductDetail"
+      initialRouteName="Home"
       screenOptions={{ header: MainTabHeader }}
     >
       <Tab.Screen
-        name="Home"
-        component={HomeScreen}
-        options={{ title: '메인화면', headerShown: false }}
-      />
-      <Tab.Screen
         name="ChatBot"
         component={ChatBotScreen}
-        options={{ title: '인증문의', headerShown: false }}
+        options={{
+          title: '인증문의',
+          headerShown: false,
+          tabBarLabel: 'chat-question-outline',
+        }}
+      />
+      <Tab.Screen
+        name="Home"
+        component={HomeScreen}
+        options={{ title: '메인화면', headerShown: false, tabBarLabel: 'home' }}
       />
       <Tab.Screen
         name="SearchProductDetail"
         component={SearchProductDetailScreen}
-        options={{ title: '인증진행' }}
+        options={{ title: '인증진행', tabBarLabel: 'chart-timeline' }}
       />
     </Tab.Navigator>
   )
