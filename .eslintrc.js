@@ -34,7 +34,7 @@ module.exports = {
     'no-console': 'error',
     'no-loop-func': 'error',
     'no-shadow': 'error',
-    'no-var': 'error',
+    'no-var': 'warn',
     'prefer-const': 'warn',
     'comma-dangle': ['error', 'always-multiline'],
     'comma-spacing': 'error',

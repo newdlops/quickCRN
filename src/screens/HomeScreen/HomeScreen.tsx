@@ -1,23 +1,30 @@
 import {
   Center,
-  Input,
-  Button,
   Box,
-  KeyboardAvoidingView,
-  ITextProps,
   Pressable,
   HStack,
   Icon,
   VStack,
-  Image,
-  AspectRatio,
   ScrollView,
 } from 'native-base'
-import React from 'react'
+import React, { useEffect } from 'react'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import QCLogo from '../../assets/svg/QCLogo'
+import { CommonActions } from '@react-navigation/native'
 
 function HomeScreen({ navigation }): JSX.Element {
+  useEffect(()=>{
+    navigation.dispatch((state) => {
+      // Add the home route to the start of the stack
+      
+      return CommonActions.reset({
+        ...state,
+        routes: state.routes,
+        index: state.routes.length - 2,
+        history: [state.routes[1]],
+      })
+    })
+  }, [])
   const gotoSearch = () => {
     navigation.navigate('SearchProductList')
   }

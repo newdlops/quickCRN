@@ -1,3 +1,4 @@
+import { RootStackScreenProp } from '@navigators/RootNavigator'
 import {
   Center,
   Input,
@@ -9,7 +10,9 @@ import {
 import React from 'react'
 import { Platform } from 'react-native'
 
-function LoginScreen({ navigation: { navigate } }): JSX.Element {
+function LoginScreen({
+  navigation: { navigate },
+}: RootStackScreenProp): JSX.Element {
   const goToHome = () => {
     navigate('Root')
   }

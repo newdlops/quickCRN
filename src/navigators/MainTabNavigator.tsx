@@ -3,9 +3,11 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 //import screens
 import HomeScreen from '@screens/HomeScreen/HomeScreen'
 import ChatBotScreen from '@screens/ChatBotScreen/ChatBotScreen'
-import SearchProductDetailScreen from '@screens/SearchProductScreen/SearchProductDetailScreen'
+import ProjectStatusList from '@screens/ProjectStatus/ProjectStatusList'
 import MainTabBar from './MainTabBar/MainTabBar'
-import MainTabHeader from './MainTabHeader/MainTabHeader'
+import SearchHeader from './MainTabHeader/MainTabHeader'
+
+import ProjectStatusHeader from '@navigators/MainTabHeader/ProjectStatusHeader'
 
 const Tab = createBottomTabNavigator()
 
@@ -14,7 +16,8 @@ function MainTabNavigator() {
     <Tab.Navigator
       tabBar={MainTabBar}
       initialRouteName="Home"
-      screenOptions={{ header: MainTabHeader }}
+      screenOptions={{ header: SearchHeader }}
+      backBehavior="initialRoute"
     >
       <Tab.Screen
         name="ChatBot"
@@ -31,9 +34,13 @@ function MainTabNavigator() {
         options={{ title: '메인화면', headerShown: false, tabBarLabel: 'home' }}
       />
       <Tab.Screen
-        name="SearchProductDetail"
-        component={SearchProductDetailScreen}
-        options={{ title: '인증진행', tabBarLabel: 'chart-timeline' }}
+        name="ProjectStatusList"
+        component={ProjectStatusList}
+        options={{
+          title: '인증진행',
+          tabBarLabel: 'chart-timeline',
+          header: ProjectStatusHeader,
+        }}
       />
     </Tab.Navigator>
   )

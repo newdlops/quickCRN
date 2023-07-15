@@ -7,7 +7,7 @@ import {
 } from 'native-base'
 import type { BottomTabBarProps } from '@react-navigation/bottom-tabs'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
-import React from 'react'
+import React, { useEffect } from 'react'
 
 export default function MainTabBar({
   state,
@@ -16,7 +16,6 @@ export default function MainTabBar({
 }: BottomTabBarProps) {
   const colorFocused = `blue.500`
   const colorNotFocused = `gray.400`
-
   return (
     <HStack
       space={'15%'}
@@ -38,17 +37,18 @@ export default function MainTabBar({
             target: route.key,
             canPreventDefault: true,
           })
-
+          console.log('tabPress')
           if (!isFocused && !event.defaultPrevented) {
             navigation.navigate({
               name: route.name,
-              merge: true,
+              merge: false,
               params: undefined,
             })
           }
         }
 
         const onLongPress = () => {
+          console.log('tabLongPress')
           const event = navigation.emit({
             type: 'tabLongPress',
             target: route.key,
