@@ -13,16 +13,26 @@ import React from 'react'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import Entypo from 'react-native-vector-icons/Entypo'
 import { PressableProps } from 'react-native'
+import { findByUser } from '../../api/project'
 
 function ProjectStatusList({ navigation }): JSX.Element {
+  React.useEffect(() => {
+    findByUser(
+      { id: '64fd5302038f0cec41c3f73a' },
+      (r) => setData(r.msg),
+      (e) => console.error(e)
+    )
+  }, [])
+  const [data, setData] = React.useState([])
   return (
     <>
       <ScrollView>
-        {Array.from({ length: 2 }, (x, i) => (
+        {data?.map((v, i) => (
           <ProductStatusDetailItem
             key={i}
+            data={v}
             onPress={() => {
-              navigation.navigate('ProjectStatusDetail')
+              navigation.navigate('ProjectStatusDetail', { projectId: v._id })
             }}
           />
         ))}
@@ -47,6 +57,7 @@ function ProjectStatusList({ navigation }): JSX.Element {
 }
 
 function ProductStatusDetailItem(props: PressableProps) {
+  const data = props.data
   return (
     <Pressable onPress={props.onPress}>
       <Center m={3}>
@@ -60,7 +71,8 @@ function ProductStatusDetailItem(props: PressableProps) {
             p={5}
           >
             <HStack mb={3}>
-              <Box _text={{ fontSize: 24, fontWeight: 'bold' }}>베터리</Box>
+              {/* <Box _text={{ fontSize: 24, fontWeight: 'bold' }}>베터리</Box> */}
+              <Box _text={{ fontSize: 24, fontWeight: 'bold' }}>{data.projectname}</Box>
               <Center
                 position="absolute"
                 right={0}
@@ -70,7 +82,7 @@ function ProductStatusDetailItem(props: PressableProps) {
                 height={'6'}
                 _text={{ color: 'white', fontWeight: 'bold' }}
               >
-                완료
+                {data.projectStatus ? '완료' : '진행중'}
               </Center>
             </HStack>
             <VStack>
@@ -87,7 +99,7 @@ function ProductStatusDetailItem(props: PressableProps) {
             <Box bg="gray.400" mt={5} h={2 / 3} w="100%" />
             <VStack mt={5}>
               <Box>
-                <Text>진행일자 : {'2023-01-01'}</Text>
+                <Text>시작일자 : {data.projectStartDate}</Text>
               </Box>
               <Box>
                 <Text>진행일자 : {'2023-01-01'}</Text>

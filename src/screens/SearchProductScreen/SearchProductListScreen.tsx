@@ -1,23 +1,33 @@
-import { Center, Box, FlatList, Pressable, HStack, VStack, Icon, Text } from 'native-base'
+import {
+  Center,
+  Box,
+  FlatList,
+  Pressable,
+  HStack,
+  VStack,
+  Icon,
+  Text,
+} from 'native-base'
 import React from 'react'
-import { PressableProps } from 'react-native'
 import Entypo from 'react-native-vector-icons/Entypo'
+import { useSelector } from 'react-redux'
 
-function SearchProductListScreen(): JSX.Element {
-  const data = Array.from({ length: 10 }, (v, i) => i)
-
+function SearchProductListScreen({ navigation }): JSX.Element {
+  const list = useSelector(state=>state.search.list)
+  const moveToDetail = (item) => {
+    navigation.navigate('SearchProductDetail', { data: item})
+  }
+  const render = ({item: data}) => <SearchProductItem data={data} moveToDetail={()=>moveToDetail(data)} />
   return (
-    <Center flex={1} >
+    <Center flex={1}>
       {/* <Box>SearchProductListScreen</Box> */}
-      <FlatList w="100%" data={data} renderItem={SearchProductItem} />
+      <FlatList w="100%" data={list} renderItem={render} />
     </Center>
   )
 }
 
-function SearchProductItem(props: PressableProps) {
-  const moveToDetail = () => {
-    alert('detail')
-  }
+function SearchProductItem({ data, moveToDetail }) {
+  console.log(data)
   return (
     <Pressable onPress={moveToDetail}>
       <Center mt={2}>
@@ -32,14 +42,23 @@ function SearchProductItem(props: PressableProps) {
           >
             <HStack mb={3}>
               <HStack alignItems={'baseline'}>
-                <Box _text={{ fontSize: 20, fontWeight: 'bold' }}>베터리</Box>
-                <Box ml={3} _text={{ fontSize: 16, fontWeight: 'bold', color: 'gray.400' }}>충전지</Box>
+                <Box _text={{ fontSize: 20, fontWeight: 'bold' }}>{data?.productname}</Box>
+                <Box
+                  ml={3}
+                  _text={{
+                    fontSize: 16,
+                    fontWeight: 'bold',
+                    color: 'gray.400',
+                  }}
+                >
+                  {data?.keyword}
+                </Box>
               </HStack>
               <Center
                 position="absolute"
                 right={0}
                 borderRadius={'lg'}
-                bg={'blueGray.400'}
+                bg={data?.substitution ? 'blue.400' : 'blueGray.200'}
                 width={'16'}
                 height={'8'}
                 _text={{ color: 'white', fontWeight: 'bold' }}

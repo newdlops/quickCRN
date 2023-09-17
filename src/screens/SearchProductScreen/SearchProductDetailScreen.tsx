@@ -17,7 +17,8 @@ import Ionicons from 'react-native-vector-icons/Ionicons'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 
-function SearchProductDetailScreen(): JSX.Element {
+function SearchProductDetailScreen({route}): JSX.Element {
+  const data = route.params.data
   return (
     <>
       <ScrollView>
@@ -29,12 +30,10 @@ function SearchProductDetailScreen(): JSX.Element {
               bg={'white'}
               borderRadius={16}
               shadow={1}
-            >
-
-            </Box>
+            />
           </Center>
           <VStack h="500" w="300" bgColor="primary.100">
-            <Box>내용</Box>
+            <Box>내용{data?.category}</Box>
             <Box>인증구분</Box>
             <Box>전기용품</Box>
             <Box>품목</Box>

@@ -13,8 +13,19 @@ import React from 'react'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import Entypo from 'react-native-vector-icons/Entypo'
 import { PressableProps } from 'react-native'
+import { getDetail } from '../../api/project'
 
-function ProjectStatusDetail(): JSX.Element {
+function ProjectStatusDetail({ route }): JSX.Element {
+  React.useEffect(() => {
+    console.log(route)
+    getDetail(
+      { _id: route.params.projectId },
+      (r) => setData(r.msg),
+      (e) => console.error(e)
+    )
+  }, [])
+  const [data, setData] = React.useState()
+
   return (
     <ScrollView>
       <Center mt={3}>
@@ -27,7 +38,7 @@ function ProjectStatusDetail(): JSX.Element {
           p={5}
         >
           <HStack mb={3}>
-            <Box _text={{ fontSize: 24, fontWeight: 'bold' }}>기본정보</Box>
+            <Box _text={{ fontSize: 24, fontWeight: 'bold' }}>{data?.projectname}</Box>
             <Center
               position="absolute"
               right={0}
@@ -37,7 +48,7 @@ function ProjectStatusDetail(): JSX.Element {
               height={'6'}
               _text={{ color: 'white', fontWeight: 'bold' }}
             >
-              완료
+              {data?.projectStatus ? '완료' : '진행중'}
             </Center>
           </HStack>
           <VStack mt={2}>
@@ -47,7 +58,7 @@ function ProjectStatusDetail(): JSX.Element {
               justifyContent={'space-between'}
             >
               <Text>신청인</Text>
-              <Text fontSize={16}>홍길동</Text>
+              <Text fontSize={16}>{data?.requestUser}</Text>
             </HStack>
             <HStack
               alignItems={'center'}
@@ -55,7 +66,7 @@ function ProjectStatusDetail(): JSX.Element {
               justifyContent={'space-between'}
             >
               <Text>모델명</Text>
-              <Text fontSize={16}>SBD-1</Text>
+              <Text fontSize={16}>{data?.modelName}</Text>
             </HStack>
             <HStack
               alignItems={'center'}
@@ -63,7 +74,7 @@ function ProjectStatusDetail(): JSX.Element {
               justifyContent={'space-between'}
             >
               <Text>제조사</Text>
-              <Text fontSize={16}>QuckC Company Co. Ltd.</Text>
+              <Text fontSize={16}>{data?.manufacture}</Text>
             </HStack>
           </VStack>
           <Box bg="gray.400" mt={5} h={2 / 3} w="100%" />
@@ -74,7 +85,7 @@ function ProjectStatusDetail(): JSX.Element {
               justifyContent={'space-between'}
             >
               <Text>프로젝트 번호</Text>
-              <Text fontSize={16}>PJT1038112909830123</Text>
+              <Text fontSize={16}>{data?.projectNumber}</Text>
             </HStack>
             <HStack
               alignItems={'center'}
@@ -82,18 +93,17 @@ function ProjectStatusDetail(): JSX.Element {
               justifyContent={'space-between'}
             >
               <Text>프로젝트 시작일</Text>
-              <Text fontSize={16}>2023-01-01</Text>
+              <Text fontSize={16}>{data?.projectStartDate}</Text>
             </HStack>
           </VStack>
         </Box>
       </Center>
-      <ProjectSubItem title="적합성평가 적합성등록" />
-      <ProjectSubItem title="전기용품 안전확인" />
+      {data?.projectItems.map((v,i)=><ProjectSubItem data={v} title={v.projectItemName} key={i}/>)}
     </ScrollView>
   )
 }
 
-function ProjectSubItem({ title }) {
+function ProjectSubItem({ title, data }) {
   const [isOpen, setOpen] = React.useState(false)
   const itemClick = () => {
     setOpen(!isOpen)
@@ -121,7 +131,7 @@ function ProjectSubItem({ title }) {
               top={2}
               _text={{ color: 'white', fontWeight: 'bold' }}
             >
-              완료
+              {data?.status ? '완료' : '진행중' }
             </Center>
           </HStack>
           <Box display={isOpen ? null : 'none'}>
@@ -132,7 +142,7 @@ function ProjectSubItem({ title }) {
                 justifyContent={'space-between'}
               >
                 <Text>견적 확인</Text>
-                <Text fontSize={16}>2022-000323</Text>
+                <Text fontSize={16}>{data?.checkdate}</Text>
               </HStack>
               <HStack
                 alignItems={'center'}
@@ -140,7 +150,7 @@ function ProjectSubItem({ title }) {
                 justifyContent={'space-between'}
               >
                 <Text>시료 준비</Text>
-                <Text fontSize={16}>완료</Text>
+                <Text fontSize={16}>{data?.sample ? '완료' : '진행중'}</Text>
               </HStack>
               <HStack
                 alignItems={'center'}
@@ -148,19 +158,19 @@ function ProjectSubItem({ title }) {
                 justifyContent={'space-between'}
               >
                 <Text>문서 준비</Text>
-                <Text fontSize={16}>완료</Text>
+                <Text fontSize={16}>{data?.document ? '완료' : '진행중'}</Text>
               </HStack>
             </VStack>
             <Box bg="gray.400" mt={5} h={2 / 3} w="100%" />
             <HStack w="100%" h={20} pt={3}>
               {/* <Box bg={'gray.300'} w="90%" position={'absolute'} py={1} top={5} ml={3}></Box> */}
-              <ProjectStepStatus status={'준비단계'} complete={true} />
-              <ProjectStepStatus status={'시험대기'} complete={true} />
-              <ProjectStepStatus status={'시험중'} complete={true} />
-              <ProjectStepStatus status={'성적서\n작성중'} complete={true} />
-              <ProjectStepStatus status={'성적서\n완료'} complete={true} />
-              <ProjectStepStatus status={'인증완료'} complete={true} />
-              <ProjectStepStatus status={'완료'} complete={false} />
+              <ProjectStepStatus status={'준비단계'} complete={data?.processedStage > 0} />
+              <ProjectStepStatus status={'시험대기'} complete={data?.processedStage > 1} />
+              <ProjectStepStatus status={'시험중'} complete={data?.processedStage > 2} />
+              <ProjectStepStatus status={'성적서\n작성중'} complete={data?.processedStage > 3} />
+              <ProjectStepStatus status={'성적서\n완료'} complete={data?.processedStage > 4} />
+              <ProjectStepStatus status={'인증완료'} complete={data?.processedStage > 5} />
+              <ProjectStepStatus status={'완료'} complete={data?.processedStage > 6} />
             </HStack>
           </Box>
         </Box>

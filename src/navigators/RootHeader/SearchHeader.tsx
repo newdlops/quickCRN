@@ -1,8 +1,12 @@
 import { Center, HStack, Pressable, Input, Icon } from 'native-base'
 import React from 'react'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
+import { find } from '../../api/product'
+import { useDispatch } from 'react-redux'
+import { getResult } from '@store/reducers/searchSlice'
 
 export default function SearchHeader({ navigation, route, options }) {
+  const dispatch = useDispatch()
   const gotoSearch = () => {
     navigation.navigate('SearchProductList')
   }
@@ -10,8 +14,16 @@ export default function SearchHeader({ navigation, route, options }) {
     navigation.goBack()
   }
   const excuteSearch = () => {
-    alert('excuteSearch')
+    find({keyword:keyword},
+      r=>dispatch(getResult(r.msg)),
+      e=>console.log(e))
   }
+
+  const handleChange = e => {
+    setKeyword(e)
+  }
+  const [keyword, setKeyword]= React.useState("")
+
   return (
     <HStack alignItems="center" justifyContent={'space-between'} bg="white">
       <Pressable flex={1 / 9} onPress={goBack}>
@@ -36,23 +48,7 @@ export default function SearchHeader({ navigation, route, options }) {
           bg: 'white',
         }}
         borderWidth={0}
-        // InputRightElement={
-        //   <Pressable
-        //     size="10"
-        //     onPress={excuteSearch}
-        //     justifyContent="center"
-        //     alignItems="center"
-        //   >
-        //     <Icon
-        //       as={FontAwesome}
-        //       name="search"
-        //       color="black"
-        //       alignContent={'center'}
-        //       justifyContent={'space-between'}
-        //       size={6}
-        //     />
-        //   </Pressable>
-        // }
+        onChangeText={handleChange}
       />
       <Pressable onPress={excuteSearch}>
         <Center w={12} h={10}>
