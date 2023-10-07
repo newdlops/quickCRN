@@ -12,6 +12,7 @@ export default function ProjectStatusHeader({ navigation, route, options }) {
   const excuteSearch = () => {
     alert('excuteSearch')
   }
+
   return (
     <HStack bg="white" alignItems="center" height={12}>
       <Pressable onPress={goBack}>

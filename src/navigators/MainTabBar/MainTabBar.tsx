@@ -18,7 +18,7 @@ export default function MainTabBar({
   const colorNotFocused = `gray.400`
   return (
     <HStack
-      space={'15%'}
+      space={'8%'}
       pt="10px"
       pb="10px"
       bg="white"
@@ -37,7 +37,6 @@ export default function MainTabBar({
             target: route.key,
             canPreventDefault: true,
           })
-          console.log('tabPress')
           if (!isFocused && !event.defaultPrevented) {
             navigation.navigate({
               name: route.name,
@@ -48,7 +47,6 @@ export default function MainTabBar({
         }
 
         const onLongPress = () => {
-          console.log('tabLongPress')
           const event = navigation.emit({
             type: 'tabLongPress',
             target: route.key,

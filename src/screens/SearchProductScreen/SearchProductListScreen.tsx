@@ -13,6 +13,7 @@ import Entypo from 'react-native-vector-icons/Entypo'
 import { useFindProductQuery } from '../../service/product'
 import { RootStackScreenProp } from '@navigators/RootNavigator'
 import { useSelector } from 'react-redux'
+import { ProductDetails } from '../../type'
 
 function SearchProductListScreen({
   navigation,
@@ -68,21 +69,17 @@ function SearchProductItem({ data, moveToDetail }) {
                 right={0}
                 borderRadius={'lg'}
                 bg={data?.substitution ? 'blue.400' : 'blueGray.200'}
-                width={'16'}
+                width={'24'}
                 height={'8'}
                 _text={{ color: 'white', fontWeight: 'bold' }}
               >
-                구매대행
+                { data?.substitution ? '구매대행가능' : '구매대행불가' }
               </Center>
             </HStack>
             <VStack>
               <HStack alignItems={'center'}>
                 <Icon as={Entypo} name="triangle-right" size="4" mr={2} />
-                <Text>전기 안전확인</Text>
-              </HStack>
-              <HStack alignItems={'center'}>
-                <Icon as={Entypo} name="triangle-right" size="4" mr={2} />
-                <Text>전기 안전확인</Text>
+                <Text>{data?.certificationCategory}</Text>
               </HStack>
             </VStack>
           </Box>

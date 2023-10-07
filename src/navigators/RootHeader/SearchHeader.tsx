@@ -1,5 +1,5 @@
 import { Center, HStack, Pressable, Input, Icon } from 'native-base'
-import React, { useEffect } from 'react'
+import React from 'react'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import { useDispatch } from 'react-redux'
 import { setSearchKeyword } from '@store/reducers/searchSlice'

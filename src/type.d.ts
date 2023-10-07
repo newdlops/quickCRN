@@ -71,3 +71,23 @@ interface LoginInfo {
   password: string
   email: string
 }
+
+interface ProductDetails {
+  [index: string | number]: string | undefined
+  category?: string
+  certificationCategory?: string
+  createdAt?: string
+  deletedAt?: string
+  description?: string
+  expectedCost?: string
+  isDelete?: string
+  keyword?: string
+  period?: string
+  productname?: string
+  requiredDocument?: string[]
+  sample?: string
+  substitution?: string
+  testingLaboratory?: string[]
+  tip?: string
+  updatedAt?: string
+}

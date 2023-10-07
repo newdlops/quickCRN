@@ -39,21 +39,21 @@ function ProjectStatusList({ navigation }): JSX.Element {
           />
         ))}
       </ScrollView>
-      <Fab
-        renderInPortal={false}
-        shadow={3}
-        size="sm"
-        bg="blue.500"
-        // label="문의하기"
-        icon={
-          <Icon
-            as={MaterialCommunityIcons}
-            name="account-question"
-            color="white"
-            size="6"
-          />
-        }
-      />
+      {/*<Fab*/}
+      {/*  renderInPortal={false}*/}
+      {/*  shadow={3}*/}
+      {/*  size="sm"*/}
+      {/*  bg="blue.500"*/}
+      {/*  // label="문의하기"*/}
+      {/*  icon={*/}
+      {/*    <Icon*/}
+      {/*      as={MaterialCommunityIcons}*/}
+      {/*      name="account-question"*/}
+      {/*      color="white"*/}
+      {/*      size="6"*/}
+      {/*    />*/}
+      {/*  }*/}
+      {/*/>*/}
     </>
   )
 }
