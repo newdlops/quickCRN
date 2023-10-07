@@ -16,7 +16,7 @@ function HomeScreen({ navigation }): JSX.Element {
   useEffect(()=>{
     navigation.dispatch((state) => {
       // Add the home route to the start of the stack
-      
+
       return CommonActions.reset({
         ...state,
         routes: state.routes,

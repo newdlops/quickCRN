@@ -1,11 +1,11 @@
 import { Center, HStack, Pressable, Input, Icon } from 'native-base'
-import React from 'react'
+import React, { useEffect } from 'react'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
-import { find } from '../../api/product'
 import { useDispatch } from 'react-redux'
-import { getResult } from '@store/reducers/searchSlice'
+import { setSearchKeyword } from '@store/reducers/searchSlice'
+import type { NativeStackHeaderProps } from '@react-navigation/native-stack'
 
-export default function SearchHeader({ navigation, route, options }) {
+export default function SearchHeader({ navigation }: NativeStackHeaderProps) {
   const dispatch = useDispatch()
   const gotoSearch = () => {
     navigation.navigate('SearchProductList')
@@ -14,15 +14,10 @@ export default function SearchHeader({ navigation, route, options }) {
     navigation.goBack()
   }
   const excuteSearch = () => {
-    find({keyword:keyword},
-      r=>dispatch(getResult(r.msg)),
-      e=>console.log(e))
   }
-
-  const handleChange = e => {
-    setKeyword(e)
+  const handleChange = (e: string) => {
+    dispatch(setSearchKeyword(e))
   }
-  const [keyword, setKeyword]= React.useState("")
 
   return (
     <HStack alignItems="center" justifyContent={'space-between'} bg="white">

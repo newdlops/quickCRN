@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">quickC</string>
+    <string name="kakao_app_key">f95b9732528c2da9ac7cd7f41b59f756</string>
 </resources>

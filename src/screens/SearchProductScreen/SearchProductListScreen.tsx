@@ -10,14 +10,22 @@ import {
 } from 'native-base'
 import React from 'react'
 import Entypo from 'react-native-vector-icons/Entypo'
+import { useFindProductQuery } from '../../service/product'
+import { RootStackScreenProp } from '@navigators/RootNavigator'
 import { useSelector } from 'react-redux'
 
-function SearchProductListScreen({ navigation }): JSX.Element {
-  const list = useSelector(state=>state.search.list)
+function SearchProductListScreen({
+  navigation,
+}: RootStackScreenProp): JSX.Element {
+  const keyword: string = useSelector(state => state.search.productSearchKeyword)
+  const { data, error } = useFindProductQuery(keyword)
+  const list = data?.msg ?? []
   const moveToDetail = (item) => {
-    navigation.navigate('SearchProductDetail', { data: item})
+    navigation.navigate('SearchProductDetail', { data: item })
   }
-  const render = ({item: data}) => <SearchProductItem data={data} moveToDetail={()=>moveToDetail(data)} />
+  const render = ({ item: data }) => (
+    <SearchProductItem data={data} moveToDetail={() => moveToDetail(data)} />
+  )
   return (
     <Center flex={1}>
       {/* <Box>SearchProductListScreen</Box> */}
@@ -27,7 +35,6 @@ function SearchProductListScreen({ navigation }): JSX.Element {
 }
 
 function SearchProductItem({ data, moveToDetail }) {
-  console.log(data)
   return (
     <Pressable onPress={moveToDetail}>
       <Center mt={2}>
@@ -42,7 +49,9 @@ function SearchProductItem({ data, moveToDetail }) {
           >
             <HStack mb={3}>
               <HStack alignItems={'baseline'}>
-                <Box _text={{ fontSize: 20, fontWeight: 'bold' }}>{data?.productname}</Box>
+                <Box _text={{ fontSize: 20, fontWeight: 'bold' }}>
+                  {data?.productname}
+                </Box>
                 <Box
                   ml={3}
                   _text={{

@@ -14,11 +14,13 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import Entypo from 'react-native-vector-icons/Entypo'
 import { PressableProps } from 'react-native'
 import { findByUser } from '../../api/project'
+import { useSelector } from 'react-redux'
 
 function ProjectStatusList({ navigation }): JSX.Element {
+  const loginUserInfo = useSelector(state => state.user.user )
   React.useEffect(() => {
     findByUser(
-      { id: '64fd5302038f0cec41c3f73a' },
+      { id: loginUserInfo._id },
       (r) => setData(r.msg),
       (e) => console.error(e)
     )

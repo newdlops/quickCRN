@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Box } from 'native-base'
 import {
   NavigationContainer,
@@ -25,9 +25,20 @@ import SearchHeader from './RootHeader/SearchHeader'
 import type { NativeStackScreenProps } from '@react-navigation/native-stack'
 import ProjectStatusDetail from '@screens/ProjectStatus/ProjectStatusDetail'
 import ProjectStatusHeader from '@navigators/MainTabHeader/ProjectStatusHeader'
+import SignupScreen from '@screens/SignupScreen/SignupScreen'
+import AsyncStorage from '@react-native-async-storage/async-storage'
+import { useLazyUserTokenLoginQuery } from '../service/user'
+import { useDispatch } from 'react-redux'
+import { setUser } from '@store/reducers/userSlice'
 
-interface RootStackParamList {
-  [index: string]: object
+export interface RootStackParamList {
+  [index: string]: object | undefined
+  Login: undefined
+  Root: undefined
+  SearchProduct: undefined
+  SearchProductList: undefined
+  SearchProductDetail: undefined
+  ProjectStatusDetail: undefined
 }
 
 export type RootStackScreenProp = NativeStackScreenProps<RootStackParamList>
@@ -36,49 +47,77 @@ const RootStack = createNativeStackNavigator<RootStackParamList>()
 
 function RootNavigator(): JSX.Element {
   const navigationRef = useNavigationContainerRef()
+  const dispatch = useDispatch()
+  const [tokenLoading, setTokenLoading] = useState(true)
   useFlipper(navigationRef)
-
+  const [tokenLogin] = useLazyUserTokenLoginQuery()
+  const [auth, setAuth] = useState(false)
+  useEffect(() => {
+    AsyncStorage.getItem('token')
+      .then((token) => {
+        console.log('saved token', token)
+        tokenLogin(token)
+          .then((r) => {
+            console.log('token login result', r)
+            if (r.data?.msg) {
+              dispatch(setUser(r.data?.msg))
+              setAuth(true)
+            }
+            setTokenLoading(false)
+          })
+          .catch((e) => console.log('tokenlogin error', e))
+      })
+      .catch((e) => null)
+  }, [])
+  //TODO: 자동로그인 활성/비활성 버튼
   return (
     <Box flex={1} safeArea>
-      <NavigationContainer ref={navigationRef}>
-        <RootStack.Navigator
-          initialRouteName="Root"
-          screenOptions={{ header: SearchHeader }}
-        >
-          <RootStack.Screen
-            name="Login"
-            component={LoginScreen}
-            options={{ headerShown: false }}
-          />
-          <RootStack.Screen
-            name="Root"
-            component={MainTabNavigator}
-            options={{ headerShown: false }}
-          />
-          {/* <RootStack.Screen name="ChatBot" component={ChatBotScreen} /> */}
-          <RootStack.Screen
-            name="SearchProduct"
-            component={SearchProductScreen}
-          />
-          <RootStack.Screen
-            name="SearchProductList"
-            component={SearchProductListScreen}
-          />
-          <RootStack.Screen
-            name="SearchProductDetail"
-            component={SearchProductDetailScreen}
-            options={{ header: SearchProductDetailHeader }}
-          />
-          <RootStack.Screen
-            name="ProjectStatusDetail"
-            component={ProjectStatusDetail}
-            options={{
-              title: '인증진행 상세',
-              header: ProjectStatusHeader,
-            }}
-          />
-        </RootStack.Navigator>
-      </NavigationContainer>
+      {tokenLoading ? null : (
+        <NavigationContainer ref={navigationRef}>
+          <RootStack.Navigator
+            initialRouteName={auth ? 'Root' : 'Login'}
+            screenOptions={{ header: SearchHeader }}
+          >
+            <RootStack.Screen
+              name="Login"
+              component={LoginScreen}
+              options={{ headerShown: false }}
+            />
+            <RootStack.Screen
+              name="Signup"
+              component={SignupScreen}
+              options={{ headerShown: false }}
+            />
+            <RootStack.Screen
+              name="Root"
+              component={MainTabNavigator}
+              options={{ headerShown: false }}
+            />
+            {/* <RootStack.Screen name="ChatBot" component={ChatBotScreen} /> */}
+            <RootStack.Screen
+              name="SearchProduct"
+              component={SearchProductScreen}
+            />
+            <RootStack.Screen
+              name="SearchProductList"
+              component={SearchProductListScreen}
+            />
+            <RootStack.Screen
+              name="SearchProductDetail"
+              component={SearchProductDetailScreen}
+              options={{ header: SearchProductDetailHeader }}
+            />
+            <RootStack.Screen
+              name="ProjectStatusDetail"
+              component={ProjectStatusDetail}
+              options={{
+                title: '인증진행 상세',
+                header: ProjectStatusHeader,
+              }}
+            />
+          </RootStack.Navigator>
+        </NavigationContainer>
+      )}
     </Box>
   )
 }
