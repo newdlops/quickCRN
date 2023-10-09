@@ -20,8 +20,8 @@ function ProjectStatusDetail({ route }): JSX.Element {
     console.log(route)
     getDetail(
       { _id: route.params.projectId },
-      (r) => setData(r.msg),
-      (e) => console.error(e)
+      r => setData(r.msg),
+      e => console.error(e),
     )
   }, [])
   const [data, setData] = React.useState()
@@ -38,9 +38,11 @@ function ProjectStatusDetail({ route }): JSX.Element {
           p={5}
         >
           <HStack mb={3}>
-            <Box _text={{ fontSize: 24, fontWeight: 'bold' }}>{data?.projectname}</Box>
+            <Box _text={{ fontSize: 24, fontWeight: 'bold' }}>
+              {data?.projectname}
+            </Box>
             <Center
-              position="absolute"
+              position='absolute'
               right={0}
               borderRadius={'lg'}
               bg={'blueGray.400'}
@@ -77,7 +79,7 @@ function ProjectStatusDetail({ route }): JSX.Element {
               <Text fontSize={16}>{data?.manufacture}</Text>
             </HStack>
           </VStack>
-          <Box bg="gray.400" mt={5} h={2 / 3} w="100%" />
+          <Box bg='gray.400' mt={5} h={2 / 3} w='100%' />
           <VStack mt={5}>
             <HStack
               alignItems={'center'}
@@ -98,7 +100,9 @@ function ProjectStatusDetail({ route }): JSX.Element {
           </VStack>
         </Box>
       </Center>
-      {data?.projectItems.map((v,i)=><ProjectSubItem data={v} title={v.projectItemName} key={i}/>)}
+      {data?.projectItems.map((v, i) => (
+        <ProjectSubItem data={v} title={v.projectItemName} key={i} />
+      ))}
     </ScrollView>
   )
 }
@@ -122,7 +126,7 @@ function ProjectSubItem({ title, data }) {
           <HStack mb={3}>
             <Box _text={{ fontSize: 24, fontWeight: 'bold' }}>{title}</Box>
             <Center
-              position="absolute"
+              position='absolute'
               right={0}
               borderRadius={'lg'}
               bg={'blueGray.400'}
@@ -131,7 +135,7 @@ function ProjectSubItem({ title, data }) {
               top={2}
               _text={{ color: 'white', fontWeight: 'bold' }}
             >
-              {data?.status ? '완료' : '진행중' }
+              {data?.status ? '완료' : '진행중'}
             </Center>
           </HStack>
           <Box display={isOpen ? null : 'none'}>
@@ -161,16 +165,37 @@ function ProjectSubItem({ title, data }) {
                 <Text fontSize={16}>{data?.document ? '완료' : '진행중'}</Text>
               </HStack>
             </VStack>
-            <Box bg="gray.400" mt={5} h={2 / 3} w="100%" />
-            <HStack w="100%" h={20} pt={3}>
+            <Box bg='gray.400' mt={5} h={2 / 3} w='100%' />
+            <HStack w='100%' h={20} pt={3}>
               {/* <Box bg={'gray.300'} w="90%" position={'absolute'} py={1} top={5} ml={3}></Box> */}
-              <ProjectStepStatus status={'준비단계'} complete={data?.processedStage > 0} />
-              <ProjectStepStatus status={'시험대기'} complete={data?.processedStage > 1} />
-              <ProjectStepStatus status={'시험중'} complete={data?.processedStage > 2} />
-              <ProjectStepStatus status={'성적서\n작성중'} complete={data?.processedStage > 3} />
-              <ProjectStepStatus status={'성적서\n완료'} complete={data?.processedStage > 4} />
-              <ProjectStepStatus status={'인증완료'} complete={data?.processedStage > 5} />
-              <ProjectStepStatus status={'완료'} complete={data?.processedStage > 6} />
+              <ProjectStepStatus
+                status={'준비단계'}
+                complete={data?.processedStage > 0}
+              />
+              <ProjectStepStatus
+                status={'시험대기'}
+                complete={data?.processedStage > 1}
+              />
+              <ProjectStepStatus
+                status={'시험중'}
+                complete={data?.processedStage > 2}
+              />
+              <ProjectStepStatus
+                status={'성적서\n작성중'}
+                complete={data?.processedStage > 3}
+              />
+              <ProjectStepStatus
+                status={'성적서\n완료'}
+                complete={data?.processedStage > 4}
+              />
+              <ProjectStepStatus
+                status={'인증완료'}
+                complete={data?.processedStage > 5}
+              />
+              <ProjectStepStatus
+                status={'완료'}
+                complete={data?.processedStage > 6}
+              />
             </HStack>
           </Box>
         </Box>
@@ -185,7 +210,7 @@ function ProjectStepStatus({ status, complete }) {
     <VStack mr={2} alignItems={'center'} w={8}>
       <Icon
         as={MaterialCommunityIcons}
-        name="check-circle"
+        name='check-circle'
         color={color}
         alignContent={'center'}
         justifyContent={'space-between'}

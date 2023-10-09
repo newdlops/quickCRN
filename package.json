@@ -30,7 +30,8 @@
     "react-query": "^3.39.3",
     "react-redux": "^8.1.2",
     "redux": "^4.2.1",
-    "redux-flipper": "^2.0.2"
+    "redux-flipper": "^2.0.2",
+    "rn-async-storage-flipper": "^0.0.10"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",

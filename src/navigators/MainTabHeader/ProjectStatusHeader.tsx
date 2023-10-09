@@ -14,13 +14,13 @@ export default function ProjectStatusHeader({ navigation, route, options }) {
   }
 
   return (
-    <HStack bg="white" alignItems="center" height={12}>
+    <HStack bg='white' alignItems='center' height={12}>
       <Pressable onPress={goBack}>
         <Center ml={2}>
           <Icon
             as={FontAwesome}
-            name="angle-left"
-            color="black"
+            name='angle-left'
+            color='black'
             alignContent={'center'}
             justifyContent={'space-between'}
             size={8}

@@ -91,3 +91,25 @@ interface ProductDetails {
   tip?: string
   updatedAt?: string
 }
+
+interface Inquiry {
+  [index: string]: string
+  _id?: string
+  name: string
+  content: string
+  user: string
+}
+
+export interface IProject {
+  _id?: string;
+  projectname: string;
+  requestUser: any;
+  modelName: string;
+  manufacture: string;
+  projectNumber: string;
+  projectStartDate: Date;
+  projectStatus: boolean;
+  projectItems: Array<any>;
+
+  [index: string | number]: string | number | boolean | Date | any | undefined;
+}

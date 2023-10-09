@@ -19,11 +19,11 @@ export default function MainTabBar({
   return (
     <HStack
       space={'8%'}
-      pt="10px"
-      pb="10px"
-      bg="white"
-      h="20"
-      justifyContent="center"
+      pt='10px'
+      pb='10px'
+      bg='white'
+      h='20'
+      justifyContent='center'
       shadow={4}
     >
       {state.routes.map((route, index: number) => {
@@ -47,7 +47,7 @@ export default function MainTabBar({
         }
 
         const onLongPress = () => {
-          const event = navigation.emit({
+          const _ = navigation.emit({
             type: 'tabLongPress',
             target: route.key,
           })
@@ -55,33 +55,31 @@ export default function MainTabBar({
 
         return (
           <Pressable
-            size="16"
+            size='16'
             key={index}
             onPress={onPress}
             onLongPress={onLongPress}
           >
-            {({ isPressed }) => (
-              <PresenceTransition
-                visible={isFocused}
-                initial={{ scale: 1 }}
-                animate={{ scale: 1, transition: { duration: 100 } }}
+            <PresenceTransition
+              visible={isFocused}
+              initial={{ scale: 1 }}
+              animate={{ scale: 1, transition: { duration: 100 } }}
+            >
+              <Center
+                size='16'
+                _text={{
+                  color: isFocused ? colorFocused : colorNotFocused,
+                }}
               >
-                <Center
-                  size="16"
-                  _text={{
-                    color: isFocused ? colorFocused : colorNotFocused,
-                  }}
-                >
-                  <Icon
-                    as={MaterialCommunityIcons}
-                    name={iconName}
-                    size="10"
-                    color={isFocused ? colorFocused : colorNotFocused}
-                  />
-                  {label}
-                </Center>
-              </PresenceTransition>
-            )}
+                <Icon
+                  as={MaterialCommunityIcons}
+                  name={iconName}
+                  size='10'
+                  color={isFocused ? colorFocused : colorNotFocused}
+                />
+                {label}
+              </Center>
+            </PresenceTransition>
           </Pressable>
         )
       })}

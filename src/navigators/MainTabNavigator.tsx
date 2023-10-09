@@ -4,7 +4,6 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import HomeScreen from '@screens/HomeScreen/HomeScreen'
 import ProjectStatusList from '@screens/ProjectStatus/ProjectStatusList'
 import MainTabBar from './MainTabBar/MainTabBar'
-import SearchHeader from './MainTabHeader/MainTabHeader'
 
 import ProjectStatusHeader from '@navigators/MainTabHeader/ProjectStatusHeader'
 import InquiryScreen from '@screens/InquiryScreen/InquiryScreen'
@@ -16,26 +15,26 @@ function MainTabNavigator() {
   return (
     <Tab.Navigator
       tabBar={MainTabBar}
-      initialRouteName="Home"
-      screenOptions={{ header: SearchHeader }}
-      backBehavior="initialRoute"
+      initialRouteName='MainTab'
+      backBehavior='initialRoute'
     >
       <Tab.Screen
-        name="ChatBot"
+        name='ChatBot'
         component={InquiryScreen}
         options={{
           title: '인증문의',
-          headerShown: false,
+          headerShown: true,
+          header: ProjectStatusHeader,
           tabBarLabel: 'chat-question-outline',
         }}
       />
       <Tab.Screen
-        name="Home"
+        name='MainTab'
         component={HomeScreen}
         options={{ title: '메인화면', headerShown: false, tabBarLabel: 'home' }}
       />
       <Tab.Screen
-        name="ProjectStatusList"
+        name='ProjectStatusList'
         component={ProjectStatusList}
         options={{
           title: '인증진행',
@@ -44,7 +43,7 @@ function MainTabNavigator() {
         }}
       />
       <Tab.Screen
-        name="Mypage"
+        name='Mypage'
         component={MyPageScreen}
         options={{
           title: 'MY',

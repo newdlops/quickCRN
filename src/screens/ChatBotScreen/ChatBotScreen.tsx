@@ -13,8 +13,8 @@ import React from 'react'
 
 function ChatBotScreen(): JSX.Element {
   return (
-    <Center flex={1} bg="white">
-      <Center h="500" w="300" bgColor="primary.100">
+    <Center flex={1} bg='white'>
+      <Center h='500' w='300' bgColor='primary.100'>
         Chatbot
       </Center>
     </Center>

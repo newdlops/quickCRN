@@ -17,59 +17,39 @@ import {
 } from 'native-base'
 import React, { useState } from 'react'
 import { Platform } from 'react-native'
-import { useLazyCreateUserQuery } from '../../service/user'
+import { useUpdateUserMutation } from '../../service/user'
+import { useDispatch, useSelector } from 'react-redux'
+import { setUser } from '@store/reducers/userSlice'
 
-function SignupScreen({
+function EditUserInfoScreen({
   navigation: { navigate, goBack },
   route: { params },
 }: RootStackScreenProp): JSX.Element {
-  const [createUser, userinformation] = useLazyCreateUserQuery()
+  const userInfo = useSelector(state => state.user.user)
+  const dispatch = useDispatch()
   const emptyForm = {
-    username: '',
-    email: params?.kakaoInfo?.email ?? '',
-    password: '',
-    passwordConfirm: '',
+    username: userInfo.username,
+    email: userInfo.email,
   }
   const [form, setForm] = useState(emptyForm)
   const toast = useToast()
+  const [updateUser] = useUpdateUserMutation()
   const backToLogin = () => {
     goBack()
   }
 
-  const submitSignup = () => {
-    createUser({ ...form })
-      .then(result => {
-        console.log(result)
-        toast.show({
-          render: ({ id }) => (
-            <ToastAlert
-              id={id}
-              title={'계정 등록이 성공했습니다.'}
-              variant={'subtle'}
-              description={'다시 로그인해주세요'}
-              isClosable
-            />
-          ),
-        })
-        goBack()
-      })
-      .catch(_ =>
-        toast.show({
-          render: ({ id, warn: status }) => (
-            <ToastAlert
-              id={id}
-              title={'계정 등록이 실패했습니다.'}
-              variant={'subtle'}
-              description={'다시 등록해주세요'}
-              isClosable
-            />
-          ),
-        }),
-      )
+  const submitUserEdit = () => {
+    updateUser({
+      _id: userInfo._id,
+      ...form,
+    }).then(updateResult => dispatch(setUser(updateResult?.data?.msg)))
   }
 
   const handleForm = (key: string) => (e: string) => {
-    setForm({ ...form, [key]: e })
+    setForm({
+      ...form,
+      [key]: e,
+    })
   }
 
   const ToastAlert = ({
@@ -151,7 +131,7 @@ function SignupScreen({
             }}
             fontWeight='semibold'
           >
-            QuickC 가입을 환영합니다!
+            개인정보 수정
           </Heading>
           <Heading
             mt='1'
@@ -162,64 +142,67 @@ function SignupScreen({
             fontWeight='medium'
             size='xs'
           >
-            회원가입을 진행해주세요
+            수정할 개인정보를 입력하세요
           </Heading>
           <VStack space={3} mt='5'>
             <FormControl isRequired>
               <FormControl.Label>닉네임</FormControl.Label>
               <Input
                 onChangeText={handleForm('username')}
-                placeholder='사용하실 별명을 입력해주세요'
+                placeholder='변경하실 별명을 입력해주세요'
                 value={form.username}
               />
             </FormControl>
-            <FormControl isRequired>
+            <FormControl isReadOnly>
               <FormControl.Label>이메일</FormControl.Label>
               <Input
+                isDisabled={true}
                 placeholder='이메일 주소를 입력해주세요'
-                onChangeText={handleForm('email')}
                 value={form.email}
               />
             </FormControl>
-            <FormControl isRequired>
-              <FormControl.Label>비밀번호</FormControl.Label>
-              <Input
-                type='password'
-                textContentType='newPassword'
-                placeholder='비밀번호를 입력해주세요'
-                onChangeText={handleForm('password')}
-                value={form.password}
-              />
-              <FormControl.ErrorMessage>
-                비밀번호를 확인해주세요
-              </FormControl.ErrorMessage>
-            </FormControl>
-            <FormControl isRequired>
-              <FormControl.Label>비밀번호 확인</FormControl.Label>
-              <Input
-                type='password'
-                textContentType='newPassword'
-                placeholder='비밀번호를 확인해주세요'
-                onChangeText={handleForm('passwordConfirm')}
-                value={form.passwordConfirm}
-              />
-            </FormControl>
+            {/*<FormControl isRequired>*/}
+            {/*  <FormControl.Label>비밀번호</FormControl.Label>*/}
+            {/*  <Input*/}
+            {/*    type='password'*/}
+            {/*    textContentType='newPassword'*/}
+            {/*    placeholder='비밀번호를 입력해주세요'*/}
+            {/*    onChangeText={handleForm('password')}*/}
+            {/*    value={form.password}*/}
+            {/*  />*/}
+            {/*  <FormControl.ErrorMessage>*/}
+            {/*    비밀번호를 확인해주세요*/}
+            {/*  </FormControl.ErrorMessage>*/}
+            {/*</FormControl>*/}
+            {/*<FormControl isRequired>*/}
+            {/*  <FormControl.Label>비밀번호 확인</FormControl.Label>*/}
+            {/*  <Input*/}
+            {/*    type='password'*/}
+            {/*    textContentType='newPassword'*/}
+            {/*    placeholder='비밀번호를 확인해주세요'*/}
+            {/*    onChangeText={handleForm('passwordConfirm')}*/}
+            {/*    value={form.passwordConfirm}*/}
+            {/*  />*/}
+            {/*</FormControl>*/}
             <Button
               mt='16'
-              _text={{ fontWeight: 'bold', fontSize: 16 }}
+              _text={{
+                fontWeight: 'bold',
+                fontSize: 16,
+              }}
               bgColor='blue.500'
-              onPress={submitSignup}
+              onPress={submitUserEdit}
             >
-              회원가입
+              회원정보 수정
             </Button>
-            <Button
-              mt='1'
-              _text={{ fontWeight: 'bold', fontSize: 16, color: '#000000' }}
-              variant='outline'
-              onPress={backToLogin}
-            >
-              취소
-            </Button>
+            {/*<Button*/}
+            {/*  mt='1'*/}
+            {/*  _text={{ fontWeight: 'bold', fontSize: 16, color: '#000000' }}*/}
+            {/*  variant='outline'*/}
+            {/*  onPress={backToLogin}*/}
+            {/*>*/}
+            {/*  취소*/}
+            {/*</Button>*/}
           </VStack>
         </Box>
       </Center>
@@ -227,4 +210,4 @@ function SignupScreen({
   )
 }
 
-export default SignupScreen
+export default EditUserInfoScreen

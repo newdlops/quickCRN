@@ -42,6 +42,17 @@ const userApi = api.injectEndpoints({
     userTokenLogin: build.query<UserResponse, string>({
       query: (token: string) => `/user/userTokenLogin/${token}`,
     }),
+    logout: build.query<UserResponse, string>({
+      query: (token: string) => `/user/logout/${token}`,
+    }),
+    updateUser: build.mutation<UserResponse, IUser>({
+      query: (body: IUser) => ({
+        url: `/user/user/${body._id}`,
+        method: 'PUT',
+        body: body,
+      }),
+      invalidatesTags: (_result, _error, arg) => [{ type: 'User', id: arg._id }],
+    }),
   }),
 })
 
@@ -50,4 +61,6 @@ export const {
   useLazyLoginQuery,
   useLazyCreateUserQuery,
   useLazyUserTokenLoginQuery,
+  useLazyLogoutQuery,
+  useUpdateUserMutation,
 } = userApi

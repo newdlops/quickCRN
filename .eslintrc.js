@@ -9,6 +9,7 @@ module.exports = {
   ],
   plugins: [
     '@typescript-eslint',
+    'prettier',
   ],
   parser: '@typescript-eslint/parser',
   parserOptions: {
@@ -20,18 +21,26 @@ module.exports = {
     'prettier/prettier': [
       'warn',
       {
-        semi: false,
+        useTabs: false,
+        arrowParens: 'avoid',
+        bracketSameLine: false,
+        bracketSpacing: true,
         singleQuote: true,
-        spaceBeforeBlocks: false,
+        jsxSingleQuote: true,
+        trailingComma: 'all',
+        tabs: false,
+        tabWidth: 2,
+        semi: false,
+        usePrettierrc: true,
       },
-      {
-        usePrettierrc: false,
-      }
     ],
     '@typescript-eslint/no-unsafe-assignment': 'warn',
     '@typescript-eslint/no-unsafe-member-access': 'warn',
     '@typescript-eslint/no-unsafe-call': 'warn',
+    '@typescript-eslint/no-unsafe-return': 'warn',
     '@typescript-eslint/ban-types': 'warn',
+    '@typescript-eslint/no-floating-promises': 'warn',
+    '@typescript-eslint/no-unused-vars': 'warn',
     'no-console': 'error',
     'no-loop-func': 'error',
     'no-shadow': 'error',
@@ -48,5 +57,7 @@ module.exports = {
     'space-in-parens': ['error', 'never'],
     'arrow-body-style': ['error', 'as-needed'],
     'no-confusing-arrow': 'error',
+    'jsx-quotes': ['error', 'prefer-single'],
+    'react-hooks/exhaustive-deps': 'warn'
   },
 }

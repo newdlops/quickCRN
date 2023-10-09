@@ -49,7 +49,7 @@ function LoginScreen({
       const _token: KakaoOAuthToken = await kakaoLogin()
       console.log('token from kakao', _token)
       const result = await trigger(_token.accessToken)
-      console.log('result from server',result)
+      console.log('result from server', result)
       const user = result.data?.msg.user
       const kakaoAccount = result.data?.msg.kakaoAccount
       if (user) {
@@ -59,9 +59,17 @@ function LoginScreen({
         goToHome()
       } else {
         toast.show({
-          render: ({ id }) => <ToastAlert id={id} title={'카카오 계정으로 등록된 회원이 없습니다.'} variant={'subtle'} description={'회원가입을 진행해주세요'} isClosable />,
+          render: ({ id }) => (
+            <ToastAlert
+              id={id}
+              title={'카카오 계정으로 등록된 회원이 없습니다.'}
+              variant={'subtle'}
+              description={'회원가입을 진행해주세요'}
+              isClosable
+            />
+          ),
         })
-        push('Signup', { kakaoInfo : kakaoAccount })
+        push('Signup', { kakaoInfo: kakaoAccount })
       }
     } catch (err) {
       log.error('LOGIN ERROR : ', err)
@@ -90,7 +98,15 @@ function LoginScreen({
         goToHome()
       } else {
         toast.show({
-          render: ({ id }) => <ToastAlert id={id} title={'입력하신 메일로 등록된 회원이 없습니다.'} variant={'subtle'} description={'회원가입을 진행해주세요'} isClosable />,
+          render: ({ id }) => (
+            <ToastAlert
+              id={id}
+              title={'입력하신 메일로 등록된 회원이 없습니다.'}
+              variant={'subtle'}
+              description={'회원가입을 진행해주세요'}
+              isClosable
+            />
+          ),
         })
         log.info('NO USER')
       }
@@ -113,22 +129,22 @@ function LoginScreen({
     ...rest
   }) => (
     <Alert
-      maxWidth="95%"
+      maxWidth='95%'
       // w="80%
-      alignSelf="center"
-      flexDirection="row"
+      alignSelf='center'
+      flexDirection='row'
       status={status ? status : 'info'}
       variant={variant}
       {...rest}
     >
-      <VStack w="100%">
-        <HStack alignItems="center" justifyContent="space-between">
-          <HStack alignItems="center">
+      <VStack w='100%'>
+        <HStack alignItems='center' justifyContent='space-between'>
+          <HStack alignItems='center'>
             <Alert.Icon />
             <Text
-              ml="3"
-              fontSize="md"
-              fontWeight="medium"
+              ml='3'
+              fontSize='md'
+              fontWeight='medium'
               color={
                 variant === 'solid'
                   ? 'lightText'
@@ -142,8 +158,8 @@ function LoginScreen({
           </HStack>
           {isClosable ? (
             <IconButton
-              variant="unstyled"
-              icon={<CloseIcon size="3" />}
+              variant='unstyled'
+              icon={<CloseIcon size='3' />}
               _icon={{
                 color: variant === 'solid' ? 'lightText' : 'darkText',
               }}
@@ -152,7 +168,7 @@ function LoginScreen({
           ) : null}
         </HStack>
         <Text
-          px="6"
+          px='6'
           color={
             variant === 'solid'
               ? 'lightText'
@@ -180,49 +196,49 @@ function LoginScreen({
             QuickC
           </Box>
         </HStack>
-        <Box w="80%">
+        <Box w='80%'>
           <Input
-            h="50"
-            placeholder="이메일 주소를 입력해주세요"
-            fontSize="14"
+            h='50'
+            placeholder='이메일 주소를 입력해주세요'
+            fontSize='14'
             mb={3}
             onChangeText={handleEmail}
           />
           <Input
-            h="50"
-            placeholder="비밀번호를 입력해주세요"
-            fontSize="14"
+            h='50'
+            placeholder='비밀번호를 입력해주세요'
+            fontSize='14'
             mb={20}
             onChangeText={handlePassword}
           />
           <Button
-            mb="3"
-            borderRadius="12px"
+            mb='3'
+            borderRadius='12px'
             height={50}
-            bgColor="blue.400"
+            bgColor='blue.400'
             _text={loginButtonStyle}
             onPress={emailLogin}
           >
             로그인
           </Button>
           <Button
-            mb="3"
-            borderRadius="12px"
+            mb='3'
+            borderRadius='12px'
             height={50}
-            variant="outline"
+            variant='outline'
             _text={buttonStyle}
             onPress={onClickSignup}
           >
             이메일로 회원가입
           </Button>
           {/* TODO: <Box>아이디 찾기 | 비밀번호 찾기</Box>*/}
-          <Pressable onPress={signInWithKakao} mt="10" mb="3">
+          <Pressable onPress={signInWithKakao} mt='10' mb='3'>
             <Image
               height={50}
-              borderRadius="12px"
+              borderRadius='12px'
               resizeMode={'contain'}
               source={require('../../assets/img/kakao_login_large_wide.png')}
-              alt="login"
+              alt='login'
             />
           </Pressable>
         </Box>

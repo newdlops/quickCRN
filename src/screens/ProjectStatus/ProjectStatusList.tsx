@@ -15,21 +15,19 @@ import Entypo from 'react-native-vector-icons/Entypo'
 import { PressableProps } from 'react-native'
 import { findByUser } from '../../api/project'
 import { useSelector } from 'react-redux'
+import { useFindProjectByUserIdQuery } from '../../service/project';
 
 function ProjectStatusList({ navigation }): JSX.Element {
-  const loginUserInfo = useSelector(state => state.user.user )
-  React.useEffect(() => {
-    findByUser(
-      { id: loginUserInfo._id },
-      (r) => setData(r.msg),
-      (e) => console.error(e)
-    )
-  }, [])
-  const [data, setData] = React.useState([])
+  const loginUserInfo = useSelector(state => state.user.user)
+  const { data } = useFindProjectByUserIdQuery(loginUserInfo._id, {
+    // pollingInterval: 300,
+    refetchOnFocus: true,
+    refetchOnMountOrArgChange: true,
+  })
   return (
     <>
       <ScrollView>
-        {data?.map((v, i) => (
+        {data?.msg?.map((v, i) => (
           <ProductStatusDetailItem
             key={i}
             data={v}
@@ -74,9 +72,11 @@ function ProductStatusDetailItem(props: PressableProps) {
           >
             <HStack mb={3}>
               {/* <Box _text={{ fontSize: 24, fontWeight: 'bold' }}>베터리</Box> */}
-              <Box _text={{ fontSize: 24, fontWeight: 'bold' }}>{data.projectname}</Box>
+              <Box _text={{ fontSize: 24, fontWeight: 'bold' }}>
+                {data.projectname}
+              </Box>
               <Center
-                position="absolute"
+                position='absolute'
                 right={0}
                 borderRadius={'lg'}
                 bg={'blueGray.400'}
@@ -90,15 +90,15 @@ function ProductStatusDetailItem(props: PressableProps) {
             <VStack>
               <Box _text={{ fontSize: 16, fontWeight: 'bold' }}>인증구분</Box>
               <HStack alignItems={'center'}>
-                <Icon as={Entypo} name="dot-single" size="4" />
+                <Icon as={Entypo} name='dot-single' size='4' />
                 <Text>전기 안전확인</Text>
               </HStack>
               <HStack alignItems={'center'}>
-                <Icon as={Entypo} name="dot-single" size="4" />
+                <Icon as={Entypo} name='dot-single' size='4' />
                 <Text>전기 안전확인</Text>
               </HStack>
             </VStack>
-            <Box bg="gray.400" mt={5} h={2 / 3} w="100%" />
+            <Box bg='gray.400' mt={5} h={2 / 3} w='100%' />
             <VStack mt={5}>
               <Box>
                 <Text>시작일자 : {data.projectStartDate}</Text>

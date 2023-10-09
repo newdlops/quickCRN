@@ -18,10 +18,12 @@ import { ProductDetails } from '../../type'
 function SearchProductListScreen({
   navigation,
 }: RootStackScreenProp): JSX.Element {
-  const keyword: string = useSelector(state => state.search.productSearchKeyword)
+  const keyword: string = useSelector(
+    state => state.search.productSearchKeyword,
+  )
   const { data, error } = useFindProductQuery(keyword)
   const list = data?.msg ?? []
-  const moveToDetail = (item) => {
+  const moveToDetail = item => {
     navigation.navigate('SearchProductDetail', { data: item })
   }
   const render = ({ item: data }) => (
@@ -30,7 +32,7 @@ function SearchProductListScreen({
   return (
     <Center flex={1}>
       {/* <Box>SearchProductListScreen</Box> */}
-      <FlatList w="100%" data={list} renderItem={render} />
+      <FlatList w='100%' data={list} renderItem={render} />
     </Center>
   )
 }
@@ -65,7 +67,7 @@ function SearchProductItem({ data, moveToDetail }) {
                 </Box>
               </HStack>
               <Center
-                position="absolute"
+                position='absolute'
                 right={0}
                 borderRadius={'lg'}
                 bg={data?.substitution ? 'blue.400' : 'blueGray.200'}
@@ -73,12 +75,12 @@ function SearchProductItem({ data, moveToDetail }) {
                 height={'8'}
                 _text={{ color: 'white', fontWeight: 'bold' }}
               >
-                { data?.substitution ? '구매대행가능' : '구매대행불가' }
+                {data?.substitution ? '구매대행가능' : '구매대행불가'}
               </Center>
             </HStack>
             <VStack>
               <HStack alignItems={'center'}>
-                <Icon as={Entypo} name="triangle-right" size="4" mr={2} />
+                <Icon as={Entypo} name='triangle-right' size='4' mr={2} />
                 <Text>{data?.certificationCategory}</Text>
               </HStack>
             </VStack>
