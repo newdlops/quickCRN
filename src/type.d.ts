@@ -101,15 +101,33 @@ interface Inquiry {
 }
 
 export interface IProject {
-  _id?: string;
-  projectname: string;
-  requestUser: any;
-  modelName: string;
-  manufacture: string;
-  projectNumber: string;
-  projectStartDate: Date;
-  projectStatus: boolean;
-  projectItems: Array<any>;
+  _id?: string
+  projectname: string
+  requestUser: IUser
+  modelName: string
+  manufacture: string
+  projectNumber: string
+  projectStartDate: Date
+  projectStatus: boolean
+  projectItems: IProjectItem[]
+  createdAt: Date
+  updatedAt: Date
+  checkDate: Date
+  certType: string[]
+  [index: string | number]: string | number | boolean | Date | any | undefined
+}
 
-  [index: string | number]: string | number | boolean | Date | any | undefined;
+export interface IProjectItem {
+  id?: string
+  projectItemName: string
+  checkdate: Date
+  sample: boolean
+  document: boolean
+  processedStage: string
+  requestUser: IUser
+  status: boolean
+  description: string
+  createdAt: Date
+  updatedAt: Date
+  project: IProject
 }

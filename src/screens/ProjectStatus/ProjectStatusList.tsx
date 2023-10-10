@@ -15,7 +15,8 @@ import Entypo from 'react-native-vector-icons/Entypo'
 import { PressableProps } from 'react-native'
 import { findByUser } from '../../api/project'
 import { useSelector } from 'react-redux'
-import { useFindProjectByUserIdQuery } from '../../service/project';
+import { useFindProjectByUserIdQuery } from '../../service/project'
+import { toDateForm } from '@utils/dateformatter'
 
 function ProjectStatusList({ navigation }): JSX.Element {
   const loginUserInfo = useSelector(state => state.user.user)
@@ -36,6 +37,7 @@ function ProjectStatusList({ navigation }): JSX.Element {
             }}
           />
         ))}
+        <Box h='100px' />
       </ScrollView>
       {/*<Fab*/}
       {/*  renderInPortal={false}*/}
@@ -61,7 +63,7 @@ function ProductStatusDetailItem(props: PressableProps) {
   return (
     <Pressable onPress={props.onPress}>
       <Center m={3}>
-        <Center height={64} alignItems={'center'}>
+        <Center alignItems={'center'}>
           <Box
             width={80}
             // height={56}
@@ -89,25 +91,17 @@ function ProductStatusDetailItem(props: PressableProps) {
             </HStack>
             <VStack>
               <Box _text={{ fontSize: 16, fontWeight: 'bold' }}>인증구분</Box>
-              <HStack alignItems={'center'}>
-                <Icon as={Entypo} name='dot-single' size='4' />
-                <Text>전기 안전확인</Text>
-              </HStack>
-              <HStack alignItems={'center'}>
-                <Icon as={Entypo} name='dot-single' size='4' />
-                <Text>전기 안전확인</Text>
-              </HStack>
+              {data.certType?.map((v, i:number) => (
+                <HStack alignItems={'center'} key={i}>
+                  <Icon as={Entypo} name='dot-single' size='4' />
+                  <Text>{v}</Text>
+                </HStack>
+              ))}
             </VStack>
             <Box bg='gray.400' mt={5} h={2 / 3} w='100%' />
             <VStack mt={5}>
               <Box>
-                <Text>시작일자 : {data.projectStartDate}</Text>
-              </Box>
-              <Box>
-                <Text>진행일자 : {'2023-01-01'}</Text>
-              </Box>
-              <Box>
-                <Text>확인일자 : {'2023-01-01'}</Text>
+                <Text>시작일자 : {toDateForm(data.projectStartDate)}</Text>
               </Box>
             </VStack>
           </Box>

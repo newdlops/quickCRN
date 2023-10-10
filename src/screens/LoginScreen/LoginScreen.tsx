@@ -31,6 +31,7 @@ import log from '@utils/logger'
 import { useDispatch } from 'react-redux'
 import { setUser } from '@store/reducers/userSlice'
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import { ToastAlert } from '@components/ToastAlert'
 
 function LoginScreen({
   navigation: { navigate, push },
@@ -39,7 +40,15 @@ function LoginScreen({
     email: '',
     password: '',
   }
+  const LOGINERRORMASSAGES = [
+    '잘못된 비밀번호를 입력하셨습니다. 올바른 비밀번호를 입력하세요',
+    '계정에 등록되지 않은 이메일입니다.',
+  ]
   const toast = useToast()
+  const [submitted, setSubmitted] = useState(false)
+  const [loginFailed, setLoginFailed] = useState(false)
+  const [emailNotInput, setEmailNotInput] = useState(false)
+  const [passwordNotInput, setPasswordNotInput] = useState(false)
   const [loginInfo, setLoginInfo] = useState<LoginInfo>(emptyLoginInfo)
   const [trigger] = useLazyUserKakaoLoginQuery()
   const [login] = useLazyLoginQuery()
@@ -86,17 +95,44 @@ function LoginScreen({
   const handlePassword = (e: string) => {
     setLoginInfo({ ...loginInfo, password: e })
   }
-
-  const emailLogin = async () => {
+  const emailLogin = () => {
+    setLoginFailed(false)
+    let emailInput = false
+    let passwordInput = false
+    if (loginInfo.email == "") {
+      setEmailNotInput(true)
+      emailInput = false
+    } else {
+      setEmailNotInput(false)
+      emailInput = true
+    }
+    if (loginInfo.password == "") {
+      setPasswordNotInput(true)
+      passwordInput = false
+    } else {
+      setPasswordNotInput(false)
+      passwordInput = true
+    }
+    setSubmitted(true)
+    if (emailInput && passwordInput) {
+      emailLoginProcess().then(_ => {
+        setSubmitted(false)
+        setEmailNotInput(false)
+        setPasswordNotInput(false)
+      })
+    }
+  }
+  const emailLoginProcess = async () => {
     try {
       const result = await login(loginInfo)
       const user = result.data.msg
       if (user) {
-        console.log('move to home', user)
         dispatch(setUser(user))
         AsyncStorage.setItem('token', user.accessToken)
         goToHome()
       } else {
+        setLoginFailed(true)
+        setSubmitted(true)
         toast.show({
           render: ({ id }) => (
             <ToastAlert
@@ -105,6 +141,7 @@ function LoginScreen({
               variant={'subtle'}
               description={'회원가입을 진행해주세요'}
               isClosable
+              toast={toast}
             />
           ),
         })
@@ -118,70 +155,6 @@ function LoginScreen({
   const onClickSignup = () => {
     navigate('Signup')
   }
-
-  const ToastAlert = ({
-    id,
-    status,
-    variant,
-    title,
-    description,
-    isClosable,
-    ...rest
-  }) => (
-    <Alert
-      maxWidth='95%'
-      // w="80%
-      alignSelf='center'
-      flexDirection='row'
-      status={status ? status : 'info'}
-      variant={variant}
-      {...rest}
-    >
-      <VStack w='100%'>
-        <HStack alignItems='center' justifyContent='space-between'>
-          <HStack alignItems='center'>
-            <Alert.Icon />
-            <Text
-              ml='3'
-              fontSize='md'
-              fontWeight='medium'
-              color={
-                variant === 'solid'
-                  ? 'lightText'
-                  : variant !== 'outline'
-                  ? 'darkText'
-                  : null
-              }
-            >
-              {title}
-            </Text>
-          </HStack>
-          {isClosable ? (
-            <IconButton
-              variant='unstyled'
-              icon={<CloseIcon size='3' />}
-              _icon={{
-                color: variant === 'solid' ? 'lightText' : 'darkText',
-              }}
-              onPress={() => toast.close(id)}
-            />
-          ) : null}
-        </HStack>
-        <Text
-          px='6'
-          color={
-            variant === 'solid'
-              ? 'lightText'
-              : variant !== 'outline'
-              ? 'darkText'
-              : null
-          }
-        >
-          {description}
-        </Text>
-      </VStack>
-    </Alert>
-  )
 
   return (
     <KeyboardAvoidingView
@@ -208,9 +181,26 @@ function LoginScreen({
             h='50'
             placeholder='비밀번호를 입력해주세요'
             fontSize='14'
-            mb={20}
+            mb={1}
+            type={'password'}
             onChangeText={handlePassword}
           />
+          {submitted && loginFailed && (
+            <Box _text={{ fontSize: 12, color: 'red.400' }}>
+              해당 계정정보가 없습니다.
+            </Box>
+          )}
+          {submitted && emailNotInput && (
+            <Box _text={{ fontSize: 12, color: 'red.400' }}>
+              이메일을 입력해주세요
+            </Box>
+          )}
+          {submitted && passwordNotInput && (
+            <Box _text={{ fontSize: 12, color: 'red.400' }}>
+              비밀번호를 입력하세요
+            </Box>
+          )}
+          <Box mb={20} />
           <Button
             mb='3'
             borderRadius='12px'

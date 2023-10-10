@@ -14,6 +14,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import Entypo from 'react-native-vector-icons/Entypo'
 import { PressableProps } from 'react-native'
 import { getDetail } from '../../api/project'
+import { toDateForm } from '@utils/dateformatter';
 
 function ProjectStatusDetail({ route }): JSX.Element {
   React.useEffect(() => {
@@ -60,7 +61,7 @@ function ProjectStatusDetail({ route }): JSX.Element {
               justifyContent={'space-between'}
             >
               <Text>신청인</Text>
-              <Text fontSize={16}>{data?.requestUser}</Text>
+              <Text fontSize={16}>{data?.requestUser?.email}</Text>
             </HStack>
             <HStack
               alignItems={'center'}
@@ -95,7 +96,7 @@ function ProjectStatusDetail({ route }): JSX.Element {
               justifyContent={'space-between'}
             >
               <Text>프로젝트 시작일</Text>
-              <Text fontSize={16}>{data?.projectStartDate}</Text>
+              <Text fontSize={16}>{toDateForm(data?.projectStartDate)}</Text>
             </HStack>
           </VStack>
         </Box>
@@ -103,6 +104,7 @@ function ProjectStatusDetail({ route }): JSX.Element {
       {data?.projectItems.map((v, i) => (
         <ProjectSubItem data={v} title={v.projectItemName} key={i} />
       ))}
+      <Box h='100px' />
     </ScrollView>
   )
 }
@@ -146,7 +148,7 @@ function ProjectSubItem({ title, data }) {
                 justifyContent={'space-between'}
               >
                 <Text>견적 확인</Text>
-                <Text fontSize={16}>{data?.checkdate}</Text>
+                <Text fontSize={16}>{toDateForm(data?.checkdate)}</Text>
               </HStack>
               <HStack
                 alignItems={'center'}
@@ -218,7 +220,7 @@ function ProjectStepStatus({ status, complete }) {
       />
       <Box
         _text={{
-          fontSize: 9,
+          fontSize: 8,
           textAlign: 'center',
           color: color,
           fontWeight: 'bold',
