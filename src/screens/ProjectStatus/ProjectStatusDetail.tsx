@@ -126,7 +126,7 @@ function ProjectSubItem({ title, data }) {
           p={5}
         >
           <HStack mb={3}>
-            <Box _text={{ fontSize: 24, fontWeight: 'bold' }}>{title}</Box>
+            <Box _text={{ fontSize: 22, fontWeight: 'bold' }}>{title}</Box>
             <Center
               position='absolute'
               right={0}

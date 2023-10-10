@@ -137,9 +137,9 @@ function LoginScreen({
           render: ({ id }) => (
             <ToastAlert
               id={id}
-              title={'입력하신 메일로 등록된 회원이 없습니다.'}
+              title={'로그인 실패'}
               variant={'subtle'}
-              description={'회원가입을 진행해주세요'}
+              description={'잘못된 계정정보를 입력하셨습니다. 다시 입력해주세요.'}
               isClosable
               toast={toast}
             />
