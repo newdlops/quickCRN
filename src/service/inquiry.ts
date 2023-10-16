@@ -3,10 +3,7 @@ import { Inquiry } from '../type'
 
 interface InquiryResponse {
   status: string
-  msg: {
-    totalNumber: number
-    inquiries: Inquiry[]
-  }
+  msg: Inquiry[]
 }
 
 interface InquiryDetailResponse {
@@ -32,8 +29,8 @@ const inquiryApi = api.injectEndpoints({
       providesTags: (_result, _error, id) => [{ type: 'Inquiry', id: id }],
     }),
     findInquiriesByUser: build.query<InquiryResponse, any>({
-      query: (userid: string) => `/inquiry/${userid}`,
-      providesTags: (result?: InquiryResponse) => (result ? result?.msg?.inquiries?.map(({_id}) => ({ type: 'Inquiry' as const, id: _id })).concat({ type:'Inquiry', id: 'LIST'}) : [{ type:'Inquiry', id: 'LIST' }]),
+      query: (userid: string) => `/inquiry/inquiryByUser/${userid}`,
+      providesTags: (result?: InquiryResponse) => (result ? result?.msg?.map(({_id}) => ({ type: 'Inquiry' as const, id: _id })).concat({ type:'Inquiry', id: 'LIST'}) : [{ type:'Inquiry', id: 'LIST' }]),
     }),
     updateInquiry: build.mutation<InquiryResponse, Partial<Inquiry>>({
       query: (body: Partial<Inquiry>) => ({
@@ -50,4 +47,5 @@ const inquiryApi = api.injectEndpoints({
 
 export const {
   useCreateInquiryMutation,
+  useFindInquiriesByUserQuery,
 } = inquiryApi

@@ -95,7 +95,7 @@ interface ProductDetails {
 interface Inquiry {
   [index: string]: string
   _id?: string
-  name: string
+  productName: string
   content: string
   user: string
 }

@@ -16,6 +16,10 @@ function MyPageScreen({ navigation }): JSX.Element {
       )
       .catch(e => console.log('Logout Error', e))
   }
+  const gotoInquiryScreen = () => {
+    navigation.navigate('MyInquiry')
+  }
+
   return (
     <ScrollView>
       <VStack>
@@ -48,12 +52,13 @@ function MyPageScreen({ navigation }): JSX.Element {
             개인정보 변경
           </Button>
         </Box>
-        {/*<VStack _text={{ fontSize: 16}} bgColor='white' h='48' mb={3} p={5} pl={9}>*/}
-        {/*  <Box mb={4} _text={{ fontSize: 16 }}>내 활동</Box>*/}
-        {/*  <Pressable onPress={()=>alert()}><Box mb={4} ml={4} _text={{ fontSize: 16 }}>즐겨찾기</Box></Pressable>*/}
-        {/*  <Pressable onPress={()=>alert()}><Box mb={4} ml={4} _text={{ fontSize: 16 }}>오류 정보 신고내역</Box></Pressable>*/}
-        {/*  <Pressable onPress={()=>alert()}><Box mb={4} ml={4} _text={{ fontSize: 16 }}>제품 추가 요청내역</Box></Pressable>*/}
-        {/*</VStack>*/}
+        <VStack _text={{ fontSize: 16}} bgColor='white'  mb={3} p={5} pl={9}>
+          <Box mb={4} _text={{ fontSize: 16 }}>내 활동</Box>
+          {/*<Pressable onPress={()=>alert()}><Box mb={4} ml={4} _text={{ fontSize: 16 }}>즐겨찾기</Box></Pressable>*/}
+          <Pressable onPress={gotoInquiryScreen}><Box mb={4} ml={4} _text={{ fontSize: 16 }}>내 문의내역</Box></Pressable>
+          {/*<Pressable onPress={()=>alert()}><Box mb={4} ml={4} _text={{ fontSize: 16 }}>오류 정보 신고내역</Box></Pressable>*/}
+          {/*<Pressable onPress={()=>alert()}><Box mb={4} ml={4} _text={{ fontSize: 16 }}>제품 추가 요청내역</Box></Pressable>*/}
+        </VStack>
         <VStack
           _text={{ fontSize: 16 }}
           bgColor='white'
