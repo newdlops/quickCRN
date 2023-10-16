@@ -11,28 +11,86 @@ import {
   FormControl,
   VStack,
   ScrollView,
-  TextArea,
-} from 'native-base'
+  TextArea, useToast,
+} from 'native-base';
 import React, { useState } from 'react'
 import { useCreateInquiryMutation } from '../../service/inquiry';
 import { useSelector } from 'react-redux';
+import { ToastAlert } from '@components/ToastAlert';
 
 function InquiryScreen(): JSX.Element {
   const loginUserInfo = useSelector(state => state.user.user)
   const emptyForm = {
     productName: '',
     content: '',
-    user: loginUserInfo._id
+    user: loginUserInfo._id,
   }
   const [form, setForm] = useState(emptyForm)
   const [createInquiry, result] = useCreateInquiryMutation()
+  const toast = useToast()
   const handleForm = (key: string) => (e: string) => {
     setForm({ ...form, [key]: e })
   }
   const submitForm = async () => {
-    const inquiry = { ...form }
-    await createInquiry(inquiry)
-    setForm(emptyForm)
+    if(form.productName.length < 1) {
+      toast.show({
+        render: ({ id }) => (
+          <ToastAlert
+            id={id}
+            title={'문의하실 제품명을 입력하세요'}
+            variant={'subtle'}
+            description={'제품명을 입력하세요'}
+            isClosable
+            toast={toast}
+          />
+        ),
+      })
+    } else if (form.content.length < 1){
+      toast.show({
+        render: ({ id }) => (
+          <ToastAlert
+            id={id}
+            title={'문의 내용이 없습니다.'}
+            variant={'subtle'}
+            description={'문의하실 내용을 입력해주세요'}
+            isClosable
+            toast={toast}
+          />
+        ),
+      })
+    } else {
+      const inquiry = { ...form }
+      try {
+        await createInquiry(inquiry)
+        setForm(emptyForm)
+        toast.show({
+          render: ({ id }) => (
+            <ToastAlert
+              id={id}
+              title={'문의 완료'}
+              variant={'subtle'}
+              description={'문의 등록이 완료되었습니다.'}
+              isClosable
+              toast={toast}
+            />
+          ),
+        })
+      } catch(e){
+        toast.show({
+          render: ({ id }) => (
+            <ToastAlert
+              id={id}
+              title={'오류가 발생했습니다.'}
+              variant={'subtle'}
+              status={'error'}
+              description={'다시 시도해주세요'}
+              isClosable
+              toast={toast}
+            />
+          ),
+        })
+      }
+    }
   }
   const cancel = () => {
     setForm(emptyForm)
