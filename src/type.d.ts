@@ -98,6 +98,7 @@ interface Inquiry {
   productName: string
   content: string
   user: string
+  reply: string
 }
 
 export interface IProject {
