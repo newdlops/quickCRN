@@ -16,7 +16,7 @@ import {
   IconButton,
   CloseIcon,
 } from 'native-base'
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
 import { Platform } from 'react-native'
 import {
   KakaoOAuthToken,
@@ -49,6 +49,7 @@ function LoginScreen({
   const [loginFailed, setLoginFailed] = useState(false)
   const [emailNotInput, setEmailNotInput] = useState(false)
   const [passwordNotInput, setPasswordNotInput] = useState(false)
+  const ref = useRef()
   const [loginInfo, setLoginInfo] = useState<LoginInfo>(emptyLoginInfo)
   const [trigger] = useLazyUserKakaoLoginQuery()
   const [login] = useLazyLoginQuery()
@@ -90,6 +91,7 @@ function LoginScreen({
   }
 
   const handleEmail = (e: string) => {
+    ref.current.focus()
     setLoginInfo({ ...loginInfo, email: e })
   }
 
@@ -177,6 +179,7 @@ function LoginScreen({
             fontSize='14'
             mb={3}
             onChangeText={handleEmail}
+            ref={ref}
           />
           <Input
             h='50'

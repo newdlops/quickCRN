@@ -4,12 +4,13 @@ import {
   ScrollView,
 } from 'native-base'
 import React, { useEffect, useState } from 'react'
-import axios from 'axios/index'
+import axios from 'axios'
+import { serverUri } from '../../environment/environment'
 
 function ServiceAgreementScreen(): JSX.Element{
   const [content, setContent] = useState('')
   useEffect(() => {
-    axios.post('http://10.0.2.2:3000/terms/find', { version: 'c' }).then(r => {
+    axios.post(`${serverUri}/terms/find`, { version: 'c' }).then(r => {
       console.log('content', r)
       setContent(r?.data?.msg?.content)
     })
