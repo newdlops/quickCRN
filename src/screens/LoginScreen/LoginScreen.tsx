@@ -75,6 +75,7 @@ function LoginScreen({
               variant={'subtle'}
               description={'회원가입을 진행해주세요'}
               isClosable
+              toast={toast}
             />
           ),
         })

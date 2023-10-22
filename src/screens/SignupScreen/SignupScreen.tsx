@@ -1,23 +1,19 @@
 import { RootStackScreenProp } from '@navigators/RootNavigator'
 import {
-  Alert,
   Box,
   Button,
   Center,
-  CloseIcon,
   FormControl,
   Heading,
-  HStack,
-  IconButton,
   Input,
   KeyboardAvoidingView,
-  Text,
   useToast,
   VStack,
 } from 'native-base'
 import React, { useState } from 'react'
 import { Platform } from 'react-native'
 import { useLazyCreateUserQuery } from '../../service/user'
+import { ToastAlert } from '@components/ToastAlert'
 
 function SignupScreen({
   navigation: { navigate, goBack },
@@ -27,6 +23,7 @@ function SignupScreen({
   const emptyForm = {
     username: '',
     email: params?.kakaoInfo?.email ?? '',
+    phoen: '',
     password: '',
     passwordConfirm: '',
   }
@@ -48,6 +45,7 @@ function SignupScreen({
               variant={'subtle'}
               description={'다시 로그인해주세요'}
               isClosable
+              toast={toast}
             />
           ),
         })
@@ -62,6 +60,7 @@ function SignupScreen({
               variant={'subtle'}
               description={'다시 등록해주세요'}
               isClosable
+              toast={toast}
             />
           ),
         }),
@@ -71,69 +70,6 @@ function SignupScreen({
   const handleForm = (key: string) => (e: string) => {
     setForm({ ...form, [key]: e })
   }
-
-  const ToastAlert = ({
-    id,
-    status,
-    variant,
-    title,
-    description,
-    isClosable,
-    ...rest
-  }) => (
-    <Alert
-      maxWidth='95%'
-      alignSelf='center'
-      flexDirection='row'
-      status={status ? status : 'info'}
-      variant={variant}
-      {...rest}
-    >
-      <VStack w='100%'>
-        <HStack alignItems='center' justifyContent='space-between'>
-          <HStack alignItems='center'>
-            <Alert.Icon />
-            <Text
-              ml='3'
-              fontSize='md'
-              fontWeight='medium'
-              color={
-                variant === 'solid'
-                  ? 'lightText'
-                  : variant !== 'outline'
-                  ? 'darkText'
-                  : null
-              }
-            >
-              {title}
-            </Text>
-          </HStack>
-          {isClosable ? (
-            <IconButton
-              variant='unstyled'
-              icon={<CloseIcon size='3' />}
-              _icon={{
-                color: variant === 'solid' ? 'lightText' : 'darkText',
-              }}
-              onPress={() => toast.close(id)}
-            />
-          ) : null}
-        </HStack>
-        <Text
-          px='6'
-          color={
-            variant === 'solid'
-              ? 'lightText'
-              : variant !== 'outline'
-              ? 'darkText'
-              : null
-          }
-        >
-          {description}
-        </Text>
-      </VStack>
-    </Alert>
-  )
 
   return (
     <KeyboardAvoidingView
@@ -179,6 +115,14 @@ function SignupScreen({
                 placeholder='이메일 주소를 입력해주세요'
                 onChangeText={handleForm('email')}
                 value={form.email}
+              />
+            </FormControl>
+            <FormControl isRequired>
+              <FormControl.Label>핸드폰</FormControl.Label>
+              <Input
+                placeholder='핸드폰 번호를 입력해주세요'
+                onChangeText={handleForm('phone')}
+                value={form.phone}
               />
             </FormControl>
             <FormControl isRequired>

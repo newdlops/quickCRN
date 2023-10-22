@@ -115,6 +115,14 @@ function InquiryScreen(): JSX.Element {
             onChangeText={handleForm('content')}
           />
         </FormControl>
+        <FormControl isRequired>
+          <FormControl.Label>연락처</FormControl.Label>
+          <Input
+            placeholder='연락받으실 연락처를 입력하세요'
+            value={form.contact}
+            onChangeText={handleForm('contact')}
+          />
+        </FormControl>
         <Button
           mt='16'
           _text={{ fontWeight: 'bold', fontSize: 16 }}

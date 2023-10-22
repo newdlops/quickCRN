@@ -1,6 +1,16 @@
 import { Alert, CloseIcon, HStack, IconButton, Text, VStack } from 'native-base'
 import React from 'react'
 
+interface ToastAlertProp {
+  id?: string
+  status?: string
+  variant?: string
+  title?: string
+  description?: string
+  isClosable?: boolean
+  toast?: any
+}
+
 export const ToastAlert = ({
   id,
   status,
@@ -10,7 +20,7 @@ export const ToastAlert = ({
   isClosable,
   toast,
   ...rest
-}) => {
+}: ToastAlertProp) => {
   const close = () => {
     console.log('닫혀라', id)
     toast.close(id)

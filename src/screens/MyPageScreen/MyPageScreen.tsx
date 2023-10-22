@@ -62,15 +62,16 @@ function MyPageScreen({ navigation }): JSX.Element {
         <VStack
           _text={{ fontSize: 16 }}
           bgColor='white'
-          h='48'
+          // h='48'
           mb={3}
           p={5}
           pl={9}
         >
           <Box mb={4} _text={{ fontSize: 16 }}>
-            고지사항
+            고객센터
           </Box>
-          {/*<Pressable onPress={()=>alert()}><Box mb={4} ml={4} _text={{ fontSize: 16 }}>공지사항</Box></Pressable>*/}
+          <Pressable onPress={()=>alert()}><Box mb={4} ml={4} _text={{ fontSize: 16 }}>공지사항</Box></Pressable>
+          <Pressable onPress={()=>alert()}><Box mb={4} ml={4} _text={{ fontSize: 16 }}>자주하는 질문</Box></Pressable>
           <Pressable
             onPress={() => navigation.push('PersonalInformationPolicy')}
           >
