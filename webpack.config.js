@@ -69,7 +69,7 @@ module.exports = {
     app: path.join(__dirname, 'index.web.js'),
   },
   output: {
-    path: path.resolve(appDirectory, 'dist'),
+    path: path.resolve(appDirectory, 'public'),
     publicPath: '/',
     filename: 'rnw_blogpost.bundle.js',
   },
@@ -78,7 +78,6 @@ module.exports = {
     alias: {
       'react-native$': 'react-native-web',
       'normalize-css-color': '@react-native/normalize-color',
-      // 'react-native-svg': 'react-native-svg-web',
     },
   },
   module: {
@@ -98,7 +97,7 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: path.join(__dirname, 'index.html'),
+      template: path.join(__dirname, '/index.html'),
     }),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.DefinePlugin({
