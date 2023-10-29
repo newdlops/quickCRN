@@ -61,7 +61,7 @@ function RootNavigator(): JSX.Element {
   useEffect(() => {
     AsyncStorage.getItem('token')
       .then(token => {
-        console.log('saved token', token)
+        console.log('saved token', token, encodeURIComponent(token))
         if(token){
           tokenLogin(token)
             .then(r => {

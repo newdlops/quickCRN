@@ -23,7 +23,7 @@ interface KaKaoLoginResponse {
 const userApi = api.injectEndpoints({
   endpoints: (build) => ({
     userKakaoLogin: build.query<KaKaoLoginResponse, string>({
-      query: (token: string) => `/user/kakaoLogin/${token}`,
+      query: (token: string) => `/user/kakaoLogin/${encodeURI(token)}`,
     }),
     login: build.query({
       query: (body: LoginInfo) => ({
@@ -40,10 +40,10 @@ const userApi = api.injectEndpoints({
       }),
     }),
     userTokenLogin: build.query<UserResponse, string>({
-      query: (token: string) => `/user/userTokenLogin/${token}`,
+      query: (token: string) => `/user/userTokenLogin/${encodeURIComponent(token)}`,
     }),
     logout: build.query<UserResponse, string>({
-      query: (token: string) => `/user/logout/${token}`,
+      query: (token: string) => `/user/logout/${encodeURIComponent(token)}`,
     }),
     updateUser: build.mutation<UserResponse, IUser>({
       query: (body: IUser) => ({
