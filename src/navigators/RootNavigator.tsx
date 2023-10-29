@@ -33,17 +33,18 @@ import { setUser } from '@store/reducers/userSlice'
 import PersonalInformationPolicyScreen from '@screens/MyPageScreen/PersonalInformationPolicyScreen'
 import ServiceAgreementScreen from '@screens/MyPageScreen/ServiceAgreementScreen'
 import EditUserInfoScreen from '@screens/MyPageScreen/EditUserInfoScreen'
-import { Keyboard } from 'react-native'
+import { Keyboard, Platform } from 'react-native'
 import InquiryScreen from '@screens/InquiryScreen/InquiryScreen'
 
 export interface RootStackParamList {
-  [index: string]: object | undefined
   Login: undefined
   Root: undefined
   SearchProduct: undefined
   SearchProductList: undefined
   SearchProductDetail: undefined
   ProjectStatusDetail: undefined
+
+  [index: string]: object | undefined
 }
 
 export type RootStackScreenProp = NativeStackScreenProps<RootStackParamList>
@@ -78,89 +79,103 @@ function RootNavigator(): JSX.Element {
       })
       .catch(_ => null)
   }, [])
+
+  const keyboarddismiss = () => {
+    console.log('platform is not web', Platform.OS != 'web')
+    if (Platform.OS != 'web') {
+      Keyboard.dismiss()
+    }
+  }
+
+  const Main = (
+    <Box flex={1} safeArea>
+      {tokenLoading ? null : (
+        <NavigationContainer ref={navigationRef}>
+          <RootStack.Navigator
+            initialRouteName={auth ? 'Root' : 'Login'}
+            screenOptions={{ header: SearchHeader }}
+          >
+            <RootStack.Screen
+              name='Login'
+              component={LoginScreen}
+              options={{ headerShown: false }}
+            />
+            <RootStack.Screen
+              name='Signup'
+              component={SignupScreen}
+              options={{ headerShown: false }}
+            />
+            <RootStack.Screen
+              name='Root'
+              component={MainTabNavigator}
+              options={{ headerShown: false }}
+            />
+            {/* <RootStack.Screen name="ChatBot" component={ChatBotScreen} /> */}
+            <RootStack.Screen
+              name='SearchProduct'
+              component={SearchProductScreen}
+            />
+            <RootStack.Screen
+              name='SearchProductList'
+              component={SearchProductListScreen}
+            />
+            <RootStack.Screen
+              name='SearchProductDetail'
+              component={SearchProductDetailScreen}
+              options={{ header: SearchProductDetailHeader }}
+            />
+            <RootStack.Screen
+              name='ProjectStatusDetail'
+              component={ProjectStatusDetail}
+              options={{
+                title: '인증진행 상세',
+                header: ProjectStatusHeader,
+              }}
+            />
+            <RootStack.Screen
+              name='PersonalInformationPolicy'
+              component={PersonalInformationPolicyScreen}
+              options={{
+                header: ProjectStatusHeader,
+                title: '개인정보 취급 방침',
+              }}
+            />
+            <RootStack.Screen
+              name='ServiceAgreement'
+              component={ServiceAgreementScreen}
+              options={{
+                header: ProjectStatusHeader,
+                title: '서비스 이용 약관',
+              }}
+            />
+            <RootStack.Screen
+              name='EditUserInfo'
+              component={EditUserInfoScreen}
+              options={{
+                header: ProjectStatusHeader,
+                title: '개인정보 변경',
+              }}
+            />
+            <RootStack.Screen
+              name='MyInquiry'
+              component={InquiryScreen}
+              options={{
+                header: ProjectStatusHeader,
+                title: '내 문의내역',
+              }}
+            />
+          </RootStack.Navigator>
+        </NavigationContainer>
+      )}
+    </Box>
+  )
+
   //TODO: 자동로그인 활성/비활성 버튼
-  return (
-    <Pressable flex={1} onPress={Keyboard.dismiss}>
-      <Box flex={1} safeArea>
-        {tokenLoading ? null : (
-          <NavigationContainer ref={navigationRef}>
-            <RootStack.Navigator
-              initialRouteName={auth ? 'Root' : 'Login'}
-              screenOptions={{ header: SearchHeader }}
-            >
-              <RootStack.Screen
-                name='Login'
-                component={LoginScreen}
-                options={{ headerShown: false }}
-              />
-              <RootStack.Screen
-                name='Signup'
-                component={SignupScreen}
-                options={{ headerShown: false }}
-              />
-              <RootStack.Screen
-                name='Root'
-                component={MainTabNavigator}
-                options={{ headerShown: false }}
-              />
-              {/* <RootStack.Screen name="ChatBot" component={ChatBotScreen} /> */}
-              <RootStack.Screen
-                name='SearchProduct'
-                component={SearchProductScreen}
-              />
-              <RootStack.Screen
-                name='SearchProductList'
-                component={SearchProductListScreen}
-              />
-              <RootStack.Screen
-                name='SearchProductDetail'
-                component={SearchProductDetailScreen}
-                options={{ header: SearchProductDetailHeader }}
-              />
-              <RootStack.Screen
-                name='ProjectStatusDetail'
-                component={ProjectStatusDetail}
-                options={{
-                  title: '인증진행 상세',
-                  header: ProjectStatusHeader,
-                }}
-              />
-              <RootStack.Screen
-                name='PersonalInformationPolicy'
-                component={PersonalInformationPolicyScreen}
-                options={{
-                  header: ProjectStatusHeader,
-                  title: '개인정보 취급 방침',
-                }}
-              />
-              <RootStack.Screen
-                name='ServiceAgreement'
-                component={ServiceAgreementScreen}
-                options={{
-                  header: ProjectStatusHeader,
-                  title: '서비스 이용 약관',
-                }}
-              />
-              <RootStack.Screen
-                name='EditUserInfo'
-                component={EditUserInfoScreen}
-                options={{
-                  header: ProjectStatusHeader,
-                  title: '개인정보 변경',
-                }}
-              />
-              <RootStack.Screen
-                name='MyInquiry'
-                component={InquiryScreen}
-                options={{
-                  header: ProjectStatusHeader,
-                  title: '내 문의내역',
-                }}
-              />
-            </RootStack.Navigator>
-          </NavigationContainer>
-        )}
-      </Box>
+  return Platform.OS == 'web' ? (
+    Main
+  ) : (
+    <Pressable flex={1} onPress={keyboarddismiss}>
+      {Main}
     </Pressable>
   )
 }

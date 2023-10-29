@@ -4,7 +4,7 @@ import {
   ScrollView,
 } from 'native-base'
 import React, { useEffect, useState } from 'react'
-import axios from 'axios/index'
+import axios from 'axios'
 
 function ServiceAgreementScreen(): JSX.Element{
   const [content, setContent] = useState('')
