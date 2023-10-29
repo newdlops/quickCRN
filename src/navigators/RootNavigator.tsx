@@ -34,7 +34,7 @@ import PersonalInformationPolicyScreen from '@screens/MyPageScreen/PersonalInfor
 import ServiceAgreementScreen from '@screens/MyPageScreen/ServiceAgreementScreen'
 import EditUserInfoScreen from '@screens/MyPageScreen/EditUserInfoScreen'
 import { Keyboard } from 'react-native'
-import InquiryListScreen from '@screens/InquiryScreen/InquiryListScreen';
+import InquiryScreen from '@screens/InquiryScreen/InquiryScreen'
 
 export interface RootStackParamList {
   [index: string]: object | undefined
@@ -147,7 +147,7 @@ function RootNavigator(): JSX.Element {
               />
               <RootStack.Screen
                 name='MyInquiry'
-                component={InquiryListScreen}
+                component={InquiryScreen}
                 options={{
                   header: ProjectStatusHeader,
                   title: '내 문의내역',
