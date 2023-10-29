@@ -34,7 +34,7 @@ import PersonalInformationPolicyScreen from '@screens/MyPageScreen/PersonalInfor
 import ServiceAgreementScreen from '@screens/MyPageScreen/ServiceAgreementScreen'
 import EditUserInfoScreen from '@screens/MyPageScreen/EditUserInfoScreen'
 import { Keyboard, Platform } from 'react-native'
-import InquiryListScreen from '@screens/InquiryScreen/InquiryListScreen'
+import InquiryScreen from '@screens/InquiryScreen/InquiryScreen'
 
 export interface RootStackParamList {
   Login: undefined
@@ -61,18 +61,21 @@ function RootNavigator(): JSX.Element {
   useEffect(() => {
     AsyncStorage.getItem('token')
       .then(token => {
-        if (!token) return null
         console.log('saved token', token)
-        tokenLogin(token)
-          .then(r => {
-            console.log('token login result', r)
-            if (r.data?.msg) {
-              dispatch(setUser(r.data?.msg))
-              setAuth(true)
-            }
-            setTokenLoading(false)
-          })
-          .catch(e => console.log('tokenlogin error', e))
+        if(token){
+          tokenLogin(token)
+            .then(r => {
+              console.log('token login result', r)
+              if (r.data?.msg) {
+                dispatch(setUser(r.data?.msg))
+                setAuth(true)
+              }
+              setTokenLoading(false)
+            })
+            .catch(e => console.log('tokenlogin error', e))
+        } else {
+          setTokenLoading(false)
+        }
       })
       .catch(_ => null)
   }, [])
@@ -155,7 +158,7 @@ function RootNavigator(): JSX.Element {
             />
             <RootStack.Screen
               name='MyInquiry'
-              component={InquiryListScreen}
+              component={InquiryScreen}
               options={{
                 header: ProjectStatusHeader,
                 title: '내 문의내역',

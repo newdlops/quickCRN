@@ -1,6 +1,6 @@
 import { AppRegistry } from 'react-native'
 import { name as appName } from './app.json'
-import App from './App'
+import App from 'App.web'
 
 // ADD THESE LINES BELOW
 // This is done for Ionicons, just follow the pattern to add others like materialicons, etc
