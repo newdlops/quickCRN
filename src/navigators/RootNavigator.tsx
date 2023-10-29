@@ -61,16 +61,20 @@ function RootNavigator(): JSX.Element {
     AsyncStorage.getItem('token')
       .then(token => {
         console.log('saved token', token)
-        tokenLogin(token)
-          .then(r => {
-            console.log('token login result', r)
-            if (r.data?.msg) {
-              dispatch(setUser(r.data?.msg))
-              setAuth(true)
-            }
-            setTokenLoading(false)
-          })
-          .catch(e => console.log('tokenlogin error', e))
+        if(token){
+          tokenLogin(token)
+            .then(r => {
+              console.log('token login result', r)
+              if (r.data?.msg) {
+                dispatch(setUser(r.data?.msg))
+                setAuth(true)
+              }
+              setTokenLoading(false)
+            })
+            .catch(e => console.log('tokenlogin error', e))
+        } else {
+          setTokenLoading(false)
+        }
       })
       .catch(_ => null)
   }, [])
