@@ -11,9 +11,11 @@ module.exports = {
         extensions: [
           '.ios.ts',
           '.android.ts',
+          '.web.ts',
           '.ts',
           '.ios.tsx',
           '.android.tsx',
+          '.web.ts',
           '.tsx',
           '.jsx',
           '.js',
