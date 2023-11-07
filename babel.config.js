@@ -28,7 +28,8 @@ module.exports = {
           '@screens': './src/screens',
           '@store': './src/store',
           '@utils': './src/utils',
-          '^react-native$': 'react-native-web',
+          // '^react-native$': 'react-native-web',
+          // 웹빌드가 아닐때는 주석처리한다(react-native를 모두 react-native로 대체함
         },
       },
     ],
