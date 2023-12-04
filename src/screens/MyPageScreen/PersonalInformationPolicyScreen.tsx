@@ -16,7 +16,6 @@ function PersonalInformationPolicyScreen(): JSX.Element{
     })
   }, [])
 
-
   return (
     <ScrollView>
       <VStack>

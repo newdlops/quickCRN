@@ -1,9 +1,10 @@
 import { Button, Box, Pressable, VStack, HStack, ScrollView } from 'native-base'
-import React from 'react'
+import React, { useState } from 'react'
 import { useLazyLogoutQuery } from '../../service/user'
 import { useSelector } from 'react-redux'
 
 function MyPageScreen({ navigation }): JSX.Element {
+  const [scroll, setScroll] = useState(true)
   const user = useSelector(state => state.user.user)
   const [logout] = useLazyLogoutQuery()
   const userLogout = () => {
@@ -21,7 +22,7 @@ function MyPageScreen({ navigation }): JSX.Element {
   }
 
   return (
-    <ScrollView>
+    <ScrollView onScroll={(e) => console.log('mypagescroll', e)}>
       <VStack>
         <Box
           _text={{ fontSize: 16 }}
@@ -52,12 +53,30 @@ function MyPageScreen({ navigation }): JSX.Element {
             개인정보 변경
           </Button>
         </Box>
-        <VStack _text={{ fontSize: 16}} bgColor='white'  mb={3} p={5} pl={9}>
-          <Box mb={4} _text={{ fontSize: 16 }}>내 활동</Box>
-          <Pressable onPress={()=>alert()}><Box mb={4} ml={4} _text={{ fontSize: 16 }}>즐겨찾기</Box></Pressable>
-          <Pressable onPress={gotoInquiryScreen}><Box mb={4} ml={4} _text={{ fontSize: 16 }}>내 문의내역</Box></Pressable>
-          <Pressable onPress={()=>alert()}><Box mb={4} ml={4} _text={{ fontSize: 16 }}>오류 정보 신고내역</Box></Pressable>
-          <Pressable onPress={()=>alert()}><Box mb={4} ml={4} _text={{ fontSize: 16 }}>제품 추가 요청내역</Box></Pressable>
+        <VStack _text={{ fontSize: 16 }} bgColor='white' mb={3} p={5} pl={9}>
+          <Box mb={4} _text={{ fontSize: 16 }}>
+            내 활동
+          </Box>
+          <Pressable onPress={() => alert()}>
+            <Box mb={4} ml={4} _text={{ fontSize: 16 }}>
+              즐겨찾기
+            </Box>
+          </Pressable>
+          <Pressable onPress={gotoInquiryScreen}>
+            <Box mb={4} ml={4} _text={{ fontSize: 16 }}>
+              내 문의내역
+            </Box>
+          </Pressable>
+          <Pressable onPress={() => alert()}>
+            <Box mb={4} ml={4} _text={{ fontSize: 16 }}>
+              오류 정보 신고내역
+            </Box>
+          </Pressable>
+          <Pressable onPress={() => alert()}>
+            <Box mb={4} ml={4} _text={{ fontSize: 16 }}>
+              제품 추가 요청내역
+            </Box>
+          </Pressable>
         </VStack>
         <VStack
           _text={{ fontSize: 16 }}
@@ -70,10 +89,21 @@ function MyPageScreen({ navigation }): JSX.Element {
           <Box mb={4} _text={{ fontSize: 16 }}>
             고객센터
           </Box>
-          <Pressable onPress={()=>alert()}><Box mb={4} ml={4} _text={{ fontSize: 16 }}>공지사항</Box></Pressable>
-          <Pressable onPress={()=>alert()}><Box mb={4} ml={4} _text={{ fontSize: 16 }}>자주하는 질문</Box></Pressable>
+          <Pressable onPress={() => alert()}>
+            <Box mb={4} ml={4} _text={{ fontSize: 16 }}>
+              공지사항
+            </Box>
+          </Pressable>
+          <Pressable onPress={() => alert()}>
+            <Box mb={4} ml={4} _text={{ fontSize: 16 }}>
+              자주하는 질문
+            </Box>
+          </Pressable>
           <Pressable
-            onPress={() => navigation.push('PersonalInformationPolicy')}
+            onPress={() => {
+              navigation.push('PersonalInformationPolicy')
+              setScroll(false)
+            }}
           >
             <Box mb={4} ml={4} _text={{ fontSize: 16 }}>
               개인정보 취급방침

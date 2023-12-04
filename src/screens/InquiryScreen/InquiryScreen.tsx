@@ -12,11 +12,13 @@ import {
   VStack,
   ScrollView,
   TextArea, useToast,
-} from 'native-base';
+} from 'native-base'
 import React, { useState } from 'react'
-import { useCreateInquiryMutation } from '../../service/inquiry';
-import { useSelector } from 'react-redux';
-import { ToastAlert } from '@components/ToastAlert';
+import { useCreateInquiryMutation } from '../../service/inquiry'
+import { useSelector } from 'react-redux'
+import { ToastAlert } from '@components/ToastAlert'
+import { CameraRoll } from '@react-native-camera-roll/camera-roll'
+import {launchCamera, launchImageLibrary} from 'react-native-image-picker'
 
 function InquiryScreen(): JSX.Element {
   const loginUserInfo = useSelector(state => state.user.user)
@@ -96,6 +98,13 @@ function InquiryScreen(): JSX.Element {
     setForm(emptyForm)
   }
 
+  const attachImage = () => {
+    launchImageLibrary({
+
+    }, r=>{
+      console.log('camera response', r)
+    })
+  }
   return (
     <VStack flex={1} alignItems={'center'} bg='white'>
       <VStack w='80%' space={3} mt='5'>
@@ -123,6 +132,7 @@ function InquiryScreen(): JSX.Element {
             onChangeText={handleForm('contact')}
           />
         </FormControl>
+
         <Button
           mt='16'
           _text={{ fontWeight: 'bold', fontSize: 16 }}
@@ -138,6 +148,14 @@ function InquiryScreen(): JSX.Element {
           onPress={cancel}
         >
           취소
+        </Button>
+        <Button
+          mt='1'
+          _text={{ fontWeight: 'bold', fontSize: 16 }}
+          bgColor='purple.300'
+          onPress={attachImage}
+        >
+          사진첨부
         </Button>
       </VStack>
     </VStack>
