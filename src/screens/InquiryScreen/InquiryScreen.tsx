@@ -141,14 +141,14 @@ function InquiryScreen(): JSX.Element {
         >
           문의
         </Button>
-        <Button
-          mt='1'
-          _text={{ fontWeight: 'bold', fontSize: 16, color: '#000000' }}
-          variant='outline'
-          onPress={cancel}
-        >
-          취소
-        </Button>
+        {/*<Button*/}
+        {/*  mt='1'*/}
+        {/*  _text={{ fontWeight: 'bold', fontSize: 16, color: '#000000' }}*/}
+        {/*  variant='outline'*/}
+        {/*  onPress={cancel}*/}
+        {/*>*/}
+        {/*  취소*/}
+        {/*</Button>*/}
         <Button
           mt='1'
           _text={{ fontWeight: 'bold', fontSize: 16 }}

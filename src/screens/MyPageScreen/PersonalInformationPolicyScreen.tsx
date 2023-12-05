@@ -17,7 +17,11 @@ function PersonalInformationPolicyScreen(): JSX.Element{
   }, [])
 
   return (
-    <ScrollView>
+    <ScrollView
+      onStartShouldSetResponder={() => true}
+      onMoveShouldSetResponder={() => true}
+      nestedScrollEnabled={true}
+    >
       <VStack>
         <Box _text={{ fontSize: 16}} bgColor='white' mb={3} p={5} pl={5} pr={5}>
           <Box _text={{ fontSize: 18, fontWeight:'bold'}} mb={2}>개인정보 취급방침</Box>

@@ -16,7 +16,11 @@ function ServiceAgreementScreen(): JSX.Element{
   }, [])
 
   return (
-    <ScrollView>
+    <ScrollView
+      onStartShouldSetResponder={() => true}
+      onMoveShouldSetResponder={() => true}
+      nestedScrollEnabled={true}
+    >
       <VStack>
         <Box _text={{ fontSize: 16}} bgColor='white' mb={3} p={5} pl={5} pr={5}>
           <Box _text={{ fontSize: 18, fontWeight:'bold'}} mb={2}>서비스 이용 약관</Box>

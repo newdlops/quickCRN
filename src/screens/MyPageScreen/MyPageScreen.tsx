@@ -22,7 +22,9 @@ function MyPageScreen({ navigation }): JSX.Element {
   }
 
   return (
-    <ScrollView onScroll={(e) => console.log('mypagescroll', e)}>
+    <ScrollView onScroll={(e) => console.log('mypagescroll', e)}
+      nestedScrollEnabled={true}
+    >
       <VStack>
         <Box
           _text={{ fontSize: 16 }}
@@ -62,11 +64,11 @@ function MyPageScreen({ navigation }): JSX.Element {
               즐겨찾기
             </Box>
           </Pressable>
-          <Pressable onPress={gotoInquiryScreen}>
-            <Box mb={4} ml={4} _text={{ fontSize: 16 }}>
-              내 문의내역
-            </Box>
-          </Pressable>
+          {/*<Pressable onPress={gotoInquiryScreen}>*/}
+          {/*  <Box mb={4} ml={4} _text={{ fontSize: 16 }}>*/}
+          {/*    내 문의내역*/}
+          {/*  </Box>*/}
+          {/*</Pressable>*/}
           <Pressable onPress={() => alert()}>
             <Box mb={4} ml={4} _text={{ fontSize: 16 }}>
               오류 정보 신고내역

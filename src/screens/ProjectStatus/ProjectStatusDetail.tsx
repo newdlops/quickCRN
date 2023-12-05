@@ -80,6 +80,14 @@ function ProjectStatusDetail({ route }): JSX.Element {
               <Text fontSize={16}>{data?.manufacture}</Text>
             </HStack>
           </VStack>
+          <Box bg='gray.400' mt={5} mb={5} h={2 / 3} w='100%' />
+          <VStack
+            mb={1}
+            justifyContent={'space-between'}
+          >
+            <Text fontSize={18} fontWeight={'bold'} mb={2}>문의 내용</Text>
+            <Text fontSize={16}>새로운 시작을 맞아</Text>
+          </VStack>
           <Box bg='gray.400' mt={5} h={2 / 3} w='100%' />
           <VStack mt={5}>
             <HStack
