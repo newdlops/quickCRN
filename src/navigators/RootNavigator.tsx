@@ -80,6 +80,25 @@ function RootNavigator(): JSX.Element {
       .catch(_ => null)
   }, [])
 
+
+  const [keyboardStatus, setKeyboardStatus] = useState(false)
+
+  useEffect(() => {
+    const showSubscription = Keyboard.addListener('keyboardDidShow', () => {
+      console.log('keyboard show')
+      setKeyboardStatus(true)
+    })
+    const hideSubscription = Keyboard.addListener('keyboardDidHide', () => {
+      console.log('keyboard hidden')
+      setKeyboardStatus(false)
+    })
+
+    return () => {
+      showSubscription.remove()
+      hideSubscription.remove()
+    }
+  }, [])
+
   const keyboarddismiss = () => {
     console.log('platform is not web', Platform.OS != 'web')
     if (Platform.OS != 'web') {
@@ -174,9 +193,20 @@ function RootNavigator(): JSX.Element {
   return Platform.OS == 'web' ? (
     Main
   ) : (
-    <Pressable flex={1} onPress={keyboarddismiss}>
+    <Box flex={1}>
+      {keyboardStatus && (
+        <Pressable
+          onPress={keyboarddismiss}
+          bgColor={'red'}
+          position={'absolute'}
+          top={0}
+          h={'100%'}
+          w={'100%'}
+          zIndex={999999}
+        />
+      )}
       {Main}
-    </Pressable>
+    </Box>
   )
 }
 

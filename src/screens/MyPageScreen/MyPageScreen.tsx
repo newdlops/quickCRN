@@ -24,6 +24,8 @@ function MyPageScreen({ navigation }): JSX.Element {
   return (
     <ScrollView onScroll={(e) => console.log('mypagescroll', e)}
       nestedScrollEnabled={true}
+      onStartShouldSetResponder={() => true}
+      onMoveShouldSetResponder={() => true}
     >
       <VStack>
         <Box
