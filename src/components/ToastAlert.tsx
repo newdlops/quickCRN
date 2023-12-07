@@ -22,7 +22,6 @@ export const ToastAlert = ({
   ...rest
 }: ToastAlertProp) => {
   const close = () => {
-    console.log('닫혀라', id)
     toast.close(id)
   }
   return (

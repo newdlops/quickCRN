@@ -85,11 +85,9 @@ function RootNavigator(): JSX.Element {
 
   useEffect(() => {
     const showSubscription = Keyboard.addListener('keyboardDidShow', () => {
-      console.log('keyboard show')
       setKeyboardStatus(true)
     })
     const hideSubscription = Keyboard.addListener('keyboardDidHide', () => {
-      console.log('keyboard hidden')
       setKeyboardStatus(false)
     })
 
