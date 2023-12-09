@@ -5,6 +5,9 @@ export function toDateForm(date: string) {
   const day = dateObject.getDate()
   const hour = dateObject.getHours()
   const minute = dateObject.getMinutes()
-
-  return `${year}년 ${month}월 ${day}일 ${hour}시 ${minute}분`
+  if (year&&month&&day&&hour&&minute) {
+    return `${year}년 ${month}월 ${day}일 ${hour}시 ${minute}분`
+  } else {
+    return null
+  }
 }

@@ -25,7 +25,7 @@ function InquiryScreen(): JSX.Element {
   const emptyForm = {
     productName: '',
     content: '',
-    user: loginUserInfo._id,
+    user: loginUserInfo,
   }
   const [form, setForm] = useState(emptyForm)
   const [createInquiry, result] = useCreateInquiryMutation()
@@ -114,6 +114,14 @@ function InquiryScreen(): JSX.Element {
             placeholder='문의하실 제품명을 입력해주세요'
             value={form.productName}
             onChangeText={handleForm('productName')}
+          />
+        </FormControl>
+        <FormControl isRequired>
+          <FormControl.Label>제조사</FormControl.Label>
+          <Input
+            placeholder='제품의 제조사를 입력해주세요'
+            value={form.manufactureName}
+            onChangeText={handleForm('manufactureName')}
           />
         </FormControl>
         <FormControl>

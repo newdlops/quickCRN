@@ -13,7 +13,7 @@ interface InquiryDetailResponse {
     inquiry: Inquiry
   }
 }
-
+/* 인쿼리 생성시 프로젝트로 생성 통합 추후 리펙토링 필요 */
 const inquiryApi = api.injectEndpoints({
   endpoints: build => ({
     createInquiry: build.mutation<InquiryResponse, Partial<Inquiry>>({
@@ -22,7 +22,7 @@ const inquiryApi = api.injectEndpoints({
         method: 'POST',
         body: body,
       }),
-      invalidatesTags: [{ type: 'Inquiry', id: 'LIST' }],
+      invalidatesTags: [{ type: 'Inquiry', id: 'LIST' }, { type: 'Project', id: 'LIST' }],
     }),
     getDetailInquiry: build.query<InquiryDetailResponse, string>({
       query: (id: string) => `/inquiry/inquiry/${id}`,

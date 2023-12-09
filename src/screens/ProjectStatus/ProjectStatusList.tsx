@@ -101,7 +101,7 @@ function ProductStatusDetailItem(props: PressableProps) {
             <Box bg='gray.400' mt={5} h={2 / 3} w='100%' />
             <VStack mt={5}>
               <Box>
-                <Text>시작일자 : {toDateForm(data.projectStartDate)}</Text>
+                <Text>시작일자 : {toDateForm(data.projectStartDate) ?? '시작일 미정'}</Text>
               </Box>
             </VStack>
           </Box>

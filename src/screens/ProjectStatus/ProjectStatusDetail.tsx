@@ -86,7 +86,7 @@ function ProjectStatusDetail({ route }): JSX.Element {
             justifyContent={'space-between'}
           >
             <Text fontSize={18} fontWeight={'bold'} mb={2}>문의 내용</Text>
-            <Text fontSize={16}>새로운 시작을 맞아</Text>
+            <Text fontSize={16}>{data?.content}</Text>
           </VStack>
           <Box bg='gray.400' mt={5} h={2 / 3} w='100%' />
           <VStack mt={5}>
@@ -104,7 +104,7 @@ function ProjectStatusDetail({ route }): JSX.Element {
               justifyContent={'space-between'}
             >
               <Text>프로젝트 시작일</Text>
-              <Text fontSize={16}>{toDateForm(data?.projectStartDate)}</Text>
+              <Text fontSize={16}>{toDateForm(data?.projectStartDate) ?? '시작일 미정'}</Text>
             </HStack>
           </VStack>
         </Box>
