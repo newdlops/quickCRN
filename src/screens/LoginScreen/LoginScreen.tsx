@@ -4,20 +4,13 @@ import {
   Input,
   Button,
   Box,
-  KeyboardAvoidingView,
   ITextProps,
   Image,
   Pressable,
   HStack,
   useToast,
-  Alert,
-  VStack,
-  Text,
-  IconButton,
-  CloseIcon,
 } from 'native-base'
 import React, { useRef, useState } from 'react'
-import { Platform } from 'react-native'
 import {
   KakaoOAuthToken,
   login as kakaoLogin,
@@ -119,19 +112,25 @@ function LoginScreen({
     setSubmitted(true)
     if (emailInput && passwordInput) {
       emailLoginProcess().then(_ => {
-        setSubmitted(false)
-        setEmailNotInput(false)
-        setPasswordNotInput(false)
-      })
+          setSubmitted(false)
+          setEmailNotInput(false)
+          setPasswordNotInput(false)
+        })
+        .catch(e => {
+          log.error('EMAIL LOGIN ERROR : ', err)
+        })
     }
   }
   const emailLoginProcess = async () => {
     try {
       const result = await login(loginInfo)
       const user = result.data.msg
+      console.log('이메일 로그인 유저 정보', user)
       if (user) {
         dispatch(setUser(user))
-        AsyncStorage.setItem('token', user.accessToken)
+        AsyncStorage.setItem('token', user.accessToken).then(r=>
+          console.log('이메일 로그인 정보 저장', r)
+        ).catch(e=>console.log('로그인 정보 기기 저장중 오류', e))
         goToHome()
       } else {
         setLoginFailed(true)
@@ -160,84 +159,79 @@ function LoginScreen({
   }
 
   return (
-    <KeyboardAvoidingView
-      flex={1}
-      behavior={Platform.OS === 'ios' ? 'height' : 'height'}
-    >
-      <Center flex={1} bgColor={'white'}>
-        <HStack alignItems={'center'} mb={10}>
-          <Box
-            _text={{ fontSize: '36', fontWeight: 'black', color: '#000000' }}
-          >
-            QuickC
-          </Box>
-        </HStack>
-        <Box w='80%'>
-          <Input
-            h='50'
-            placeholder='이메일 주소를 입력해주세요'
-            fontSize='14'
-            mb={3}
-            onChangeText={handleEmail}
-            ref={ref}
-          />
-          <Input
-            h='50'
-            placeholder='비밀번호를 입력해주세요'
-            fontSize='14'
-            mb={1}
-            type={'password'}
-            onChangeText={handlePassword}
-          />
-          {submitted && loginFailed && (
-            <Box _text={{ fontSize: 12, color: 'red.400' }}>
-              해당 계정정보가 없습니다.
-            </Box>
-          )}
-          {submitted && emailNotInput && (
-            <Box _text={{ fontSize: 12, color: 'red.400' }}>
-              이메일을 입력해주세요
-            </Box>
-          )}
-          {submitted && passwordNotInput && (
-            <Box _text={{ fontSize: 12, color: 'red.400' }}>
-              비밀번호를 입력하세요
-            </Box>
-          )}
-          <Box mb={20} />
-          <Button
-            mb='3'
-            borderRadius='12px'
-            height={50}
-            bgColor='blue.400'
-            _text={loginButtonStyle}
-            onPress={emailLogin}
-          >
-            로그인
-          </Button>
-          <Button
-            mb='3'
-            borderRadius='12px'
-            height={50}
-            variant='outline'
-            _text={buttonStyle}
-            onPress={onClickSignup}
-          >
-            이메일로 회원가입
-          </Button>
-          {/* TODO: <Box>아이디 찾기 | 비밀번호 찾기</Box>*/}
-          <Pressable onPress={signInWithKakao} mt='10' mb='3'>
-            <Image
-              height={50}
-              borderRadius='12px'
-              resizeMode={'contain'}
-              source={require('../../assets/img/kakao_login_large_wide.png')}
-              alt='login'
-            />
-          </Pressable>
+    <Center flex={1} bgColor={'white'}>
+      <HStack alignItems={'center'} mb={10}>
+        <Box
+          _text={{ fontSize: '36', fontWeight: 'black', color: '#000000' }}
+        >
+          QuickC
         </Box>
-      </Center>
-    </KeyboardAvoidingView>
+      </HStack>
+      <Box w='80%'>
+        <Input
+          h='50'
+          placeholder='이메일 주소를 입력해주세요'
+          fontSize='14'
+          mb={3}
+          onChangeText={handleEmail}
+          ref={ref}
+        />
+        <Input
+          h='50'
+          placeholder='비밀번호를 입력해주세요'
+          fontSize='14'
+          mb={1}
+          type={'password'}
+          onChangeText={handlePassword}
+        />
+        {submitted && loginFailed && (
+          <Box _text={{ fontSize: 12, color: 'red.400' }}>
+            해당 계정정보가 없습니다.
+          </Box>
+        )}
+        {submitted && emailNotInput && (
+          <Box _text={{ fontSize: 12, color: 'red.400' }}>
+            이메일을 입력해주세요
+          </Box>
+        )}
+        {submitted && passwordNotInput && (
+          <Box _text={{ fontSize: 12, color: 'red.400' }}>
+            비밀번호를 입력하세요
+          </Box>
+        )}
+        <Box mb={20} />
+        <Button
+          mb='3'
+          borderRadius='12px'
+          height={50}
+          bgColor='blue.400'
+          _text={loginButtonStyle}
+          onPress={emailLogin}
+        >
+          로그인
+        </Button>
+        <Button
+          mb='3'
+          borderRadius='12px'
+          height={50}
+          variant='outline'
+          _text={buttonStyle}
+          onPress={onClickSignup}
+        >
+          이메일로 회원가입
+        </Button>
+        {/* TODO: <Box>아이디 찾기 | 비밀번호 찾기</Box>*/}
+        <Pressable onPress={signInWithKakao} mt='10' mb='3'>
+          <Image
+            height={50}
+            borderRadius='12px'
+            resizeMode={'contain'}
+            source={require('../../assets/img/kakao_login_large_wide.png')}
+            alt='login'
+          />
+        </Pressable>
+      </Box>
+    </Center>
   )
 }
 

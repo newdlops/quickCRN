@@ -14,7 +14,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import Entypo from 'react-native-vector-icons/Entypo'
 import { PressableProps } from 'react-native'
 import { getDetail } from '../../api/project'
-import { toDateForm } from '@utils/dateformatter';
+import { toDateForm } from '@utils/dateformatter'
 
 function ProjectStatusDetail({ route }): JSX.Element {
   React.useEffect(() => {
@@ -81,11 +81,10 @@ function ProjectStatusDetail({ route }): JSX.Element {
             </HStack>
           </VStack>
           <Box bg='gray.400' mt={5} mb={5} h={2 / 3} w='100%' />
-          <VStack
-            mb={1}
-            justifyContent={'space-between'}
-          >
-            <Text fontSize={18} fontWeight={'bold'} mb={2}>문의 내용</Text>
+          <VStack mb={1} justifyContent={'space-between'}>
+            <Text fontSize={18} fontWeight={'bold'} mb={2}>
+              문의 내용
+            </Text>
             <Text fontSize={16}>{data?.content}</Text>
           </VStack>
           <Box bg='gray.400' mt={5} h={2 / 3} w='100%' />
@@ -104,7 +103,9 @@ function ProjectStatusDetail({ route }): JSX.Element {
               justifyContent={'space-between'}
             >
               <Text>프로젝트 시작일</Text>
-              <Text fontSize={16}>{toDateForm(data?.projectStartDate) ?? '시작일 미정'}</Text>
+              <Text fontSize={16}>
+                {toDateForm(data?.projectStartDate) ?? '시작일 미정'}
+              </Text>
             </HStack>
           </VStack>
         </Box>

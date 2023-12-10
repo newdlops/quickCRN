@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Box, Pressable } from 'native-base'
+import { Box, Pressable, KeyboardAvoidingView } from 'native-base'
 import {
   NavigationContainer,
   useNavigationContainerRef,
@@ -77,9 +77,8 @@ function RootNavigator(): JSX.Element {
           setTokenLoading(false)
         }
       })
-      .catch(_ => null)
+      .catch(_ => console.log('Error loading token', _))
   }, [])
-
 
   const [keyboardStatus, setKeyboardStatus] = useState(false)
 
@@ -191,20 +190,24 @@ function RootNavigator(): JSX.Element {
   return Platform.OS == 'web' ? (
     Main
   ) : (
-    <Box flex={1}>
-      {keyboardStatus && (
-        <Pressable
-          onPress={keyboarddismiss}
-          bgColor={'red'}
-          position={'absolute'}
-          top={0}
-          h={'100%'}
-          w={'100%'}
-          zIndex={999999}
-        />
-      )}
+    <KeyboardAvoidingView
+      flex={1}
+      behavior={Platform.OS === 'ios' ? 'height' : 'height'}
+      bgColor='#FFFFFF'
+    >
+      {/*{keyboardStatus && (*/}
+      {/*  <Pressable*/}
+      {/*    onPress={keyboarddismiss}*/}
+      {/*    bgColor={'red'}*/}
+      {/*    position={'absolute'}*/}
+      {/*    top={0}*/}
+      {/*    h={'100%'}*/}
+      {/*    w={'100%'}*/}
+      {/*    zIndex={999999}*/}
+      {/*  />*/}
+      {/*)}*/}
       {Main}
-    </Box>
+    </KeyboardAvoidingView>
   )
 }
 

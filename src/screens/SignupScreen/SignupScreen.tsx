@@ -72,102 +72,96 @@ function SignupScreen({
   }
 
   return (
-    <KeyboardAvoidingView
-      flex={1}
-      behavior={Platform.OS === 'ios' ? 'height' : 'height'}
-      bgColor='#FFFFFF'
-    >
-      <Center w='100%'>
-        <Box safeArea p='2' w='90%' maxW='290' py='8'>
-          <Heading
-            size='lg'
-            color='coolGray.800'
-            _dark={{
-              color: 'warmGray.50',
-            }}
-            fontWeight='semibold'
+    <Center w='100%'>
+      <Box safeArea p='2' w='90%' maxW='290' py='8'>
+        <Heading
+          size='lg'
+          color='coolGray.800'
+          _dark={{
+            color: 'warmGray.50',
+          }}
+          fontWeight='semibold'
+        >
+          QuickC 가입을 환영합니다!
+        </Heading>
+        <Heading
+          mt='1'
+          color='coolGray.600'
+          _dark={{
+            color: 'warmGray.200',
+          }}
+          fontWeight='medium'
+          size='xs'
+        >
+          회원가입을 진행해주세요
+        </Heading>
+        <VStack space={3} mt='5'>
+          <FormControl isRequired>
+            <FormControl.Label>닉네임</FormControl.Label>
+            <Input
+              onChangeText={handleForm('username')}
+              placeholder='사용하실 별명을 입력해주세요'
+              value={form.username}
+            />
+          </FormControl>
+          <FormControl isRequired>
+            <FormControl.Label>이메일</FormControl.Label>
+            <Input
+              placeholder='이메일 주소를 입력해주세요'
+              onChangeText={handleForm('email')}
+              value={form.email}
+            />
+          </FormControl>
+          <FormControl isRequired>
+            <FormControl.Label>핸드폰</FormControl.Label>
+            <Input
+              placeholder='핸드폰 번호를 입력해주세요'
+              onChangeText={handleForm('phone')}
+              value={form.phone}
+            />
+          </FormControl>
+          <FormControl isRequired>
+            <FormControl.Label>비밀번호</FormControl.Label>
+            <Input
+              type='password'
+              textContentType='newPassword'
+              placeholder='비밀번호를 입력해주세요'
+              onChangeText={handleForm('password')}
+              value={form.password}
+            />
+            <FormControl.ErrorMessage>
+              비밀번호를 확인해주세요
+            </FormControl.ErrorMessage>
+          </FormControl>
+          <FormControl isRequired>
+            <FormControl.Label>비밀번호 확인</FormControl.Label>
+            <Input
+              type='password'
+              textContentType='newPassword'
+              placeholder='비밀번호를 확인해주세요'
+              onChangeText={handleForm('passwordConfirm')}
+              value={form.passwordConfirm}
+            />
+          </FormControl>
+          <Button
+            mt='16'
+            _text={{ fontWeight: 'bold', fontSize: 16 }}
+            bgColor='blue.500'
+            onPress={submitSignup}
           >
-            QuickC 가입을 환영합니다!
-          </Heading>
-          <Heading
+            회원가입
+          </Button>
+          <Button
             mt='1'
-            color='coolGray.600'
-            _dark={{
-              color: 'warmGray.200',
-            }}
-            fontWeight='medium'
-            size='xs'
+            _text={{ fontWeight: 'bold', fontSize: 16, color: '#000000' }}
+            variant='outline'
+            onPress={backToLogin}
           >
-            회원가입을 진행해주세요
-          </Heading>
-          <VStack space={3} mt='5'>
-            <FormControl isRequired>
-              <FormControl.Label>닉네임</FormControl.Label>
-              <Input
-                onChangeText={handleForm('username')}
-                placeholder='사용하실 별명을 입력해주세요'
-                value={form.username}
-              />
-            </FormControl>
-            <FormControl isRequired>
-              <FormControl.Label>이메일</FormControl.Label>
-              <Input
-                placeholder='이메일 주소를 입력해주세요'
-                onChangeText={handleForm('email')}
-                value={form.email}
-              />
-            </FormControl>
-            <FormControl isRequired>
-              <FormControl.Label>핸드폰</FormControl.Label>
-              <Input
-                placeholder='핸드폰 번호를 입력해주세요'
-                onChangeText={handleForm('phone')}
-                value={form.phone}
-              />
-            </FormControl>
-            <FormControl isRequired>
-              <FormControl.Label>비밀번호</FormControl.Label>
-              <Input
-                type='password'
-                textContentType='newPassword'
-                placeholder='비밀번호를 입력해주세요'
-                onChangeText={handleForm('password')}
-                value={form.password}
-              />
-              <FormControl.ErrorMessage>
-                비밀번호를 확인해주세요
-              </FormControl.ErrorMessage>
-            </FormControl>
-            <FormControl isRequired>
-              <FormControl.Label>비밀번호 확인</FormControl.Label>
-              <Input
-                type='password'
-                textContentType='newPassword'
-                placeholder='비밀번호를 확인해주세요'
-                onChangeText={handleForm('passwordConfirm')}
-                value={form.passwordConfirm}
-              />
-            </FormControl>
-            <Button
-              mt='16'
-              _text={{ fontWeight: 'bold', fontSize: 16 }}
-              bgColor='blue.500'
-              onPress={submitSignup}
-            >
-              회원가입
-            </Button>
-            <Button
-              mt='1'
-              _text={{ fontWeight: 'bold', fontSize: 16, color: '#000000' }}
-              variant='outline'
-              onPress={backToLogin}
-            >
-              취소
-            </Button>
-          </VStack>
-        </Box>
-      </Center>
-    </KeyboardAvoidingView>
+            취소
+          </Button>
+        </VStack>
+      </Box>
+    </Center>
   )
 }
 
