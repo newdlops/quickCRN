@@ -17,6 +17,7 @@ import { findByUser } from '../../api/project'
 import { useSelector } from 'react-redux'
 import { useFindProjectByUserIdQuery } from '../../service/project'
 import { toDateForm } from '@utils/dateformatter'
+import { length } from 'axios'
 
 function ProjectStatusList({ navigation }): JSX.Element {
   const loginUserInfo = useSelector(state => state.user.user)
@@ -60,6 +61,13 @@ function ProjectStatusList({ navigation }): JSX.Element {
 
 function ProductStatusDetailItem(props: PressableProps) {
   const data = props.data
+  function title(string) {
+    if(string.length>10){
+      return string.slice(0, 10).concat('...')
+    }
+    return string
+  }
+
   return (
     <Pressable onPress={props.onPress}>
       <Center m={3}>
@@ -72,10 +80,10 @@ function ProductStatusDetailItem(props: PressableProps) {
             shadow={1}
             p={5}
           >
-            <HStack mb={3}>
+            <VStack mb={3}>
               {/* <Box _text={{ fontSize: 24, fontWeight: 'bold' }}>베터리</Box> */}
               <Box _text={{ fontSize: 24, fontWeight: 'bold' }}>
-                {data.projectname}
+                {title(data.projectname)}
               </Box>
               <Center
                 position='absolute'
@@ -88,7 +96,7 @@ function ProductStatusDetailItem(props: PressableProps) {
               >
                 {data.projectStatus ? '완료' : '진행중'}
               </Center>
-            </HStack>
+            </VStack>
             <VStack>
               <Box _text={{ fontSize: 16, fontWeight: 'bold' }}>인증구분</Box>
               {data.certType?.map((v, i: number) => (

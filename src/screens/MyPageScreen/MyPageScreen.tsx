@@ -93,12 +93,12 @@ function MyPageScreen({ navigation }): JSX.Element {
           <Box mb={4} _text={{ fontSize: 16 }}>
             고객센터
           </Box>
-          <Pressable onPress={() => alert()}>
+          <Pressable onPress={() => navigation.push('Notice')}>
             <Box mb={4} ml={4} _text={{ fontSize: 16 }}>
               공지사항
             </Box>
           </Pressable>
-          <Pressable onPress={() => alert()}>
+          <Pressable onPress={() => navigation.push('Faq')}>
             <Box mb={4} ml={4} _text={{ fontSize: 16 }}>
               자주하는 질문
             </Box>

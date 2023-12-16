@@ -46,6 +46,7 @@ export const api = createApi({
     'Project',
     'ProjectItem',
     'Inquiry',
+    'Notice',
   ],
   /**
    * This api has endpoints injected in adjacent files,

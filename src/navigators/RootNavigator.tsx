@@ -35,6 +35,8 @@ import ServiceAgreementScreen from '@screens/MyPageScreen/ServiceAgreementScreen
 import EditUserInfoScreen from '@screens/MyPageScreen/EditUserInfoScreen'
 import { Keyboard, Platform } from 'react-native'
 import InquiryScreen from '@screens/InquiryScreen/InquiryScreen'
+import NoticeList from '@screens/Notice/NoticeList'
+import FaqList from '@screens/MyPageScreen/Faq'
 
 export interface RootStackParamList {
   Login: undefined
@@ -178,6 +180,22 @@ function RootNavigator(): JSX.Element {
               options={{
                 header: ProjectStatusHeader,
                 title: '내 문의내역',
+              }}
+            />
+            <RootStack.Screen
+              name='Notice'
+              component={NoticeList}
+              options={{
+                header: ProjectStatusHeader,
+                title: '공지사항',
+              }}
+            />
+            <RootStack.Screen
+              name='Faq'
+              component={NoticeList}
+              options={{
+                header: ProjectStatusHeader,
+                title: '자주하는 질문',
               }}
             />
           </RootStack.Navigator>

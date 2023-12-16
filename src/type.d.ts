@@ -132,3 +132,9 @@ export interface IProjectItem {
   updatedAt: Date
   project: IProject
 }
+
+export interface Notice {
+  id?: string
+  title: string
+  content: string
+}

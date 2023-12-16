@@ -42,19 +42,16 @@ function ProjectStatusDetail({ route }): JSX.Element {
             <Box _text={{ fontSize: 24, fontWeight: 'bold' }}>
               {data?.projectname}
             </Box>
-            <Center
-              position='absolute'
-              right={0}
-              borderRadius={'lg'}
-              bg={'blueGray.400'}
-              width={'12'}
-              height={'6'}
-              _text={{ color: 'white', fontWeight: 'bold' }}
-            >
-              {data?.projectStatus ? '완료' : '진행중'}
-            </Center>
           </HStack>
           <VStack mt={2}>
+            <HStack
+              alignItems={'center'}
+              mb={1}
+              justifyContent={'space-between'}
+            >
+              <Text>상태</Text>
+              <Text fontSize={16}>{data?.projectStatus ? '완료' : '진행중'}</Text>
+            </HStack>
             <HStack
               alignItems={'center'}
               mb={1}
