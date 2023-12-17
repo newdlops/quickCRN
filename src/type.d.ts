@@ -92,7 +92,7 @@ interface ProductDetails {
   updatedAt?: string
 }
 
-interface Inquiry {
+interface IRequestInformation {
   [index: string]: string
   _id?: string
   productName: string
@@ -137,4 +137,29 @@ export interface Notice {
   id?: string
   title: string
   content: string
+}
+
+export interface Faq {
+  id?: string
+  question: string
+  answer: string
+}
+
+export interface WrongInformation {
+  id?: string
+  title: string
+  content: string
+  productName: string
+  requestUser: IUser
+  product: IProduct
+  reply: string
+}
+
+export interface IRequestInformation {
+  id?: string
+  title: string
+  content: string
+  productName: string
+  requestUser: IUser
+  reply: string
 }

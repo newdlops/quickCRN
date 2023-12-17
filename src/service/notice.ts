@@ -22,7 +22,7 @@ const noticeApi = api.injectEndpoints({
         method: 'POST',
         body: body,
       }),
-      invalidatesTags: [{ type: 'Notice', id: 'LIST' }, { type: 'Project', id: 'LIST' }],
+      invalidatesTags: [{ type: 'Notice', id: 'LIST' }],
     }),
     getNotices: build.query<NoticeResponse, string>({
       query: () => `/notice/notices`,

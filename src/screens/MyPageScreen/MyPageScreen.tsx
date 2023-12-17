@@ -71,12 +71,12 @@ function MyPageScreen({ navigation }): JSX.Element {
           {/*    내 문의내역*/}
           {/*  </Box>*/}
           {/*</Pressable>*/}
-          <Pressable onPress={() => alert()}>
+          <Pressable onPress={() => navigation.push('WrongInformationList')}>
             <Box mb={4} ml={4} _text={{ fontSize: 16 }}>
               오류 정보 신고내역
             </Box>
           </Pressable>
-          <Pressable onPress={() => alert()}>
+          <Pressable onPress={() => navigation.push('RequestInformationList')}>
             <Box mb={4} ml={4} _text={{ fontSize: 16 }}>
               제품 추가 요청내역
             </Box>

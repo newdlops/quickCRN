@@ -2,6 +2,46 @@ import { Center, Box, Text, Icon, Fab, VStack, ScrollView } from 'native-base'
 import React, { useEffect } from 'react'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import { ProductDetails } from '../../type'
+import { FloatingAction } from "react-native-floating-action"
+
+const actions = [
+  {
+    text: "정보 추가 요청",
+    color:'#06b6d4',
+    icon: <Icon
+      as={MaterialCommunityIcons}
+      name='pencil-plus'
+      color='white'
+      size='6'
+    />,
+    name: "inquery",
+    position: 2
+  },
+  {
+    text: "잘못된 정보 신고",
+    color:'#14b8a6',
+    icon: <Icon
+      as={MaterialCommunityIcons}
+      name='alarm-light'
+      color='white'
+      size='6'
+    />,
+    name: "warn",
+    position: 1
+  },
+  // {
+  //   text: "즐겨찾기",
+  //   color:'#1a91ff',
+  //   icon: <Icon
+  //     as={MaterialCommunityIcons}
+  //     name='bookmark'
+  //     color='white'
+  //     size='6'
+  //   />,
+  //   name: "bookmark",
+  //   position: 3
+  // },
+]
 
 function SearchProductDetailScreen({ navigation, route }): JSX.Element {
   const data: ProductDetails = route.params.data
@@ -10,7 +50,20 @@ function SearchProductDetailScreen({ navigation, route }): JSX.Element {
       title: data?.productname,
     })
   }, [])
-  console.log('show data', data)
+  function onPressItem(item) {
+    switch (item) {
+      case 'inquery':
+        navigation.navigate('RequestInformation')
+        break
+      case 'warn':
+        navigation.navigate('WrongInformation', { title: data.productname ?? '', product: data})
+        break
+      case 'bookmark':
+        alert('book')
+        break
+    }
+  }
+
   return (
     <>
       <ScrollView>
@@ -169,19 +222,11 @@ function SearchProductDetailScreen({ navigation, route }): JSX.Element {
         </Center>
         <Box h={100}></Box>
       </ScrollView>
-      <Fab
-        renderInPortal={false}
-        shadow={2}
-        size='sm'
-        // label="문의하기"
-        icon={
-          <Icon
-            as={MaterialCommunityIcons}
-            name='account-question'
-            color='primary.200'
-            size='6'
-          />
-        }
+      <FloatingAction
+        actions={actions}
+        color={'#0891b2'}
+        onPressItem={onPressItem}
+        showBackground={false}
       />
     </>
   )

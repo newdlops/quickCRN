@@ -13,66 +13,57 @@ import React from 'react'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import Entypo from 'react-native-vector-icons/Entypo'
 import { PressableProps } from 'react-native'
-import { findByUser } from '../../api/project'
-import { useSelector } from 'react-redux'
-import { useFindProjectByUserIdQuery } from '../../service/project'
-import { useFindInquiriesByUserQuery } from '../../service/inquiry'
+import { getDetail } from '../../api/project'
 import { toDateForm } from '@utils/dateformatter'
-import { Inquiry } from '../../type';
+import { useGetFaqsQuery } from '../../service/faq'
 
-function FaqList({ navigation }): JSX.Element {
-  const loginUserInfo = useSelector(state => state.user.user)
-  const { data ,isLoading, error} = useFindInquiriesByUserQuery(loginUserInfo._id, {
+function FaqList({ route }): JSX.Element {
+  const { data, isLoading, error } = useGetFaqsQuery('',{
     refetchOnFocus: true,
     refetchOnMountOrArgChange: true,
   })
-  console.log(data)
+
   return (
     <ScrollView>
-      {data?.msg?.map((v, i) => (
-        <FaqDetail
-          key={i}
-          data={v}
-        />
+      {data?.msg.map((v, i) => (
+        <Faq data={v} title={v.question} key={i} />
       ))}
       <Box h='100px' />
     </ScrollView>
   )
 }
 
-function FaqDetail(props: PressableProps) {
-  const data: Inquiry = props.data
+function Faq({ title, data }) {
+  const [isOpen, setOpen] = React.useState(false)
+  const itemClick = () => {
+    setOpen(!isOpen)
+  }
   return (
-    <Pressable onPress={props.onPress}>
-      <Center m={3}>
-        <Center alignItems={'center'}>
-          <Box
-            width={80}
-            // height={56}
-            bg={'white'}
-            borderRadius={16}
-            shadow={1}
-            p={5}
-          >
-            <HStack mb={3}>
-              <Box _text={{ fontSize: 18, fontWeight: 'bold' }}>
-                {data.productName}
-              </Box>
-            </HStack>
-            <VStack>
-              <Box _text={{ fontSize: 16, fontWeight: 'normal' }}>{data.content}</Box>
-            </VStack>
-            <Box bg='gray.400' mt={5} h={2 / 3} w='100%' />
+    <Pressable onPress={itemClick}>
+      <Center mt={3}>
+        <Box
+          width={80}
+          height={isOpen ? null : 20}
+          bg={'white'}
+          borderRadius={16}
+          shadow={1}
+          p={5}
+        >
+          <HStack mb={3}>
+            <Box _text={{ fontSize: 22, fontWeight: 'bold' }}>{`Q. ${title}`}</Box>
+          </HStack>
+          <Box display={isOpen ? null : 'none'}>
             <VStack mt={2}>
-              <Box _text={{ fontSize: 16, fontWeight: 'normal' }}>{data.reply ?? '아직 등록된 답변이 없습니다.'}</Box>
-            </VStack>
-            <VStack mt={5}>
-              <Box>
-                <Text>문의일시 : {toDateForm(data.createdAt)}</Text>
-              </Box>
+              <HStack
+                alignItems={'center'}
+                mb={1}
+                justifyContent={'space-between'}
+              >
+                <Text fontSize={16}>A. {data?.answer}</Text>
+              </HStack>
             </VStack>
           </Box>
-        </Center>
+        </Box>
       </Center>
     </Pressable>
   )

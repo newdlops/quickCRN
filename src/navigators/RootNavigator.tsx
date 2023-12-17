@@ -37,6 +37,10 @@ import { Keyboard, Platform } from 'react-native'
 import InquiryScreen from '@screens/InquiryScreen/InquiryScreen'
 import NoticeList from '@screens/Notice/NoticeList'
 import FaqList from '@screens/MyPageScreen/Faq'
+import RequestInformation from '@screens/InquiryScreen/RequestInformation'
+import WrongInformation from '@screens/InquiryScreen/WrongInformation'
+import WrongInformationListScreen from '@screens/InquiryScreen/WrongInformationListScreen'
+import RequestInformationListScreen from '@screens/InquiryScreen/RequestInformationListScreen'
 
 export interface RootStackParamList {
   Login: undefined
@@ -192,10 +196,42 @@ function RootNavigator(): JSX.Element {
             />
             <RootStack.Screen
               name='Faq'
-              component={NoticeList}
+              component={FaqList}
               options={{
                 header: ProjectStatusHeader,
                 title: '자주하는 질문',
+              }}
+            />
+            <RootStack.Screen
+              name='RequestInformation'
+              component={RequestInformation}
+              options={{
+                header: ProjectStatusHeader,
+                title: '정보 추가 요청',
+              }}
+            />
+            <RootStack.Screen
+              name='WrongInformation'
+              component={WrongInformation}
+              options={{
+                header: ProjectStatusHeader,
+                title: '잘못된 정보 신고',
+              }}
+            />
+            <RootStack.Screen
+              name='WrongInformationList'
+              component={WrongInformationListScreen}
+              options={{
+                header: ProjectStatusHeader,
+                title: '오류 정보 신고내역',
+              }}
+            />
+            <RootStack.Screen
+              name='RequestInformationList'
+              component={RequestInformationListScreen}
+              options={{
+                header: ProjectStatusHeader,
+                title: '제품 추가 요청내역',
               }}
             />
           </RootStack.Navigator>

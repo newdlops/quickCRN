@@ -19,10 +19,11 @@ import { useFindProjectByUserIdQuery } from '../../service/project'
 import { useFindInquiriesByUserQuery } from '../../service/inquiry'
 import { toDateForm } from '@utils/dateformatter'
 import { IRequestInformation } from '../../type';
+import { useGetWrongInformationByUserQuery } from '../../service/wronginfo'
 
-function InquiryListScreen({ navigation }): JSX.Element {
+function WrongInformationListScreen({ navigation }): JSX.Element {
   const loginUserInfo = useSelector(state => state.user.user)
-  const { data ,isLoading, error} = useFindInquiriesByUserQuery(loginUserInfo._id, {
+  const { data ,isLoading, error} = useGetWrongInformationByUserQuery(loginUserInfo._id, {
     refetchOnFocus: true,
     refetchOnMountOrArgChange: true,
   })
@@ -79,7 +80,7 @@ function InquiryDetail(props: PressableProps) {
             <VStack>
               <Box _text={{ fontSize: 16, fontWeight: 'normal' }}>{data.content}</Box>
             </VStack>
-            <Box bg='gray.400' mt={5} h={2 / 3} w='100%' />
+            <Box bg='gray.400' mt={2} h={2 / 3} w='100%' />
             <VStack mt={2}>
               <Box _text={{ fontSize: 16, fontWeight: 'normal' }}>{data.reply ?? '아직 등록된 답변이 없습니다.'}</Box>
             </VStack>
@@ -95,4 +96,4 @@ function InquiryDetail(props: PressableProps) {
   )
 }
 
-export default InquiryListScreen
+export default WrongInformationListScreen

@@ -10,54 +10,34 @@ import {
   Pressable,
 } from 'native-base'
 import React from 'react'
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
-import Entypo from 'react-native-vector-icons/Entypo'
 import { PressableProps } from 'react-native'
-import { findByUser } from '../../api/project'
 import { useSelector } from 'react-redux'
-import { useFindProjectByUserIdQuery } from '../../service/project'
-import { useFindInquiriesByUserQuery } from '../../service/inquiry'
 import { toDateForm } from '@utils/dateformatter'
-import { IRequestInformation } from '../../type';
+import { IRequestInformation } from '../../type'
+import { useGetRequestInformationByUserQuery } from '../../service/requestinfo'
 
-function InquiryListScreen({ navigation }): JSX.Element {
+function RequestInformationListScreen({ navigation }): JSX.Element {
   const loginUserInfo = useSelector(state => state.user.user)
-  const { data ,isLoading, error} = useFindInquiriesByUserQuery(loginUserInfo._id, {
+  const { data ,isLoading, error} = useGetRequestInformationByUserQuery(loginUserInfo._id, {
     refetchOnFocus: true,
     refetchOnMountOrArgChange: true,
   })
-  console.log(data)
   return (
     <>
       <ScrollView>
         {data?.msg?.map((v, i) => (
-          <InquiryDetail
+          <RequestInfoDetail
             key={i}
             data={v}
           />
         ))}
         <Box h='100px' />
       </ScrollView>
-      {/*<Fab*/}
-      {/*  renderInPortal={false}*/}
-      {/*  shadow={3}*/}
-      {/*  size="sm"*/}
-      {/*  bg="blue.500"*/}
-      {/*  // label="문의하기"*/}
-      {/*  icon={*/}
-      {/*    <Icon*/}
-      {/*      as={MaterialCommunityIcons}*/}
-      {/*      name="account-question"*/}
-      {/*      color="white"*/}
-      {/*      size="6"*/}
-      {/*    />*/}
-      {/*  }*/}
-      {/*/>*/}
     </>
   )
 }
 
-function InquiryDetail(props: PressableProps) {
+function RequestInfoDetail(props: PressableProps) {
   const data: IRequestInformation = props.data
   return (
     <Pressable onPress={props.onPress}>
@@ -71,13 +51,16 @@ function InquiryDetail(props: PressableProps) {
             shadow={1}
             p={5}
           >
-            <HStack mb={3}>
+            <HStack mb={4}>
               <Box _text={{ fontSize: 18, fontWeight: 'bold' }}>
-                {data.productName}
+                {data.title}
               </Box>
             </HStack>
             <VStack>
-              <Box _text={{ fontSize: 16, fontWeight: 'normal' }}>{data.content}</Box>
+              <Box mb={1} _text={{ fontSize: 16, fontWeight: 'normal' }}>{`제품명 : ${data.productName}`}</Box>
+            </VStack>
+            <VStack mt={2}>
+              <Box _text={{ fontSize: 16, fontWeight: 'normal' }}>{data.content ?? ''}</Box>
             </VStack>
             <Box bg='gray.400' mt={5} h={2 / 3} w='100%' />
             <VStack mt={2}>
@@ -95,4 +78,4 @@ function InquiryDetail(props: PressableProps) {
   )
 }
 
-export default InquiryListScreen
+export default RequestInformationListScreen

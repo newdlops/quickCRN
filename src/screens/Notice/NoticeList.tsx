@@ -17,7 +17,7 @@ import { findByUser } from '../../api/project'
 import { useSelector } from 'react-redux'
 import { useGetNoticesQuery } from '../../service/notice'
 import { toDateForm } from '@utils/dateformatter'
-import { Inquiry } from '../../type';
+import { IRequestInformation } from '../../type';
 
 function NoticeList({ navigation }): JSX.Element {
   const { data, isLoading, error } = useGetNoticesQuery('',{
@@ -38,7 +38,7 @@ function NoticeList({ navigation }): JSX.Element {
 }
 
 function NoticeDetail(props: PressableProps) {
-  const data: Inquiry = props.data
+  const data: IRequestInformation = props.data
   return (
     <Pressable onPress={props.onPress}>
       <Center m={3}>
