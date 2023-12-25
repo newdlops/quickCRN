@@ -17,11 +17,31 @@ interface InquiryDetailResponse {
 const inquiryApi = api.injectEndpoints({
   endpoints: build => ({
     createInquiry: build.mutation<InquiryResponse, Partial<IRequestInformation>>({
-      query: (body: Partial<IRequestInformation>) => ({
-        url: `/inquiry/inquiry`,
-        method: 'POST',
-        body: body,
-      }),
+      query: (body: Partial<IRequestInformation>) => {
+        console.log('바디')
+        console.log(body)
+        const formData = new FormData()
+        Object.keys(body).forEach(key => {
+          if(key == 'photos'){
+            body[key]?.map(file => {
+              formData.append('files', {
+                uri: file.uri,
+                type: file.type,
+                name: file.fileName,
+              })
+            })
+          } else {
+            formData.append(key, body[key])
+          }
+        })
+        console.log('폼데이터')
+        console.log(formData)
+        return {
+          url: `/inquiry/inquiry`,
+          method: 'POST',
+          body: formData,
+        }
+      },
       invalidatesTags: [{ type: 'Inquiry', id: 'LIST' }, { type: 'Project', id: 'LIST' }],
     }),
     getDetailInquiry: build.query<InquiryDetailResponse, string>({

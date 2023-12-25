@@ -10,14 +10,14 @@ import {
 } from 'native-base'
 import React, { useEffect } from 'react'
 import Ionicons from 'react-native-vector-icons/Ionicons'
+import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import QCLogo from '../../assets/svg/QCLogo'
 import { CommonActions } from '@react-navigation/native'
+import { useGetRecentNoticeQuery } from '../../service/notice'
 
 function HomeScreen({ navigation }): JSX.Element {
   useEffect(() => {
     navigation.dispatch(state => {
-      // Add the home route to the start of the stack
-
       return CommonActions.reset({
         ...state,
         routes: state.routes,
@@ -26,6 +26,10 @@ function HomeScreen({ navigation }): JSX.Element {
       })
     })
   }, [])
+
+  const { data: notice } = useGetRecentNoticeQuery('')
+  console.log('공지사항')
+  console.log(notice)
   const gotoSearch = () => {
     navigation.navigate('SearchProductList')
   }
@@ -74,10 +78,12 @@ function HomeScreen({ navigation }): JSX.Element {
               bg={'white'}
             >
               <Icon
-                as={Ionicons}
-                name='search'
-                size={'7'}
-                color='black'
+                as={FontAwesome}
+                name="search"
+                color="black"
+                alignContent={'center'}
+                justifyContent={'space-between'}
+                size={7}
                 ml={'3'}
               />
               <Box ml={'2'} _text={{ fontSize: '18' }}>
@@ -86,112 +92,6 @@ function HomeScreen({ navigation }): JSX.Element {
             </HStack>
           </Pressable>
         </VStack>
-        <Center height={64} alignItems={'center'} mt={2}>
-          <Box
-            width={80}
-            height={56}
-            bg={'white'}
-            borderRadius={16}
-            shadow={1}
-            pt={3}
-            pl={5}
-          >
-            <Text fontSize={16} mb={2}>
-              검색어 순위
-            </Text>
-            <HStack>
-              <VStack>
-                <HStack>
-                  {rankUpIcon()}
-                  <Text ml={2} mr={2}>
-                    1
-                  </Text>
-                  <Text>인공위성</Text>
-                </HStack>
-                <HStack>
-                  {rankDownIcon()}
-                  <Text ml={2} mr={2}>
-                    1
-                  </Text>
-                  <Text>인공위성</Text>
-                </HStack>
-                <HStack>
-                  {rankUpIcon()}
-                  <Text ml={2} mr={2}>
-                    1
-                  </Text>
-                  <Text>인공위성</Text>
-                </HStack>
-                <HStack>
-                  {rankDownIcon()}
-                  <Text ml={2} mr={2}>
-                    1
-                  </Text>
-                  <Text>인공위성</Text>
-                </HStack>
-                <HStack>
-                  {rankUpIcon()}
-                  <Text ml={2} mr={2}>
-                    1
-                  </Text>
-                  <Text>인공위성</Text>
-                </HStack>
-                <HStack>
-                  {rankDownIcon()}
-                  <Text ml={2} mr={2}>
-                    1
-                  </Text>
-                  <Text>인공위성</Text>
-                </HStack>
-              </VStack>
-              <Box w={10} />
-              <VStack>
-                <HStack>
-                  {rankUpIcon()}
-                  <Text ml={2} mr={2}>
-                    1
-                  </Text>
-                  <Text>인공위성</Text>
-                </HStack>
-                <HStack>
-                  {rankDownIcon()}
-                  <Text ml={2} mr={2}>
-                    1
-                  </Text>
-                  <Text>인공위성</Text>
-                </HStack>
-                <HStack>
-                  {rankUpIcon()}
-                  <Text ml={2} mr={2}>
-                    1
-                  </Text>
-                  <Text>인공위성</Text>
-                </HStack>
-                <HStack>
-                  {rankDownIcon()}
-                  <Text ml={2} mr={2}>
-                    1
-                  </Text>
-                  <Text>인공위성</Text>
-                </HStack>
-                <HStack>
-                  {rankUpIcon()}
-                  <Text ml={2} mr={2}>
-                    1
-                  </Text>
-                  <Text>인공위성</Text>
-                </HStack>
-                <HStack>
-                  {rankDownIcon()}
-                  <Text ml={2} mr={2}>
-                    1
-                  </Text>
-                  <Text>인공위성</Text>
-                </HStack>
-              </VStack>
-            </HStack>
-          </Box>
-        </Center>
         {/*<Center height={64} alignItems={'center'} mt={2}>*/}
         {/*  <Box*/}
         {/*    width={80}*/}
@@ -199,8 +99,124 @@ function HomeScreen({ navigation }): JSX.Element {
         {/*    bg={'white'}*/}
         {/*    borderRadius={16}*/}
         {/*    shadow={1}*/}
-        {/*  />*/}
+        {/*    pt={3}*/}
+        {/*    pl={5}*/}
+        {/*  >*/}
+        {/*    <Text fontSize={16} mb={2}>*/}
+        {/*      검색어 순위*/}
+        {/*    </Text>*/}
+        {/*    <HStack>*/}
+        {/*      <VStack>*/}
+        {/*        <HStack>*/}
+        {/*          {rankUpIcon()}*/}
+        {/*          <Text ml={2} mr={2}>*/}
+        {/*            1*/}
+        {/*          </Text>*/}
+        {/*          <Text>인공위성</Text>*/}
+        {/*        </HStack>*/}
+        {/*        <HStack>*/}
+        {/*          {rankDownIcon()}*/}
+        {/*          <Text ml={2} mr={2}>*/}
+        {/*            1*/}
+        {/*          </Text>*/}
+        {/*          <Text>인공위성</Text>*/}
+        {/*        </HStack>*/}
+        {/*        <HStack>*/}
+        {/*          {rankUpIcon()}*/}
+        {/*          <Text ml={2} mr={2}>*/}
+        {/*            1*/}
+        {/*          </Text>*/}
+        {/*          <Text>인공위성</Text>*/}
+        {/*        </HStack>*/}
+        {/*        <HStack>*/}
+        {/*          {rankDownIcon()}*/}
+        {/*          <Text ml={2} mr={2}>*/}
+        {/*            1*/}
+        {/*          </Text>*/}
+        {/*          <Text>인공위성</Text>*/}
+        {/*        </HStack>*/}
+        {/*        <HStack>*/}
+        {/*          {rankUpIcon()}*/}
+        {/*          <Text ml={2} mr={2}>*/}
+        {/*            1*/}
+        {/*          </Text>*/}
+        {/*          <Text>인공위성</Text>*/}
+        {/*        </HStack>*/}
+        {/*        <HStack>*/}
+        {/*          {rankDownIcon()}*/}
+        {/*          <Text ml={2} mr={2}>*/}
+        {/*            1*/}
+        {/*          </Text>*/}
+        {/*          <Text>인공위성</Text>*/}
+        {/*        </HStack>*/}
+        {/*      </VStack>*/}
+        {/*      <Box w={10} />*/}
+        {/*      <VStack>*/}
+        {/*        <HStack>*/}
+        {/*          {rankUpIcon()}*/}
+        {/*          <Text ml={2} mr={2}>*/}
+        {/*            1*/}
+        {/*          </Text>*/}
+        {/*          <Text>인공위성</Text>*/}
+        {/*        </HStack>*/}
+        {/*        <HStack>*/}
+        {/*          {rankDownIcon()}*/}
+        {/*          <Text ml={2} mr={2}>*/}
+        {/*            1*/}
+        {/*          </Text>*/}
+        {/*          <Text>인공위성</Text>*/}
+        {/*        </HStack>*/}
+        {/*        <HStack>*/}
+        {/*          {rankUpIcon()}*/}
+        {/*          <Text ml={2} mr={2}>*/}
+        {/*            1*/}
+        {/*          </Text>*/}
+        {/*          <Text>인공위성</Text>*/}
+        {/*        </HStack>*/}
+        {/*        <HStack>*/}
+        {/*          {rankDownIcon()}*/}
+        {/*          <Text ml={2} mr={2}>*/}
+        {/*            1*/}
+        {/*          </Text>*/}
+        {/*          <Text>인공위성</Text>*/}
+        {/*        </HStack>*/}
+        {/*        <HStack>*/}
+        {/*          {rankUpIcon()}*/}
+        {/*          <Text ml={2} mr={2}>*/}
+        {/*            1*/}
+        {/*          </Text>*/}
+        {/*          <Text>인공위성</Text>*/}
+        {/*        </HStack>*/}
+        {/*        <HStack>*/}
+        {/*          {rankDownIcon()}*/}
+        {/*          <Text ml={2} mr={2}>*/}
+        {/*            1*/}
+        {/*          </Text>*/}
+        {/*          <Text>인공위성</Text>*/}
+        {/*        </HStack>*/}
+        {/*      </VStack>*/}
+        {/*    </HStack>*/}
+        {/*  </Box>*/}
         {/*</Center>*/}
+        <Center alignItems={'center'} mt={4}>
+          <Box
+            width={80}
+            bg={'white'}
+            borderRadius={16}
+            shadow={1}
+            pt={3}
+            pl={5}
+            pr={5}
+            pb={3}
+          >
+            <Text fontSize={16} fontWeight={'bold'} mb={2}>
+              {notice?.msg.title}
+            </Text>
+            <Text fontSize={16} fontWeight={'bold'} mb={2}>
+              {notice?.msg.content}
+            </Text>
+          </Box>
+        </Center>
         {/*<Center height={64} alignItems={'center'} mt={2}>*/}
         {/*  <Box*/}
         {/*    width={80}*/}

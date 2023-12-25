@@ -11,7 +11,6 @@ function PersonalInformationPolicyScreen(): JSX.Element{
   const [content, setContent] = useState('')
   useEffect(() => {
     axios.post(`${serverUri}/terms/find`, { version: 'p' }).then(r => {
-      console.log('content', r)
       setContent(r?.data?.msg?.content)
     })
   }, [])

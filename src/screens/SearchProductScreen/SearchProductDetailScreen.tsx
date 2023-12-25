@@ -4,46 +4,46 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import { ProductDetails } from '../../type'
 import { FloatingAction } from "react-native-floating-action"
 
-const actions = [
-  {
-    text: "정보 추가 요청",
-    color:'#06b6d4',
-    icon: <Icon
-      as={MaterialCommunityIcons}
-      name='pencil-plus'
-      color='white'
-      size='6'
-    />,
-    name: "inquery",
-    position: 2
-  },
-  {
-    text: "잘못된 정보 신고",
-    color:'#14b8a6',
-    icon: <Icon
-      as={MaterialCommunityIcons}
-      name='alarm-light'
-      color='white'
-      size='6'
-    />,
-    name: "warn",
-    position: 1
-  },
-  // {
-  //   text: "즐겨찾기",
-  //   color:'#1a91ff',
-  //   icon: <Icon
-  //     as={MaterialCommunityIcons}
-  //     name='bookmark'
-  //     color='white'
-  //     size='6'
-  //   />,
-  //   name: "bookmark",
-  //   position: 3
-  // },
-]
-
 function SearchProductDetailScreen({ navigation, route }): JSX.Element {
+  const actions = [
+    {
+      text: "정보 추가 요청",
+      color:'#06b6d4',
+      icon: <Icon
+        as={MaterialCommunityIcons}
+        name='pencil-plus'
+        color='white'
+        size='6'
+      />,
+      name: "inquery",
+      position: 2
+    },
+    {
+      text: "잘못된 정보 신고",
+      color:'#14b8a6',
+      icon: <Icon
+        as={MaterialCommunityIcons}
+        name='alarm-light'
+        color='white'
+        size='6'
+      />,
+      name: "warn",
+      position: 1
+    },
+    // {
+    //   text: "즐겨찾기",
+    //   color:'#1a91ff',
+    //   icon: <Icon
+    //     as={MaterialCommunityIcons}
+    //     name='bookmark'
+    //     color='white'
+    //     size='6'
+    //   />,
+    //   name: "bookmark",
+    //   position: 3
+    // },
+  ]
+
   const data: ProductDetails = route.params.data
   useEffect(() => {
     navigation.setOptions({

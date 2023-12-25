@@ -28,6 +28,10 @@ const noticeApi = api.injectEndpoints({
       query: () => `/notice/notices`,
       providesTags: (_result, _error, id) => [{ type: 'Notice', id: id }],
     }),
+    getRecentNotice: build.query<NoticeResponse, string>({
+      query: () => `/notice/recentNotice`,
+      providesTags: (_result, _error, id) => [{ type: 'Notice', id: id }],
+    }),
     getDetailNotice: build.query<NoticeDetailResponse, string>({
       query: (id: string) => `/notice/notice/${id}`,
       providesTags: (_result, _error, id) => [{ type: 'Notice', id: id }],
@@ -37,4 +41,5 @@ const noticeApi = api.injectEndpoints({
 
 export const {
   useGetNoticesQuery,
+  useGetRecentNoticeQuery,
 } = noticeApi

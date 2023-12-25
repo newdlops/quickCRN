@@ -17,7 +17,6 @@ import React, { useState } from 'react'
 import { useCreateInquiryMutation } from '../../service/inquiry'
 import { useSelector } from 'react-redux'
 import { ToastAlert } from '@components/ToastAlert'
-import {launchImageLibrary} from 'react-native-image-picker'
 import { Platform } from 'react-native'
 
 function InquiryScreen(): JSX.Element {
@@ -106,13 +105,6 @@ function InquiryScreen(): JSX.Element {
   }
 
   const attachImage = () => {
-    launchImageLibrary({
-      mediaType: 'photo',
-      selectionLimit: 3,
-    }, ({ assets: files }) => {
-      setForm({...form, photos: files})
-      console.log('camera response', files)
-    })
   }
   return (
     <ScrollView>
