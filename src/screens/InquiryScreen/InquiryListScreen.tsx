@@ -20,7 +20,7 @@ import { useFindInquiriesByUserQuery } from '../../service/inquiry'
 import { toDateForm } from '@utils/dateformatter'
 import { IRequestInformation } from '../../type';
 
-function InquiryListScreen({ navigation }): JSX.Element {
+function InquiryListScreen({ navigation }): React.JSX.Element {
   const loginUserInfo = useSelector(state => state.user.user)
   const { data ,isLoading, error} = useFindInquiriesByUserQuery(loginUserInfo._id, {
     refetchOnFocus: true,

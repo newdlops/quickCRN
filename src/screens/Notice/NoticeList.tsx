@@ -19,7 +19,7 @@ import { useGetNoticesQuery } from '../../service/notice'
 import { toDateForm } from '@utils/dateformatter'
 import { IRequestInformation } from '../../type';
 
-function NoticeList({ navigation }): JSX.Element {
+function NoticeList({ navigation }): React.JSX.Element {
   const { data, isLoading, error } = useGetNoticesQuery('',{
     refetchOnFocus: true,
     refetchOnMountOrArgChange: true,

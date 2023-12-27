@@ -7,7 +7,7 @@ import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import { serverUri } from '../../environment/environment'
 
-function ServiceAgreementScreen(): JSX.Element{
+function ServiceAgreementScreen(): React.JSX.Element{
   const [content, setContent] = useState('')
   useEffect(() => {
     axios.post(`${serverUri}/terms/find`, { version: 'c' }).then(r => {

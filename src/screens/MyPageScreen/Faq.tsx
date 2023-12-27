@@ -17,7 +17,7 @@ import { getDetail } from '../../api/project'
 import { toDateForm } from '@utils/dateformatter'
 import { useGetFaqsQuery } from '../../service/faq'
 
-function FaqList({ route }): JSX.Element {
+function FaqList({ route }): React.JSX.Element {
   const { data, isLoading, error } = useGetFaqsQuery('',{
     refetchOnFocus: true,
     refetchOnMountOrArgChange: true,

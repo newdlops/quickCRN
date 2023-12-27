@@ -10,13 +10,13 @@ import {
   HStack,
   IconButton,
   Input,
-  KeyboardAvoidingView,
+  KeyboardAvoidingView, ScrollView,
   Text,
   useToast,
   VStack,
 } from 'native-base'
 import React, { useState } from 'react'
-import { Platform } from 'react-native'
+import { Dimensions, Platform } from 'react-native'
 import { useUpdateUserMutation } from '../../service/user'
 import { useDispatch, useSelector } from 'react-redux'
 import { setUser } from '@store/reducers/userSlice'
@@ -24,7 +24,7 @@ import { setUser } from '@store/reducers/userSlice'
 function EditUserInfoScreen({
   navigation: { navigate, goBack },
   route: { params },
-}: RootStackScreenProp): JSX.Element {
+}: RootStackScreenProp): React.JSX.Element {
   const userInfo = useSelector(state => state.user.user)
   const dispatch = useDispatch()
   const emptyForm = {
@@ -116,13 +116,9 @@ function EditUserInfoScreen({
   )
 
   return (
-    <KeyboardAvoidingView
-      flex={1}
-      behavior={Platform.OS === 'ios' ? 'height' : 'height'}
-      bgColor='#FFFFFF'
-    >
-      <Center w='100%'>
-        <Box safeArea p='2' w='90%' maxW='290' py='8'>
+    <ScrollView>
+      <Center w='100%' bgColor={'#FFFFFF'} h={Dimensions.get('window').height}>
+        <Box safeArea p='2' w='90%' maxW='290' py='8' mt={'-100%'}>
           <Heading
             size='lg'
             color='coolGray.800'
@@ -206,7 +202,7 @@ function EditUserInfoScreen({
           </VStack>
         </Box>
       </Center>
-    </KeyboardAvoidingView>
+    </ScrollView>
   )
 }
 

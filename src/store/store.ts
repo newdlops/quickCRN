@@ -1,7 +1,6 @@
 import { configureStore, ConfigureStoreOptions } from '@reduxjs/toolkit'
 import type { TypedUseSelectorHook } from 'react-redux'
 import { useDispatch, useSelector } from 'react-redux'
-import createDebugger from 'redux-flipper'
 import { api } from '../service/api'
 import searchReducer from '@store/reducers/searchSlice'
 import userReducer from '@store/reducers/userSlice'
@@ -16,8 +15,9 @@ export const createStore = (
       [api.reducerPath]: api.reducer,
     },
     middleware: (getDefaultMiddleware) =>
-      getDefaultMiddleware().concat(api.middleware).concat(createDebugger()),
+      getDefaultMiddleware().concat(api.middleware),
     ...options,
+    devTools: true,
   })
 
 export const store = createStore()

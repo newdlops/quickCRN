@@ -9,6 +9,7 @@ import {
   Pressable,
   HStack,
   useToast,
+  ScrollView,
 } from 'native-base'
 import React, { useRef, useState } from 'react'
 import {
@@ -25,10 +26,12 @@ import { useDispatch } from 'react-redux'
 import { setUser } from '@store/reducers/userSlice'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { ToastAlert } from '@components/ToastAlert'
+import { Dimensions } from 'react-native'
+
 
 function LoginScreen({
   navigation: { navigate, push },
-}: RootStackScreenProp): JSX.Element {
+}: RootStackScreenProp): React.JSX.Element {
   const emptyLoginInfo = {
     email: '',
     password: '',
@@ -159,79 +162,81 @@ function LoginScreen({
   }
 
   return (
-    <Center flex={1} bgColor={'white'}>
-      <HStack alignItems={'center'} mb={10}>
-        <Box
-          _text={{ fontSize: '36', fontWeight: 'black', color: '#000000' }}
-        >
-          QuickC
-        </Box>
-      </HStack>
-      <Box w='80%'>
-        <Input
-          h='50'
-          placeholder='이메일 주소를 입력해주세요'
-          fontSize='14'
-          mb={3}
-          onChangeText={handleEmail}
-          ref={ref}
-        />
-        <Input
-          h='50'
-          placeholder='비밀번호를 입력해주세요'
-          fontSize='14'
-          mb={1}
-          type={'password'}
-          onChangeText={handlePassword}
-        />
-        {submitted && loginFailed && (
-          <Box _text={{ fontSize: 12, color: 'red.400' }}>
-            해당 계정정보가 없습니다.
+    <ScrollView>
+      <Center height={Dimensions.get('window').height} bgColor={'white'}>
+        <HStack alignItems={'center'} mb={10}>
+          <Box
+            _text={{ fontSize: '36', fontWeight: 'black', color: '#000000' }}
+          >
+            QuickC
           </Box>
-        )}
-        {submitted && emailNotInput && (
-          <Box _text={{ fontSize: 12, color: 'red.400' }}>
-            이메일을 입력해주세요
-          </Box>
-        )}
-        {submitted && passwordNotInput && (
-          <Box _text={{ fontSize: 12, color: 'red.400' }}>
-            비밀번호를 입력하세요
-          </Box>
-        )}
-        <Box mb={20} />
-        <Button
-          mb='3'
-          borderRadius='12px'
-          height={50}
-          bgColor='blue.400'
-          _text={loginButtonStyle}
-          onPress={emailLogin}
-        >
-          로그인
-        </Button>
-        <Button
-          mb='3'
-          borderRadius='12px'
-          height={50}
-          variant='outline'
-          _text={buttonStyle}
-          onPress={onClickSignup}
-        >
-          이메일로 회원가입
-        </Button>
-        {/* TODO: <Box>아이디 찾기 | 비밀번호 찾기</Box>*/}
-        <Pressable onPress={signInWithKakao} mt='10' mb='3'>
-          <Image
-            height={50}
-            borderRadius='12px'
-            resizeMode={'contain'}
-            source={require('../../assets/img/kakao_login_large_wide.png')}
-            alt='login'
+        </HStack>
+        <Box w='80%'>
+          <Input
+            h='50'
+            placeholder='이메일 주소를 입력해주세요'
+            fontSize='14'
+            mb={3}
+            onChangeText={handleEmail}
+            ref={ref}
           />
-        </Pressable>
-      </Box>
-    </Center>
+          <Input
+            h='50'
+            placeholder='비밀번호를 입력해주세요'
+            fontSize='14'
+            mb={1}
+            type={'password'}
+            onChangeText={handlePassword}
+          />
+          {submitted && loginFailed && (
+            <Box _text={{ fontSize: 12, color: 'red.400' }}>
+              해당 계정정보가 없습니다.
+            </Box>
+          )}
+          {submitted && emailNotInput && (
+            <Box _text={{ fontSize: 12, color: 'red.400' }}>
+              이메일을 입력해주세요
+            </Box>
+          )}
+          {submitted && passwordNotInput && (
+            <Box _text={{ fontSize: 12, color: 'red.400' }}>
+              비밀번호를 입력하세요
+            </Box>
+          )}
+          <Box mb={20} />
+          <Button
+            mb='3'
+            borderRadius='12px'
+            height={50}
+            bgColor='blue.400'
+            _text={loginButtonStyle}
+            onPress={emailLogin}
+          >
+            로그인
+          </Button>
+          <Button
+            mb='3'
+            borderRadius='12px'
+            height={50}
+            variant='outline'
+            _text={buttonStyle}
+            onPress={onClickSignup}
+          >
+            이메일로 회원가입
+          </Button>
+          {/* TODO: <Box>아이디 찾기 | 비밀번호 찾기</Box>*/}
+          <Pressable onPress={signInWithKakao} mt='10' mb='3'>
+            <Image
+              height={50}
+              borderRadius='12px'
+              resizeMode={'contain'}
+              source={require('../../assets/img/kakao_login_large_wide.png')}
+              alt='login'
+            />
+          </Pressable>
+        </Box>
+      </Center>
+    </ScrollView>
   )
 }
 

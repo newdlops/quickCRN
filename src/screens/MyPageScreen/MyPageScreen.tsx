@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import { useLazyLogoutQuery } from '../../service/user'
 import { useSelector } from 'react-redux'
 
-function MyPageScreen({ navigation }): JSX.Element {
+function MyPageScreen({ navigation }): React.JSX.Element {
   const [scroll, setScroll] = useState(true)
   const user = useSelector(state => state.user.user)
   const [logout] = useLazyLogoutQuery()

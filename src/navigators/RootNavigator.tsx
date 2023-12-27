@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react'
-import { Box, Pressable, KeyboardAvoidingView } from 'native-base'
+import { Box } from 'native-base'
 import {
   NavigationContainer,
   useNavigationContainerRef,
 } from '@react-navigation/native'
-import { useFlipper } from '@react-navigation/devtools'
+//TypeChecking
+import type { NativeStackScreenProps } from '@react-navigation/native-stack'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 //import screens
 import LoginScreen from '@screens/LoginScreen/LoginScreen'
@@ -14,17 +15,14 @@ import SearchProductDetailScreen from '@screens/SearchProductScreen/SearchProduc
 
 //header
 import SearchProductDetailHeader from '@navigators/MainTabHeader/ProjectStatusHeader'
+import ProjectStatusHeader from '@navigators/MainTabHeader/ProjectStatusHeader'
 
 //bottom tab
 import MainTabNavigator from './MainTabNavigator'
 
 //RootHeader
 import SearchHeader from './RootHeader/SearchHeader'
-
-//TypeChecking
-import type { NativeStackScreenProps } from '@react-navigation/native-stack'
 import ProjectStatusDetail from '@screens/ProjectStatus/ProjectStatusDetail'
-import ProjectStatusHeader from '@navigators/MainTabHeader/ProjectStatusHeader'
 import SignupScreen from '@screens/SignupScreen/SignupScreen'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { useLazyUserTokenLoginQuery } from '../service/user'
@@ -33,7 +31,6 @@ import { setUser } from '@store/reducers/userSlice'
 import PersonalInformationPolicyScreen from '@screens/MyPageScreen/PersonalInformationPolicyScreen'
 import ServiceAgreementScreen from '@screens/MyPageScreen/ServiceAgreementScreen'
 import EditUserInfoScreen from '@screens/MyPageScreen/EditUserInfoScreen'
-import { Keyboard, Platform } from 'react-native'
 import InquiryScreen from '@screens/InquiryScreen/InquiryScreen'
 import NoticeList from '@screens/Notice/NoticeList'
 import FaqList from '@screens/MyPageScreen/Faq'
@@ -57,11 +54,10 @@ export type RootStackScreenProp = NativeStackScreenProps<RootStackParamList>
 
 const RootStack = createNativeStackNavigator<RootStackParamList>()
 
-function RootNavigator(): JSX.Element {
+function RootNavigator(): React.JSX.Element {
   const navigationRef = useNavigationContainerRef()
   const dispatch = useDispatch()
   const [tokenLoading, setTokenLoading] = useState(true)
-  useFlipper(navigationRef)
   const [tokenLogin] = useLazyUserTokenLoginQuery()
   const [auth, setAuth] = useState(false)
   useEffect(() => {
@@ -86,30 +82,8 @@ function RootNavigator(): JSX.Element {
       .catch(_ => console.log('Error loading token', _))
   }, [])
 
-  const [keyboardStatus, setKeyboardStatus] = useState(false)
-
-  useEffect(() => {
-    const showSubscription = Keyboard.addListener('keyboardDidShow', () => {
-      setKeyboardStatus(true)
-    })
-    const hideSubscription = Keyboard.addListener('keyboardDidHide', () => {
-      setKeyboardStatus(false)
-    })
-
-    return () => {
-      showSubscription.remove()
-      hideSubscription.remove()
-    }
-  }, [])
-
-  const keyboarddismiss = () => {
-    console.log('platform is not web', Platform.OS != 'web')
-    if (Platform.OS != 'web') {
-      Keyboard.dismiss()
-    }
-  }
-
-  const Main = (
+  //TODO: 자동로그인 활성/비활성 버튼
+  return (
     <Box flex={1} safeArea>
       {tokenLoading ? null : (
         <NavigationContainer ref={navigationRef}>
@@ -238,30 +212,6 @@ function RootNavigator(): JSX.Element {
         </NavigationContainer>
       )}
     </Box>
-  )
-
-  //TODO: 자동로그인 활성/비활성 버튼
-  return Platform.OS == 'web' ? (
-    Main
-  ) : (
-    <KeyboardAvoidingView
-      flex={1}
-      behavior={Platform.OS === 'ios' ? 'height' : 'height'}
-      bgColor='#FFFFFF'
-    >
-      {/*{keyboardStatus && (*/}
-      {/*  <Pressable*/}
-      {/*    onPress={keyboarddismiss}*/}
-      {/*    bgColor={'red'}*/}
-      {/*    position={'absolute'}*/}
-      {/*    top={0}*/}
-      {/*    h={'100%'}*/}
-      {/*    w={'100%'}*/}
-      {/*    zIndex={999999}*/}
-      {/*  />*/}
-      {/*)}*/}
-      {Main}
-    </KeyboardAvoidingView>
   )
 }
 

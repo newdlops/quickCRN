@@ -18,7 +18,7 @@ import { ToastAlert } from '@components/ToastAlert'
 function SignupScreen({
   navigation: { navigate, goBack },
   route: { params },
-}: RootStackScreenProp): JSX.Element {
+}: RootStackScreenProp): React.JSX.Element {
   const [createUser, userinformation] = useLazyCreateUserQuery()
   const emptyForm = {
     username: '',
@@ -72,7 +72,7 @@ function SignupScreen({
   }
 
   return (
-    <Center w='100%'>
+    <Center w='100%' bgColor={'#FFFFFF'}>
       <Box safeArea p='2' w='90%' maxW='290' py='8'>
         <Heading
           size='lg'

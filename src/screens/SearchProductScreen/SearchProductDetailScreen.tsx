@@ -4,7 +4,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import { ProductDetails } from '../../type'
 import { FloatingAction } from "react-native-floating-action"
 
-function SearchProductDetailScreen({ navigation, route }): JSX.Element {
+function SearchProductDetailScreen({ navigation, route }): React.JSX.Element {
   const actions = [
     {
       text: "정보 추가 요청",

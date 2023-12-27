@@ -19,7 +19,7 @@ import { ToastAlert } from '@components/ToastAlert'
 import { Platform } from 'react-native'
 import { useCreateRequestInformationMutation } from '../../service/requestinfo'
 
-function RequestInformation(): JSX.Element {
+function RequestInformation(): React.JSX.Element {
   const loginUserInfo = useSelector(state => state.user.user)
   const emptyForm = {
     productName: '',

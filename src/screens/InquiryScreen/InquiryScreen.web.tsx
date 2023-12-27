@@ -19,7 +19,7 @@ import { useSelector } from 'react-redux'
 import { ToastAlert } from '@components/ToastAlert'
 import { Platform } from 'react-native'
 
-function InquiryScreen(): JSX.Element {
+function InquiryScreen(): React.JSX.Element {
   const loginUserInfo = useSelector(state => state.user.user)
   const emptyForm = {
     productName: '',

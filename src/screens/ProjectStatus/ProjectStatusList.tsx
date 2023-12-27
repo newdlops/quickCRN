@@ -19,7 +19,7 @@ import { useFindProjectByUserIdQuery } from '../../service/project'
 import { toDateForm } from '@utils/dateformatter'
 import { length } from 'axios'
 
-function ProjectStatusList({ navigation }): JSX.Element {
+function ProjectStatusList({ navigation }): React.JSX.Element {
   const loginUserInfo = useSelector(state => state.user.user)
   const { data } = useFindProjectByUserIdQuery(loginUserInfo._id, {
     // pollingInterval: 300,

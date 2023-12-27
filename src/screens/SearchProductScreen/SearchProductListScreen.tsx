@@ -17,7 +17,7 @@ import { ProductDetails } from '../../type'
 
 function SearchProductListScreen({
   navigation,
-}: RootStackScreenProp): JSX.Element {
+}: RootStackScreenProp): React.JSX.Element {
   const keyword: string = useSelector(
     state => state.search.productSearchKeyword,
   )

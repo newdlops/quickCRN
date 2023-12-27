@@ -15,7 +15,6 @@ const compileNodeModules = [
   'react-native-safe-area-context',
   'react-redux',
   'axios',
-  'react-native-flipper',
   'react-native-codegen',
   'react-native-screens',
   'react-native-svg',

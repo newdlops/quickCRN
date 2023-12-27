@@ -29,7 +29,7 @@ type SectionProps = PropsWithChildren<{
   title: string
 }>
 
-function Section({ children, title }: SectionProps): JSX.Element{
+function Section({ children, title }: SectionProps): React.JSX.Element{
   const isDarkMode = useColorScheme() === 'dark'
   // console.log( 'render', styles );
   return (
@@ -56,7 +56,7 @@ function Section({ children, title }: SectionProps): JSX.Element{
   )
 }
 
-function App(): JSX.Element{
+function App(): React.JSX.Element{
   const isDarkMode = useColorScheme() === 'dark'
   // const dka = true ? 'dsas' : 'd;slkajfds'
   // const a = ['a', 'b']

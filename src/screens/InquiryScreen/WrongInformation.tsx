@@ -21,7 +21,7 @@ import {launchCamera, launchImageLibrary} from 'react-native-image-picker'
 import { Platform } from 'react-native'
 import { useCreateWrongInformationMutation } from '../../service/wronginfo'
 
-function WrongInformation({ navigation, route }): JSX.Element {
+function WrongInformation({ navigation, route }): React.JSX.Element {
   const loginUserInfo = useSelector(state => state.user.user)
   const emptyForm = {
     productName: route.params.title ?? '',

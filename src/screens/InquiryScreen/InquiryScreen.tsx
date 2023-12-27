@@ -20,7 +20,7 @@ import { ToastAlert } from '@components/ToastAlert'
 import {launchImageLibrary} from 'react-native-image-picker'
 import { Platform } from 'react-native'
 
-function InquiryScreen(): JSX.Element {
+function InquiryScreen(): React.JSX.Element {
   const loginUserInfo = useSelector(state => state.user.user)
   const emptyForm = {
     productName: '',

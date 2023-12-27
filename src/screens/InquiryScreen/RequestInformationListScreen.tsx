@@ -16,7 +16,7 @@ import { toDateForm } from '@utils/dateformatter'
 import { IRequestInformation } from '../../type'
 import { useGetRequestInformationByUserQuery } from '../../service/requestinfo'
 
-function RequestInformationListScreen({ navigation }): JSX.Element {
+function RequestInformationListScreen({ navigation }): React.JSX.Element {
   const loginUserInfo = useSelector(state => state.user.user)
   const { data ,isLoading, error} = useGetRequestInformationByUserQuery(loginUserInfo._id, {
     refetchOnFocus: true,

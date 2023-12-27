@@ -15,7 +15,7 @@ import QCLogo from '../../assets/svg/QCLogo'
 import { CommonActions } from '@react-navigation/native'
 import { useGetRecentNoticeQuery } from '../../service/notice'
 
-function HomeScreen({ navigation }): JSX.Element {
+function HomeScreen({ navigation }): React.JSX.Element {
   useEffect(() => {
     navigation.dispatch(state => {
       return CommonActions.reset({

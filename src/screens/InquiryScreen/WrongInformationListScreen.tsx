@@ -21,7 +21,7 @@ import { toDateForm } from '@utils/dateformatter'
 import { IRequestInformation } from '../../type';
 import { useGetWrongInformationByUserQuery } from '../../service/wronginfo'
 
-function WrongInformationListScreen({ navigation }): JSX.Element {
+function WrongInformationListScreen({ navigation }): React.JSX.Element {
   const loginUserInfo = useSelector(state => state.user.user)
   const { data ,isLoading, error} = useGetWrongInformationByUserQuery(loginUserInfo._id, {
     refetchOnFocus: true,

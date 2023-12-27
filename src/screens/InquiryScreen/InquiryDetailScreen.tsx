@@ -16,7 +16,7 @@ import { PressableProps } from 'react-native'
 import { getDetail } from '../../api/project'
 import { toDateForm } from '@utils/dateformatter';
 
-function InquiryDetailScreen({ route }): JSX.Element {
+function InquiryDetailScreen({ route }): React.JSX.Element {
   React.useEffect(() => {
     console.log(route)
     getDetail(
