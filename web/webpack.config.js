@@ -2,7 +2,7 @@ const path = require('path')
 
 const webpack = require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
-
+const CopyPlugin = require('copy-webpack-plugin')
 const appDirectory = path.resolve(__dirname, '../')
 const { presets } = require(`${appDirectory}/babel.config.js`)
 
@@ -19,6 +19,7 @@ const compileNodeModules = [
   'react-native-screens',
   'react-native-svg',
   'react-native-vector-icons',
+  'react-native-floating-action',
 ].map(moduleName => path.resolve(appDirectory, `node_modules/${moduleName}`))
 
 const babelLoaderConfiguration = {
@@ -50,11 +51,14 @@ const svgLoaderConfiguration = {
 }
 
 const imageLoaderConfiguration = {
-  test: /\.(gif|jpe?g|png)$/,
+  test: /\.(gif|jpe?g|png)$/i,
   use: {
-    loader: 'url-loader',
+    loader: 'file-loader',
     options: {
+      outputPath: path.resolve(appDirectory, 'src/assets/img'),
+      publicPath: '/assets/img',
       name: '[name].[ext]',
+      esModule: false,
     },
   },
 }
@@ -66,7 +70,7 @@ module.exports = {
   output: {
     path: path.resolve(appDirectory, 'public'),
     publicPath: '/',
-    filename: 'rnw_blogpost.bundle.js',
+    filename: 'quickC.bundle.js',
   },
   resolve: {
     extensions: ['.web.tsx', '.web.ts', '.tsx', '.ts', '.web.js', '.js'],
@@ -91,6 +95,14 @@ module.exports = {
     ],
   },
   plugins: [
+    new CopyPlugin({
+      patterns: [
+        {
+          from: path.resolve(__dirname, '../src', 'assets'),
+          to: path.resolve(__dirname, '../public', 'assets'),
+        },
+      ],
+    }),
     new HtmlWebpackPlugin({
       template: path.join(appDirectory, 'index.html'),
     }),

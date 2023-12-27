@@ -6,12 +6,12 @@ import {
   FormControl,
   Heading,
   Input,
-  KeyboardAvoidingView,
   useToast,
   VStack,
+  ScrollView,
 } from 'native-base'
 import React, { useState } from 'react'
-import { Platform } from 'react-native'
+import { Dimensions, Platform } from 'react-native'
 import { useLazyCreateUserQuery } from '../../service/user'
 import { ToastAlert } from '@components/ToastAlert'
 
@@ -72,8 +72,9 @@ function SignupScreen({
   }
 
   return (
-    <Center w='100%' bgColor={'#FFFFFF'}>
-      <Box safeArea p='2' w='90%' maxW='290' py='8'>
+    <ScrollView>
+      <Center w='100%' bgColor={'#FFFFFF'} h={Dimensions.get('window').height}>
+        <Box safeArea p='2' w='90%' maxW='290' py='8'>
         <Heading
           size='lg'
           color='coolGray.800'
@@ -161,7 +162,8 @@ function SignupScreen({
           </Button>
         </VStack>
       </Box>
-    </Center>
+      </Center>
+    </ScrollView>
   )
 }
 
