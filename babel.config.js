@@ -28,7 +28,7 @@ module.exports = {
           '@screens': './src/screens',
           '@store': './src/store',
           '@utils': './src/utils',
-          '^react-native$': 'react-native-web',
+          // '^react-native$': 'react-native-web',
           // 웹빌드가 아닐때는 주석처리한다(react-native를 모두 react-native로 대체함
           // TODO 웹, 앱 설정파일을 별도로 만들어서 자동화
         },

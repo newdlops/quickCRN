@@ -7,7 +7,7 @@ import {
   VStack,
   ScrollView,
   Text,
-  Pressable,
+  Pressable, Image,
 } from 'native-base'
 import React from 'react'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
@@ -15,6 +15,7 @@ import Entypo from 'react-native-vector-icons/Entypo'
 import { PressableProps } from 'react-native'
 import { getDetail } from '../../api/project'
 import { toDateForm } from '@utils/dateformatter'
+import FontAwesome from 'react-native-vector-icons/FontAwesome'
 
 function ProjectStatusDetail({ route }): React.JSX.Element {
   React.useEffect(() => {
@@ -26,7 +27,7 @@ function ProjectStatusDetail({ route }): React.JSX.Element {
     )
   }, [])
   const [data, setData] = React.useState()
-
+  console.log('data', data)
   return (
     <ScrollView>
       <Center mt={3}>
@@ -50,7 +51,9 @@ function ProjectStatusDetail({ route }): React.JSX.Element {
               justifyContent={'space-between'}
             >
               <Text>상태</Text>
-              <Text fontSize={16}>{data?.projectStatus ? '완료' : '진행중'}</Text>
+              <Text fontSize={16}>
+                {data?.projectStatus ? '완료' : '진행중'}
+              </Text>
             </HStack>
             <HStack
               alignItems={'center'}
@@ -84,6 +87,32 @@ function ProjectStatusDetail({ route }): React.JSX.Element {
             </Text>
             <Text fontSize={16}>{data?.content}</Text>
           </VStack>
+          {data?.photos.length > 0 && (
+            <>
+              <Box bg='gray.400' mt={5} mb={5} h={2 / 3} w='100%' />
+              <VStack mb={1} justifyContent={'space-between'}>
+                <Text fontSize={18} fontWeight={'bold'} mb={2}>
+                  첨부 이미지
+                </Text>
+                <ScrollView horizontal>
+                  {data.photos?.map((v, i) => {
+                    console.log('값', v)
+                    return (
+                      <Box key={i} mr={3}>
+                        <Image
+                          borderRadius={10}
+                          h='200px'
+                          w='200px'
+                          source={{ uri: v }}
+                          alt={'첨부이미지'}
+                        />
+                      </Box>
+                    )
+                  })}
+                </ScrollView>
+              </VStack>
+            </>
+          )}
           <Box bg='gray.400' mt={5} h={2 / 3} w='100%' />
           <VStack mt={5}>
             <HStack

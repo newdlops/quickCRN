@@ -11,7 +11,7 @@ import {
   FormControl,
   VStack,
   ScrollView,
-  TextArea, useToast,
+  TextArea, useToast, Image,
 } from 'native-base'
 import React, { useState } from 'react'
 import { useCreateInquiryMutation } from '../../service/inquiry'
@@ -19,6 +19,7 @@ import { useSelector } from 'react-redux'
 import { ToastAlert } from '@components/ToastAlert'
 import {launchImageLibrary} from 'react-native-image-picker'
 import { Platform } from 'react-native'
+import FontAwesome from 'react-native-vector-icons/FontAwesome'
 
 function InquiryScreen(): React.JSX.Element {
   const loginUserInfo = useSelector(state => state.user.user)
@@ -30,7 +31,7 @@ function InquiryScreen(): React.JSX.Element {
   }
   const [form, setForm] = useState(emptyForm)
   const [submit, setSubmit] = useState(false)
-  const [createInquiry, result] = useCreateInquiryMutation()
+  const [createInquiry] = useCreateInquiryMutation()
   const toast = useToast()
   const handleForm = (key: string) => (e: string) => {
     setForm({ ...form, [key]: e })
@@ -114,6 +115,12 @@ function InquiryScreen(): React.JSX.Element {
       console.log('camera response', files)
     })
   }
+
+  const removeImage = (itemNo) => {
+    const photos = form.photos.filter((_, i)=>itemNo!=i)
+    setForm({...form, photos: photos})
+  }
+
   return (
     <ScrollView>
       <VStack flex={1} alignItems={'center'} bg='white'>
@@ -150,9 +157,38 @@ function InquiryScreen(): React.JSX.Element {
               onChangeText={handleForm('contact')}
             />
           </FormControl>
-
+          <ScrollView horizontal>
+            {form.photos?.map((v, i) => {
+              console.log('값', v)
+              return (
+                <Box key={i} mr={3}>
+                  <Icon
+                    position={'absolute'}
+                    right={1}
+                    top={1}
+                    zIndex={99}
+                    as={FontAwesome}
+                    name='close'
+                    color='black'
+                    alignContent={'center'}
+                    justifyContent={'space-between'}
+                    size={10}
+                    ml={'3'}
+                    onPress={() => removeImage(i)}
+                  />
+                  <Image
+                    borderRadius={10}
+                    h='200px'
+                    w='200px'
+                    source={{ uri: v.uri }}
+                    alt={'첨부이미지'}
+                  />
+                </Box>
+              )
+            })}
+          </ScrollView>
           <Button
-            mt='16'
+            mt='8'
             _text={{ fontWeight: 'bold', fontSize: 16 }}
             bgColor='blue.500'
             onPress={submitFormClick}
