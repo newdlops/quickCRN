@@ -7,17 +7,22 @@ import {
   VStack,
   ScrollView,
   Text,
-  Pressable, Image,
+  Pressable, Image, Modal,
 } from 'native-base'
-import React from 'react'
+import React, { useState } from 'react'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import Entypo from 'react-native-vector-icons/Entypo'
-import { PressableProps } from 'react-native'
+import { Dimensions, PressableProps } from 'react-native'
 import { getDetail } from '../../api/project'
 import { toDateForm } from '@utils/dateformatter'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
+import ImageView from 'react-native-image-viewing'
 
 function ProjectStatusDetail({ route }): React.JSX.Element {
+  const [imgModal, setImgModal] = useState({
+    open: false,
+    uri: null,
+  })
   React.useEffect(() => {
     console.log(route)
     getDetail(
@@ -28,119 +33,140 @@ function ProjectStatusDetail({ route }): React.JSX.Element {
   }, [])
   const [data, setData] = React.useState()
   console.log('data', data)
+
+  const zoomImage = (index) => {
+    setImgModal({
+      open: true,
+      index: index,
+    })
+  }
+
   return (
-    <ScrollView>
-      <Center mt={3}>
-        <Box
-          width={80}
-          // height={56}
-          bg={'white'}
-          borderRadius={16}
-          shadow={1}
-          p={5}
-        >
-          <HStack mb={3}>
-            <Box _text={{ fontSize: 24, fontWeight: 'bold' }}>
-              {data?.projectname}
-            </Box>
-          </HStack>
-          <VStack mt={2}>
-            <HStack
-              alignItems={'center'}
-              mb={1}
-              justifyContent={'space-between'}
-            >
-              <Text>상태</Text>
-              <Text fontSize={16}>
-                {data?.projectStatus ? '완료' : '진행중'}
-              </Text>
+    <>
+      <ImageView
+        images={data?.photos.map(v => ({ uri: v })) ?? []}
+        imageIndex={imgModal.index}
+        visible={imgModal.open}
+        onRequestClose={() => setImgModal({ ...imgModal, open: false })}
+      />
+      <ScrollView>
+        <Center mt={3}>
+          <Box
+            width={80}
+            // height={56}
+            bg={'white'}
+            borderRadius={16}
+            shadow={1}
+            p={5}
+          >
+            <HStack mb={3}>
+              <Box _text={{ fontSize: 24, fontWeight: 'bold' }}>
+                {data?.projectname}
+              </Box>
             </HStack>
-            <HStack
-              alignItems={'center'}
-              mb={1}
-              justifyContent={'space-between'}
-            >
-              <Text>신청인</Text>
-              <Text fontSize={16}>{data?.requestUser?.email}</Text>
-            </HStack>
-            <HStack
-              alignItems={'center'}
-              mb={1}
-              justifyContent={'space-between'}
-            >
-              <Text>모델명</Text>
-              <Text fontSize={16}>{data?.modelName}</Text>
-            </HStack>
-            <HStack
-              alignItems={'center'}
-              mb={1}
-              justifyContent={'space-between'}
-            >
-              <Text>제조사</Text>
-              <Text fontSize={16}>{data?.manufacture}</Text>
-            </HStack>
-          </VStack>
-          <Box bg='gray.400' mt={5} mb={5} h={2 / 3} w='100%' />
-          <VStack mb={1} justifyContent={'space-between'}>
-            <Text fontSize={18} fontWeight={'bold'} mb={2}>
-              문의 내용
-            </Text>
-            <Text fontSize={16}>{data?.content}</Text>
-          </VStack>
-          {data?.photos.length > 0 && (
-            <>
-              <Box bg='gray.400' mt={5} mb={5} h={2 / 3} w='100%' />
-              <VStack mb={1} justifyContent={'space-between'}>
-                <Text fontSize={18} fontWeight={'bold'} mb={2}>
-                  첨부 이미지
+            <VStack mt={2}>
+              <HStack
+                alignItems={'center'}
+                mb={1}
+                justifyContent={'space-between'}
+              >
+                <Text>상태</Text>
+                <Text fontSize={16}>
+                  {data?.projectStatus ? '완료' : '진행중'}
                 </Text>
-                <ScrollView horizontal>
-                  {data.photos?.map((v, i) => {
-                    console.log('값', v)
-                    return (
-                      <Box key={i} mr={3}>
-                        <Image
-                          borderRadius={10}
-                          h='200px'
-                          w='200px'
-                          source={{ uri: v }}
-                          alt={'첨부이미지'}
-                        />
-                      </Box>
-                    )
-                  })}
-                </ScrollView>
-              </VStack>
-            </>
-          )}
-          <Box bg='gray.400' mt={5} h={2 / 3} w='100%' />
-          <VStack mt={5}>
-            <HStack
-              alignItems={'center'}
-              mb={1}
-              justifyContent={'space-between'}
-            >
-              <Text>프로젝트 번호</Text>
-              <Text fontSize={16}>{data?.projectNumber}</Text>
-            </HStack>
-            <HStack
-              alignItems={'center'}
-              mb={1}
-              justifyContent={'space-between'}
-            >
-              <Text>프로젝트 시작일</Text>
-              <Text fontSize={16}>
-                {toDateForm(data?.projectStartDate) ?? '시작일 미정'}
+              </HStack>
+              <HStack
+                alignItems={'center'}
+                mb={1}
+                justifyContent={'space-between'}
+              >
+                <Text>신청인</Text>
+                <Text fontSize={16}>{data?.requestUser?.email}</Text>
+              </HStack>
+              <HStack
+                alignItems={'center'}
+                mb={1}
+                justifyContent={'space-between'}
+              >
+                <Text>모델명</Text>
+                <Text fontSize={16}>{data?.modelName}</Text>
+              </HStack>
+              <HStack
+                alignItems={'center'}
+                mb={1}
+                justifyContent={'space-between'}
+              >
+                <Text>제조사</Text>
+                <Text fontSize={16}>{data?.manufacture}</Text>
+              </HStack>
+            </VStack>
+            <Box bg='gray.400' mt={5} mb={5} h={2 / 3} w='100%' />
+            <VStack mb={1} justifyContent={'space-between'}>
+              <Text fontSize={18} fontWeight={'bold'} mb={2}>
+                문의 내용
               </Text>
-            </HStack>
-          </VStack>
-        </Box>
-      </Center>
-      {data?.projectItems.map((v, i) => (
-        <ProjectSubItem data={v} title={v.projectItemName} key={i} />
-      ))}
-      <Box h='100px' />
-    </ScrollView>
+              <Text fontSize={16}>{data?.content}</Text>
+            </VStack>
+            {data?.photos.length > 0 && (
+              <>
+                <Box bg='gray.400' mt={5} mb={5} h={2 / 3} w='100%' />
+                <VStack mb={1} justifyContent={'space-between'}>
+                  <Text fontSize={18} fontWeight={'bold'} mb={2}>
+                    첨부 이미지
+                  </Text>
+                  <ScrollView horizontal>
+                    {data.photos?.map((v, i) => {
+                      return (
+                        <Pressable
+                          key={i}
+                          mr={3}
+                          onPress={() => zoomImage(i)}
+                        >
+                          <Image
+                            borderRadius={10}
+                            h='200px'
+                            w='200px'
+                            source={{ uri: v }}
+                            alt={'첨부이미지'}
+                            minScale={0.1}
+                            maxScale={10}
+                          />
+                        </Pressable>
+                      )
+                    })}
+                  </ScrollView>
+                </VStack>
+              </>
+            )}
+            <Box bg='gray.400' mt={5} h={2 / 3} w='100%' />
+            <VStack mt={5}>
+              <HStack
+                alignItems={'center'}
+                mb={1}
+                justifyContent={'space-between'}
+              >
+                <Text>프로젝트 번호</Text>
+                <Text fontSize={16}>{data?.projectNumber}</Text>
+              </HStack>
+              <HStack
+                alignItems={'center'}
+                mb={1}
+                justifyContent={'space-between'}
+              >
+                <Text>프로젝트 시작일</Text>
+                <Text fontSize={16}>
+                  {toDateForm(data?.projectStartDate) ?? '시작일 미정'}
+                </Text>
+              </HStack>
+            </VStack>
+          </Box>
+        </Center>
+        {data?.projectItems.map((v, i) => (
+          <ProjectSubItem data={v} title={v.projectItemName} key={i} />
+        ))}
+        <Box h='100px' />
+      </ScrollView>
+    </>
   )
 }
 
@@ -264,6 +290,29 @@ function ProjectStepStatus({ status, complete }) {
         {status}
       </Box>
     </VStack>
+  )
+}
+
+
+function ImageModal({ state, onClose }) {
+  return (
+    <Center>
+      <Modal isOpen={state.open} size={'full'}>
+        <Modal.Content maxWidth='100%'>
+          <Modal.CloseButton onPress={onClose}/>
+          <Modal.Header>첨부파일 보기</Modal.Header>
+          <Modal.Body h={800}>
+            <Box bgColor={'yellow.200'} h={'100%'}>
+              <Image style={{width:300, height:300}}
+                     source={{uri:state.uri}}
+                     alt={'test'}
+                     bgColor={'blue.500'}
+              />
+            </Box>
+          </Modal.Body>
+        </Modal.Content>
+      </Modal>
+    </Center>
   )
 }
 

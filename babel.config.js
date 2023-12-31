@@ -34,5 +34,7 @@ module.exports = {
         },
       },
     ],
+    '@babel/plugin-proposal-export-namespace-from', // reanimated web
+    'react-native-reanimated/plugin', // 항상 가장 마지막에 와야함
   ],
 }

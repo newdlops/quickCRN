@@ -20,6 +20,7 @@ import { ToastAlert } from '@components/ToastAlert'
 import {launchImageLibrary} from 'react-native-image-picker'
 import { Platform } from 'react-native'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
+import ImageView from 'react-native-image-viewing'
 
 function InquiryScreen(): React.JSX.Element {
   const loginUserInfo = useSelector(state => state.user.user)
@@ -32,6 +33,10 @@ function InquiryScreen(): React.JSX.Element {
   const [form, setForm] = useState(emptyForm)
   const [submit, setSubmit] = useState(false)
   const [createInquiry] = useCreateInquiryMutation()
+  const [imgModal, setImgModal] = useState({
+    index: 0,
+    open: false,
+  })
   const toast = useToast()
   const handleForm = (key: string) => (e: string) => {
     setForm({ ...form, [key]: e })
@@ -122,99 +127,116 @@ function InquiryScreen(): React.JSX.Element {
   }
 
   return (
-    <ScrollView>
-      <VStack flex={1} alignItems={'center'} bg='white'>
-        <VStack w='80%' space={3} mt='5'>
-          <FormControl isRequired>
-            <FormControl.Label>제품명</FormControl.Label>
-            <Input
-              placeholder='문의하실 제품명을 입력해주세요'
-              value={form.productName}
-              onChangeText={handleForm('productName')}
-            />
-          </FormControl>
-          <FormControl isRequired>
-            <FormControl.Label>제조사</FormControl.Label>
-            <Input
-              placeholder='제품의 제조사를 입력해주세요'
-              value={form.manufactureName}
-              onChangeText={handleForm('manufactureName')}
-            />
-          </FormControl>
-          <FormControl>
-            <FormControl.Label>문의내용</FormControl.Label>
-            <TextArea
-              placeholder='문의내용을 입력해주세요'
-              value={form.content}
-              onChangeText={handleForm('content')}
-            />
-          </FormControl>
-          <FormControl isRequired>
-            <FormControl.Label>연락처</FormControl.Label>
-            <Input
-              placeholder='연락받으실 연락처를 입력하세요'
-              value={form.contact}
-              onChangeText={handleForm('contact')}
-            />
-          </FormControl>
-          <ScrollView horizontal>
-            {form.photos?.map((v, i) => {
-              console.log('값', v)
-              return (
-                <Box key={i} mr={3}>
-                  <Icon
-                    position={'absolute'}
-                    right={1}
-                    top={1}
-                    zIndex={99}
-                    as={FontAwesome}
-                    name='close'
-                    color='black'
-                    alignContent={'center'}
-                    justifyContent={'space-between'}
-                    size={10}
-                    ml={'3'}
-                    onPress={() => removeImage(i)}
-                  />
-                  <Image
-                    borderRadius={10}
-                    h='200px'
-                    w='200px'
-                    source={{ uri: v.uri }}
-                    alt={'첨부이미지'}
-                  />
-                </Box>
-              )
-            })}
-          </ScrollView>
-          <Button
-            mt='8'
-            _text={{ fontWeight: 'bold', fontSize: 16 }}
-            bgColor='blue.500'
-            onPress={submitFormClick}
-          >
-            문의
-          </Button>
-          {/*<Button*/}
-          {/*  mt='1'*/}
-          {/*  _text={{ fontWeight: 'bold', fontSize: 16, color: '#000000' }}*/}
-          {/*  variant='outline'*/}
-          {/*  onPress={cancel}*/}
-          {/*>*/}
-          {/*  취소*/}
-          {/*</Button>*/}
-          <Button
-            mt='1'
-            _text={{ fontWeight: 'bold', fontSize: 16 }}
-            bgColor='purple.300'
-            onPress={attachImage}
-          >
-            사진첨부
-          </Button>
-          <Box h={'100px'}></Box>
+    <>
+      <ImageView
+        images={form.photos?.map(v => ({ uri: v.uri })) ?? []}
+        imageIndex={imgModal.index}
+        visible={imgModal.open}
+        onRequestClose={() => setImgModal({ ...imgModal, open: false })}
+      />
+      <ScrollView>
+        <VStack flex={1} alignItems={'center'} bg='white'>
+          <VStack w='80%' space={3} mt='5'>
+            <FormControl isRequired>
+              <FormControl.Label>제품명</FormControl.Label>
+              <Input
+                placeholder='문의하실 제품명을 입력해주세요'
+                value={form.productName}
+                onChangeText={handleForm('productName')}
+              />
+            </FormControl>
+            <FormControl isRequired>
+              <FormControl.Label>제조사</FormControl.Label>
+              <Input
+                placeholder='제품의 제조사를 입력해주세요'
+                value={form.manufactureName}
+                onChangeText={handleForm('manufactureName')}
+              />
+            </FormControl>
+            <FormControl>
+              <FormControl.Label>문의내용</FormControl.Label>
+              <TextArea
+                placeholder='문의내용을 입력해주세요'
+                value={form.content}
+                onChangeText={handleForm('content')}
+              />
+            </FormControl>
+            <FormControl isRequired>
+              <FormControl.Label>연락처</FormControl.Label>
+              <Input
+                placeholder='연락받으실 연락처를 입력하세요'
+                value={form.contact}
+                onChangeText={handleForm('contact')}
+              />
+            </FormControl>
+            <ScrollView horizontal>
+              {form.photos?.map((v, i) => {
+                console.log('값', v)
+                return (
+                  <Box key={i} mr={3}>
+                    <Icon
+                      position={'absolute'}
+                      right={1}
+                      top={1}
+                      zIndex={99}
+                      as={FontAwesome}
+                      name='close'
+                      color='black'
+                      alignContent={'center'}
+                      justifyContent={'space-between'}
+                      size={10}
+                      ml={'3'}
+                      onPress={() => removeImage(i)}
+                    />
+                    <Pressable
+                      onPress={() =>
+                        setImgModal({
+                          open: true,
+                          index: i,
+                        })
+                      }
+                    >
+                      <Image
+                        borderRadius={10}
+                        h='200px'
+                        w='200px'
+                        source={{ uri: v.uri }}
+                        alt={'첨부이미지'}
+                      />
+                    </Pressable>
+                  </Box>
+                )
+              })}
+            </ScrollView>
+            <Button
+              mt='8'
+              _text={{ fontWeight: 'bold', fontSize: 16 }}
+              bgColor='blue.500'
+              onPress={submitFormClick}
+            >
+              문의
+            </Button>
+            {/*<Button*/}
+            {/*  mt='1'*/}
+            {/*  _text={{ fontWeight: 'bold', fontSize: 16, color: '#000000' }}*/}
+            {/*  variant='outline'*/}
+            {/*  onPress={cancel}*/}
+            {/*>*/}
+            {/*  취소*/}
+            {/*</Button>*/}
+            <Button
+              mt='1'
+              _text={{ fontWeight: 'bold', fontSize: 16 }}
+              bgColor='purple.300'
+              onPress={attachImage}
+            >
+              사진첨부
+            </Button>
+            <Box h={'100px'}></Box>
+          </VStack>
         </VStack>
-      </VStack>
-    </ScrollView>
+      </ScrollView>
+    </>
   )
 }
 

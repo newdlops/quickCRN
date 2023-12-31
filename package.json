@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
+    "debug": "react-native start --experimental-debugger",
     "android": "react-native run-android",
     "ios": "react-native run-ios --simulator='iPhone 14 Pro'",
     "lint": "eslint \"./src/**\"",
@@ -12,8 +13,10 @@
     "web": "webpack serve --mode=development --config ./web/webpack.config.js"
   },
   "dependencies": {
+    "@babel/plugin-proposal-export-namespace-from": "^7.18.9",
     "@react-native-async-storage/async-storage": "^1.19.3",
     "@react-native-camera-roll/camera-roll": "^7.2.0",
+    "@react-native-community/cli": "^13.2.0",
     "@react-native-seoul/kakao-login": "^5.3.0",
     "@react-navigation/bottom-tabs": "^6.5.7",
     "@react-navigation/devtools": "^6.0.18",
@@ -29,8 +32,11 @@
     "react-native": "0.73.1",
     "react-native-avoid-softinput": "^3.1.5",
     "react-native-floating-action": "^1.22.0",
+    "react-native-gesture-handler": "^2.14.0",
     "react-native-image-picker": "^7.1.0",
+    "react-native-image-viewing": "^0.2.2",
     "react-native-logs": "^5.0.1",
+    "react-native-reanimated": "^3.6.1",
     "react-native-safe-area-context": "3.3.2",
     "react-native-screens": "^3.20.0",
     "react-native-svg": "14.1.0",
