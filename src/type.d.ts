@@ -108,9 +108,10 @@ export interface IProject {
   modelName: string
   manufacture: string
   projectNumber: string
-  projectStartDate: Date
+  projectStartDate: Date | string
   projectStatus: boolean
   projectItems: IProjectItem[]
+  photos: string[]
   createdAt: Date
   updatedAt: Date
   checkDate: Date

@@ -45,9 +45,9 @@ export interface RootStackParamList {
   SearchProduct: undefined
   SearchProductList: undefined
   SearchProductDetail: undefined
-  ProjectStatusDetail: undefined
+  ProjectStatusDetail: { projectId: string } | undefined
 
-  [index: string]: object | undefined
+  [index: string]: undefined | any
 }
 
 export type RootStackScreenProp = NativeStackScreenProps<RootStackParamList>

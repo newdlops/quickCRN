@@ -6,6 +6,11 @@ interface ProjectResponse {
   msg: IProject[]
 }
 
+interface ProjectDetailResponse {
+  status: string
+  msg: IProject
+}
+
 const projectApi = api.injectEndpoints({
   endpoints: build => ({
     findProjectByUserId: build.query<ProjectResponse, string>({
@@ -17,7 +22,11 @@ const projectApi = api.injectEndpoints({
               .concat({ id: 'LIST', type: 'Project' })
           : [{ type: 'Project', id: 'LIST' }],
     }),
+    findProjectById: build.query<ProjectDetailResponse, string>({
+      query: (id: string) => `/project/project/${id}`,
+      providesTags: (_result, _error, id) => [{type: 'Project', id: id}],
+    }),
   }),
 })
 
-export const { useFindProjectByUserIdQuery } = projectApi
+export const { useFindProjectByUserIdQuery, useFindProjectByIdQuery } = projectApi

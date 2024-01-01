@@ -1,6 +1,6 @@
 import React from 'react'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
-//import screens
+
 import HomeScreen from '@screens/HomeScreen/HomeScreen'
 import ProjectStatusList from '@screens/ProjectStatus/ProjectStatusList'
 import MainTabBar from './MainTabBar/MainTabBar'
@@ -9,7 +9,20 @@ import ProjectStatusHeader from '@navigators/MainTabHeader/ProjectStatusHeader'
 import InquiryScreen from '@screens/InquiryScreen/InquiryScreen'
 import MyPageScreen from '@screens/MyPageScreen/MyPageScreen'
 
-const Tab = createBottomTabNavigator()
+
+export interface MainTabParamList {
+  MainTab: undefined
+  ChatBot: undefined
+  ProjectStatusList: undefined
+  Mypage: undefined
+
+  [index: string]: object | undefined
+}
+
+const Tab = createBottomTabNavigator<MainTabParamList>()
+
+
+
 
 function MainTabNavigator() {
   return (

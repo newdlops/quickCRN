@@ -3,7 +3,6 @@ import {
   Box,
   HStack,
   Icon,
-  Fab,
   VStack,
   ScrollView,
   Text,
@@ -11,30 +10,22 @@ import {
 } from 'native-base'
 import React, { useState } from 'react'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
-import Entypo from 'react-native-vector-icons/Entypo'
-import { Dimensions, PressableProps } from 'react-native'
 import { getDetail } from '../../api/project'
 import { toDateForm } from '@utils/dateformatter'
-import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import ImageView from 'react-native-image-viewing'
+import { RootStackScreenProp } from '@navigators/RootNavigator.tsx'
+import { useFindProjectByIdQuery } from '../../service/project.ts'
 
-function ProjectStatusDetail({ route }): React.JSX.Element {
+
+// TODO: 공지사항 팝업창 만들기
+function ProjectStatusDetail({ route }: RootStackScreenProp) {
   const [imgModal, setImgModal] = useState({
     open: false,
-    uri: null,
+    index: 0,
   })
-  React.useEffect(() => {
-    console.log(route)
-    getDetail(
-      { _id: route.params.projectId },
-      r => setData(r.msg),
-      e => console.error(e),
-    )
-  }, [])
-  const [data, setData] = React.useState()
-  console.log('data', data)
-
-  const zoomImage = (index) => {
+  const { data } = useFindProjectByIdQuery(route.params?.projectId)
+  console.log('데이터', data)
+  const zoomImage = (index: number) => {
     setImgModal({
       open: true,
       index: index,
@@ -44,7 +35,7 @@ function ProjectStatusDetail({ route }): React.JSX.Element {
   return (
     <>
       <ImageView
-        images={data?.photos.map(v => ({ uri: v })) ?? []}
+        images={data?.msg?.photos?.map(v => ({ uri: v })) ?? []}
         imageIndex={imgModal.index}
         visible={imgModal.open}
         onRequestClose={() => setImgModal({ ...imgModal, open: false })}
@@ -61,7 +52,7 @@ function ProjectStatusDetail({ route }): React.JSX.Element {
           >
             <HStack mb={3}>
               <Box _text={{ fontSize: 24, fontWeight: 'bold' }}>
-                {data?.projectname}
+                {data?.msg.projectname}
               </Box>
             </HStack>
             <VStack mt={2}>
@@ -72,7 +63,7 @@ function ProjectStatusDetail({ route }): React.JSX.Element {
               >
                 <Text>상태</Text>
                 <Text fontSize={16}>
-                  {data?.projectStatus ? '완료' : '진행중'}
+                  {data?.msg.projectStatus ? '완료' : '진행중'}
                 </Text>
               </HStack>
               <HStack
@@ -81,7 +72,7 @@ function ProjectStatusDetail({ route }): React.JSX.Element {
                 justifyContent={'space-between'}
               >
                 <Text>신청인</Text>
-                <Text fontSize={16}>{data?.requestUser?.email}</Text>
+                <Text fontSize={16}>{data?.msg.requestUser?.email}</Text>
               </HStack>
               <HStack
                 alignItems={'center'}
@@ -89,7 +80,7 @@ function ProjectStatusDetail({ route }): React.JSX.Element {
                 justifyContent={'space-between'}
               >
                 <Text>모델명</Text>
-                <Text fontSize={16}>{data?.modelName}</Text>
+                <Text fontSize={16}>{data?.msg.modelName}</Text>
               </HStack>
               <HStack
                 alignItems={'center'}
@@ -97,7 +88,7 @@ function ProjectStatusDetail({ route }): React.JSX.Element {
                 justifyContent={'space-between'}
               >
                 <Text>제조사</Text>
-                <Text fontSize={16}>{data?.manufacture}</Text>
+                <Text fontSize={16}>{data?.msg.manufacture}</Text>
               </HStack>
             </VStack>
             <Box bg='gray.400' mt={5} mb={5} h={2 / 3} w='100%' />
@@ -105,9 +96,9 @@ function ProjectStatusDetail({ route }): React.JSX.Element {
               <Text fontSize={18} fontWeight={'bold'} mb={2}>
                 문의 내용
               </Text>
-              <Text fontSize={16}>{data?.content}</Text>
+              <Text fontSize={16}>{data?.msg.content}</Text>
             </VStack>
-            {data?.photos.length > 0 && (
+            {(data?.msg?.photos.length ?? 0) > 0 && (
               <>
                 <Box bg='gray.400' mt={5} mb={5} h={2 / 3} w='100%' />
                 <VStack mb={1} justifyContent={'space-between'}>
@@ -115,13 +106,9 @@ function ProjectStatusDetail({ route }): React.JSX.Element {
                     첨부 이미지
                   </Text>
                   <ScrollView horizontal>
-                    {data.photos?.map((v, i) => {
+                    {data?.msg?.photos?.map((v, i) => {
                       return (
-                        <Pressable
-                          key={i}
-                          mr={3}
-                          onPress={() => zoomImage(i)}
-                        >
+                        <Pressable key={i} mr={3} onPress={() => zoomImage(i)}>
                           <Image
                             borderRadius={10}
                             h='200px'
@@ -146,7 +133,7 @@ function ProjectStatusDetail({ route }): React.JSX.Element {
                 justifyContent={'space-between'}
               >
                 <Text>프로젝트 번호</Text>
-                <Text fontSize={16}>{data?.projectNumber}</Text>
+                <Text fontSize={16}>{data?.msg.projectNumber}</Text>
               </HStack>
               <HStack
                 alignItems={'center'}
@@ -155,13 +142,14 @@ function ProjectStatusDetail({ route }): React.JSX.Element {
               >
                 <Text>프로젝트 시작일</Text>
                 <Text fontSize={16}>
-                  {toDateForm(data?.projectStartDate) ?? '시작일 미정'}
+                  {toDateForm(`${data?.msg?.projectStartDate}`) ??
+                    '시작일 미정'}
                 </Text>
               </HStack>
             </VStack>
           </Box>
         </Center>
-        {data?.projectItems.map((v, i) => (
+        {data?.msg?.projectItems.map((v, i) => (
           <ProjectSubItem data={v} title={v.projectItemName} key={i} />
         ))}
         <Box h='100px' />

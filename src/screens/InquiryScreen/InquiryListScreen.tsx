@@ -10,12 +10,8 @@ import {
   Pressable,
 } from 'native-base'
 import React from 'react'
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
-import Entypo from 'react-native-vector-icons/Entypo'
 import { PressableProps } from 'react-native'
-import { findByUser } from '../../api/project'
 import { useSelector } from 'react-redux'
-import { useFindProjectByUserIdQuery } from '../../service/project'
 import { useFindInquiriesByUserQuery } from '../../service/inquiry'
 import { toDateForm } from '@utils/dateformatter'
 import { IRequestInformation } from '../../type';
