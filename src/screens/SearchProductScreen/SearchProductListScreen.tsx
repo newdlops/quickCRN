@@ -13,7 +13,6 @@ import Entypo from 'react-native-vector-icons/Entypo'
 import { useFindProductQuery } from '../../service/product'
 import { RootStackScreenProp } from '@navigators/RootNavigator'
 import { useSelector } from 'react-redux'
-import { ProductDetails } from '../../type'
 
 function SearchProductListScreen({
   navigation,
@@ -21,7 +20,7 @@ function SearchProductListScreen({
   const keyword: string = useSelector(
     state => state.search.productSearchKeyword,
   )
-  const { data, error } = useFindProductQuery(keyword)
+  const { data } = useFindProductQuery(keyword)
   const list = data?.msg ?? []
   const moveToDetail = item => {
     navigation.navigate('SearchProductDetail', { data: item })
@@ -31,7 +30,6 @@ function SearchProductListScreen({
   )
   return (
     <Center flex={1}>
-      {/* <Box>SearchProductListScreen</Box> */}
       <FlatList w='100%' data={list} renderItem={render} />
     </Center>
   )

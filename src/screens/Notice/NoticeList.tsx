@@ -2,45 +2,40 @@ import {
   Center,
   Box,
   HStack,
-  Icon,
-  Fab,
   VStack,
   ScrollView,
   Text,
   Pressable,
 } from 'native-base'
 import React from 'react'
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
-import Entypo from 'react-native-vector-icons/Entypo'
 import { PressableProps } from 'react-native'
-import { findByUser } from '../../api/project'
-import { useSelector } from 'react-redux'
 import { useGetNoticesQuery } from '../../service/notice'
 import { toDateForm } from '@utils/dateformatter'
-import { IRequestInformation } from '../../type';
+import { Notice } from '../../type'
 
-function NoticeList({ navigation }): React.JSX.Element {
-  const { data, isLoading, error } = useGetNoticesQuery('',{
+function NoticeList(): React.JSX.Element {
+  const { data } = useGetNoticesQuery('', {
     refetchOnFocus: true,
     refetchOnMountOrArgChange: true,
   })
   return (
     <ScrollView>
       {data?.msg?.map((v, i) => (
-        <NoticeDetail
-          key={i}
-          data={v}
-        />
+        <NoticeDetail key={i} data={v} />
       ))}
       <Box h='100px' />
     </ScrollView>
   )
 }
 
-function NoticeDetail(props: PressableProps) {
-  const data: IRequestInformation = props.data
+interface NoticeDetailProps extends PressableProps {
+  data: Notice
+}
+
+function NoticeDetail({ data, onPress }: NoticeDetailProps) {
+  const notice = data
   return (
-    <Pressable onPress={props.onPress}>
+    <Pressable onPress={onPress}>
       <Center m={3}>
         <Center alignItems={'center'}>
           <Box
@@ -53,16 +48,18 @@ function NoticeDetail(props: PressableProps) {
           >
             <HStack mb={3}>
               <Box _text={{ fontSize: 18, fontWeight: 'bold' }}>
-                {data.title}
+                {notice.title}
               </Box>
             </HStack>
             <VStack>
-              <Box _text={{ fontSize: 16, fontWeight: 'normal' }}>{data.content}</Box>
+              <Box _text={{ fontSize: 16, fontWeight: 'normal' }}>
+                {notice.content}
+              </Box>
             </VStack>
             <Box bg='gray.400' mt={5} h={2 / 3} w='100%' />
             <VStack mt={5}>
               <Box>
-                <Text>공지일자 : {toDateForm(data.createdAt)}</Text>
+                <Text>공지일자 : {toDateForm(notice.createdAt)}</Text>
               </Box>
             </VStack>
           </Box>

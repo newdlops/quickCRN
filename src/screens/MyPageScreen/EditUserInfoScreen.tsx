@@ -10,13 +10,13 @@ import {
   HStack,
   IconButton,
   Input,
-  KeyboardAvoidingView, ScrollView,
+  ScrollView,
   Text,
   useToast,
   VStack,
 } from 'native-base'
 import React, { useState } from 'react'
-import { Dimensions, Platform } from 'react-native'
+import { Dimensions } from 'react-native'
 import { useUpdateUserMutation } from '../../service/user'
 import { useDispatch, useSelector } from 'react-redux'
 import { setUser } from '@store/reducers/userSlice'

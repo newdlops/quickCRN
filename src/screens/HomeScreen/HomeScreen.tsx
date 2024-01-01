@@ -14,22 +14,24 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import QCLogo from '../../assets/svg/QCLogo'
 import { CommonActions } from '@react-navigation/native'
 import { useGetRecentNoticeQuery } from '../../service/notice'
+import { MainTabParamList } from '@navigators/MainTabNavigator.tsx'
+import { BottomTabScreenProps } from '@react-navigation/bottom-tabs'
 
-function HomeScreen({ navigation }): React.JSX.Element {
+type HomeScreenProp = BottomTabScreenProps<MainTabParamList, 'MainTab'>
+
+function HomeScreen({ navigation }: HomeScreenProp): React.JSX.Element {
   useEffect(() => {
-    navigation.dispatch(state => {
-      return CommonActions.reset({
+    navigation.dispatch(state =>
+      CommonActions.reset({
         ...state,
         routes: state.routes,
         index: state.routes.length - 3,
         history: [state.routes[1]],
-      })
-    })
+      }),
+    )
   }, [])
 
   const { data: notice } = useGetRecentNoticeQuery('')
-  console.log('공지사항')
-  console.log(notice)
   const gotoSearch = () => {
     navigation.navigate('SearchProductList')
   }
@@ -79,8 +81,8 @@ function HomeScreen({ navigation }): React.JSX.Element {
             >
               <Icon
                 as={FontAwesome}
-                name="search"
-                color="black"
+                name='search'
+                color='black'
                 alignContent={'center'}
                 justifyContent={'space-between'}
                 size={7}
@@ -217,15 +219,6 @@ function HomeScreen({ navigation }): React.JSX.Element {
             </Text>
           </Box>
         </Center>
-        {/*<Center height={64} alignItems={'center'} mt={2}>*/}
-        {/*  <Box*/}
-        {/*    width={80}*/}
-        {/*    height={56}*/}
-        {/*    bg={'white'}*/}
-        {/*    borderRadius={16}*/}
-        {/*    shadow={1}*/}
-        {/*  />*/}
-        {/*</Center>*/}
       </VStack>
     </ScrollView>
   )

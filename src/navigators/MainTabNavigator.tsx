@@ -9,20 +9,16 @@ import ProjectStatusHeader from '@navigators/MainTabHeader/ProjectStatusHeader'
 import InquiryScreen from '@screens/InquiryScreen/InquiryScreen'
 import MyPageScreen from '@screens/MyPageScreen/MyPageScreen'
 
-
 export interface MainTabParamList {
   MainTab: undefined
   ChatBot: undefined
   ProjectStatusList: undefined
-  Mypage: undefined
+  MyPage: undefined
 
   [index: string]: object | undefined
 }
 
 const Tab = createBottomTabNavigator<MainTabParamList>()
-
-
-
 
 function MainTabNavigator() {
   return (

@@ -1,11 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit'
+import { IUser } from '../../type'
 
 const userSlice = createSlice({
   name: 'userInformation',
   initialState: { user: {} },
   reducers: {
-    setUser: (state, action:any) => {
-      console.log('actionpayload', action.payload)
+    setUser: (state, action: { payload: IUser[]; type: string }) => {
       state.user = action.payload
     },
   },

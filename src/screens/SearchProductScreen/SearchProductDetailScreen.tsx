@@ -1,8 +1,8 @@
-import { Center, Box, Text, Icon, Fab, VStack, ScrollView } from 'native-base'
+import { Center, Box, Text, Icon, VStack, ScrollView } from 'native-base'
 import React, { useEffect } from 'react'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import { ProductDetails } from '../../type'
-import { FloatingAction } from "react-native-floating-action"
+import { FloatingAction } from 'react-native-floating-action'
 
 function SearchProductDetailScreen({ navigation, route }): React.JSX.Element {
   const actions = [

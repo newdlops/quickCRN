@@ -45,7 +45,7 @@ export interface RootStackParamList {
   SearchProduct: undefined
   SearchProductList: undefined
   SearchProductDetail: undefined
-  ProjectStatusDetail: { projectId: string } | undefined
+  ProjectStatusDetailView: { projectId: string } | undefined
 
   [index: string]: undefined | any
 }
@@ -63,22 +63,22 @@ function RootNavigator(): React.JSX.Element {
   useEffect(() => {
     AsyncStorage.getItem('token')
       .then(token => {
-        console.log('saved token', token, encodeURIComponent(token))
-        if(token){
+        if (token) {
           tokenLogin(token)
             .then(r => {
-              console.log('token login result', r)
               if (r.data?.msg) {
                 dispatch(setUser(r.data?.msg))
                 setAuth(true)
               }
               setTokenLoading(false)
             })
-            .catch(e => console.log('tokenlogin error', e))
+            // eslint-disable-next-line no-console
+            .catch(e => console.log('token login error', e))
         } else {
           setTokenLoading(false)
         }
       })
+      // eslint-disable-next-line no-console
       .catch(_ => console.log('Error loading token', _))
   }, [])
 
@@ -121,7 +121,7 @@ function RootNavigator(): React.JSX.Element {
               options={{ header: SearchProductDetailHeader }}
             />
             <RootStack.Screen
-              name='ProjectStatusDetail'
+              name='ProjectStatusDetailView'
               component={ProjectStatusDetail}
               options={{
                 title: '인증진행 상세',

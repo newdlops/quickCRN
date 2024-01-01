@@ -3,21 +3,17 @@ import {
   Box,
   HStack,
   Icon,
-  Fab,
   VStack,
   ScrollView,
   Text,
   Pressable,
 } from 'native-base'
 import React from 'react'
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import Entypo from 'react-native-vector-icons/Entypo'
 import { PressableProps } from 'react-native'
-import { findByUser } from '../../api/project'
 import { useSelector } from 'react-redux'
 import { useFindProjectByUserIdQuery } from '../../service/project'
 import { toDateForm } from '@utils/dateformatter'
-import { length } from 'axios'
 
 function ProjectStatusList({ navigation }): React.JSX.Element {
   const loginUserInfo = useSelector(state => state.user.user)
@@ -27,35 +23,18 @@ function ProjectStatusList({ navigation }): React.JSX.Element {
     refetchOnMountOrArgChange: true,
   })
   return (
-    <>
-      <ScrollView>
-        {data?.msg?.map((v, i) => (
-          <ProductStatusDetailItem
-            key={i}
-            data={v}
-            onPress={() => {
-              navigation.navigate('ProjectStatusDetail', { projectId: v._id })
-            }}
-          />
-        ))}
-        <Box h='100px' />
-      </ScrollView>
-      {/*<Fab*/}
-      {/*  renderInPortal={false}*/}
-      {/*  shadow={3}*/}
-      {/*  size="sm"*/}
-      {/*  bg="blue.500"*/}
-      {/*  // label="문의하기"*/}
-      {/*  icon={*/}
-      {/*    <Icon*/}
-      {/*      as={MaterialCommunityIcons}*/}
-      {/*      name="account-question"*/}
-      {/*      color="white"*/}
-      {/*      size="6"*/}
-      {/*    />*/}
-      {/*  }*/}
-      {/*/>*/}
-    </>
+    <ScrollView>
+      {data?.msg?.map((v, i) => (
+        <ProductStatusDetailItem
+          key={i}
+          data={v}
+          onPress={() => {
+            navigation.navigate('ProjectStatusDetail', { projectId: v._id })
+          }}
+        />
+      ))}
+      <Box h='100px' />
+    </ScrollView>
   )
 }
 

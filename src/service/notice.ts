@@ -5,6 +5,10 @@ interface NoticeResponse {
   status: string
   msg: Notice[]
 }
+interface NoticeRecentResponse {
+  status: string
+  msg: Notice
+}
 
 interface NoticeDetailResponse {
   status: string
@@ -28,7 +32,7 @@ const noticeApi = api.injectEndpoints({
       query: () => `/notice/notices`,
       providesTags: (_result, _error, id) => [{ type: 'Notice', id: id }],
     }),
-    getRecentNotice: build.query<NoticeResponse, string>({
+    getRecentNotice: build.query<NoticeRecentResponse, string>({
       query: () => `/notice/recentNotice`,
       providesTags: (_result, _error, id) => [{ type: 'Notice', id: id }],
     }),

@@ -2,20 +2,18 @@ import {
   Center,
   Box,
   HStack,
-  Icon,
   VStack,
   ScrollView,
   Text,
-  Pressable, Image, Modal,
+  Pressable,
+  Image,
 } from 'native-base'
 import React, { useState } from 'react'
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
-import { getDetail } from '../../api/project'
 import { toDateForm } from '@utils/dateformatter'
 import ImageView from 'react-native-image-viewing'
 import { RootStackScreenProp } from '@navigators/RootNavigator.tsx'
 import { useFindProjectByIdQuery } from '../../service/project.ts'
-
+import ProjectSubItem from '@screens/ProjectStatus/ProjectSubItem.tsx'
 
 // TODO: 공지사항 팝업창 만들기
 function ProjectStatusDetail({ route }: RootStackScreenProp) {
@@ -24,7 +22,6 @@ function ProjectStatusDetail({ route }: RootStackScreenProp) {
     index: 0,
   })
   const { data } = useFindProjectByIdQuery(route.params?.projectId)
-  console.log('데이터', data)
   const zoomImage = (index: number) => {
     setImgModal({
       open: true,
@@ -106,21 +103,17 @@ function ProjectStatusDetail({ route }: RootStackScreenProp) {
                     첨부 이미지
                   </Text>
                   <ScrollView horizontal>
-                    {data?.msg?.photos?.map((v, i) => {
-                      return (
-                        <Pressable key={i} mr={3} onPress={() => zoomImage(i)}>
-                          <Image
-                            borderRadius={10}
-                            h='200px'
-                            w='200px'
-                            source={{ uri: v }}
-                            alt={'첨부이미지'}
-                            minScale={0.1}
-                            maxScale={10}
-                          />
-                        </Pressable>
-                      )
-                    })}
+                    {data?.msg?.photos?.map((v, i) => (
+                      <Pressable key={i} mr={3} onPress={() => zoomImage(i)}>
+                        <Image
+                          borderRadius={10}
+                          h='200px'
+                          w='200px'
+                          source={{ uri: v }}
+                          alt={'첨부이미지'}
+                        />
+                      </Pressable>
+                    ))}
                   </ScrollView>
                 </VStack>
               </>
@@ -155,152 +148,6 @@ function ProjectStatusDetail({ route }: RootStackScreenProp) {
         <Box h='100px' />
       </ScrollView>
     </>
-  )
-}
-
-function ProjectSubItem({ title, data }) {
-  const [isOpen, setOpen] = React.useState(false)
-  const itemClick = () => {
-    setOpen(!isOpen)
-  }
-  return (
-    <Pressable onPress={itemClick}>
-      <Center mt={3}>
-        <Box
-          width={80}
-          height={isOpen ? null : 20}
-          bg={'white'}
-          borderRadius={16}
-          shadow={1}
-          p={5}
-        >
-          <HStack mb={3}>
-            <Box _text={{ fontSize: 22, fontWeight: 'bold' }}>{title}</Box>
-            <Center
-              position='absolute'
-              right={0}
-              borderRadius={'lg'}
-              bg={'blueGray.400'}
-              width={'12'}
-              height={'6'}
-              top={2}
-              _text={{ color: 'white', fontWeight: 'bold' }}
-            >
-              {data?.status ? '완료' : '진행중'}
-            </Center>
-          </HStack>
-          <Box display={isOpen ? null : 'none'}>
-            <VStack mt={2}>
-              <HStack
-                alignItems={'center'}
-                mb={1}
-                justifyContent={'space-between'}
-              >
-                <Text>견적 확인</Text>
-                <Text fontSize={16}>{toDateForm(data?.checkdate)}</Text>
-              </HStack>
-              <HStack
-                alignItems={'center'}
-                mb={1}
-                justifyContent={'space-between'}
-              >
-                <Text>시료 준비</Text>
-                <Text fontSize={16}>{data?.sample ? '완료' : '진행중'}</Text>
-              </HStack>
-              <HStack
-                alignItems={'center'}
-                mb={1}
-                justifyContent={'space-between'}
-              >
-                <Text>문서 준비</Text>
-                <Text fontSize={16}>{data?.document ? '완료' : '진행중'}</Text>
-              </HStack>
-            </VStack>
-            <Box bg='gray.400' mt={5} h={2 / 3} w='100%' />
-            <HStack w='100%' h={20} pt={3}>
-              {/* <Box bg={'gray.300'} w="90%" position={'absolute'} py={1} top={5} ml={3}></Box> */}
-              <ProjectStepStatus
-                status={'준비단계'}
-                complete={data?.processedStage > 0}
-              />
-              <ProjectStepStatus
-                status={'시험대기'}
-                complete={data?.processedStage > 1}
-              />
-              <ProjectStepStatus
-                status={'시험중'}
-                complete={data?.processedStage > 2}
-              />
-              <ProjectStepStatus
-                status={'성적서\n작성중'}
-                complete={data?.processedStage > 3}
-              />
-              <ProjectStepStatus
-                status={'성적서\n완료'}
-                complete={data?.processedStage > 4}
-              />
-              <ProjectStepStatus
-                status={'인증완료'}
-                complete={data?.processedStage > 5}
-              />
-              <ProjectStepStatus
-                status={'완료'}
-                complete={data?.processedStage > 6}
-              />
-            </HStack>
-          </Box>
-        </Box>
-      </Center>
-    </Pressable>
-  )
-}
-
-function ProjectStepStatus({ status, complete }) {
-  const color = complete ? 'blue.400' : 'gray.400'
-  return (
-    <VStack mr={2} alignItems={'center'} w={8}>
-      <Icon
-        as={MaterialCommunityIcons}
-        name='check-circle'
-        color={color}
-        alignContent={'center'}
-        justifyContent={'space-between'}
-        size={7}
-      />
-      <Box
-        _text={{
-          fontSize: 8,
-          textAlign: 'center',
-          color: color,
-          fontWeight: 'bold',
-        }}
-      >
-        {status}
-      </Box>
-    </VStack>
-  )
-}
-
-
-function ImageModal({ state, onClose }) {
-  return (
-    <Center>
-      <Modal isOpen={state.open} size={'full'}>
-        <Modal.Content maxWidth='100%'>
-          <Modal.CloseButton onPress={onClose}/>
-          <Modal.Header>첨부파일 보기</Modal.Header>
-          <Modal.Body h={800}>
-            <Box bgColor={'yellow.200'} h={'100%'}>
-              <Image style={{width:300, height:300}}
-                     source={{uri:state.uri}}
-                     alt={'test'}
-                     bgColor={'blue.500'}
-              />
-            </Box>
-          </Modal.Body>
-        </Modal.Content>
-      </Modal>
-    </Center>
   )
 }
 
