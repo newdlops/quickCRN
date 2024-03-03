@@ -29,7 +29,7 @@ function ProjectStatusList({ navigation }): React.JSX.Element {
           key={i}
           data={v}
           onPress={() => {
-            navigation.navigate('ProjectStatusDetail', { projectId: v._id })
+            navigation.navigate('ProjectStatusDetailView', { projectId: v._id })
           }}
         />
       ))}

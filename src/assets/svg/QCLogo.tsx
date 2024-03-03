@@ -1,9 +1,11 @@
 import React from 'react'
 import { Svg, Path } from 'react-native-svg'
+import Logo from './QCLogo.svg'
 
 const logoColor = '#ffd700'
 
 export default function QCLogo() {
+  return <Logo />
   return (
     <Svg
       id='Layer_1'

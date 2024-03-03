@@ -46,7 +46,7 @@ export interface RootStackParamList {
   SearchProductList: undefined
   SearchProductDetail: undefined
   ProjectStatusDetailView: { projectId: string } | undefined
-
+  EditUserInfo: undefined
   [index: string]: undefined | any
 }
 

@@ -1,7 +1,7 @@
 import { api } from './api'
 import { IUser, LoginInfo } from '../type'
 
-interface UserResponse {
+export interface UserResponse {
   status: string
   msg: IUser[]
 }
@@ -45,8 +45,8 @@ const userApi = api.injectEndpoints({
     logout: build.query<UserResponse, string>({
       query: (token: string) => `/user/logout/${encodeURIComponent(token)}`,
     }),
-    updateUser: build.mutation<UserResponse, IUser>({
-      query: (body: IUser) => ({
+    updateUser: build.mutation<UserResponse, Partial<IUser>>({
+      query: (body: Partial<IUser>) => ({
         url: `/user/user/${body._id}`,
         method: 'PUT',
         body: body,

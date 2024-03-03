@@ -4,20 +4,16 @@ import {
   Box,
   Button,
   Center,
-  CloseIcon,
   FormControl,
   Heading,
-  HStack,
-  IconButton,
   Input,
   ScrollView,
-  Text,
   useToast,
   VStack,
 } from 'native-base'
 import React, { useState } from 'react'
 import { Dimensions } from 'react-native'
-import { useUpdateUserMutation } from '../../service/user'
+import { UserResponse, useUpdateUserMutation } from '../../service/user'
 import { useDispatch, useSelector } from 'react-redux'
 import { setUser } from '@store/reducers/userSlice'
 
@@ -25,6 +21,7 @@ function EditUserInfoScreen({
   navigation: { navigate, goBack },
   route: { params },
 }: RootStackScreenProp): React.JSX.Element {
+  // @ts-ignore
   const userInfo = useSelector(state => state.user.user)
   const dispatch = useDispatch()
   const emptyForm = {
@@ -39,9 +36,11 @@ function EditUserInfoScreen({
   }
 
   const submitUserEdit = () => {
+
     updateUser({
       _id: userInfo._id,
       ...form,
+      // @ts-ignore
     }).then(updateResult => dispatch(setUser(updateResult?.data?.msg)))
   }
 
@@ -52,68 +51,68 @@ function EditUserInfoScreen({
     })
   }
 
-  const ToastAlert = ({
-    id,
-    status,
-    variant,
-    title,
-    description,
-    isClosable,
-    ...rest
-  }) => (
-    <Alert
-      maxWidth='95%'
-      alignSelf='center'
-      flexDirection='row'
-      status={status ? status : 'info'}
-      variant={variant}
-      {...rest}
-    >
-      <VStack w='100%'>
-        <HStack alignItems='center' justifyContent='space-between'>
-          <HStack alignItems='center'>
-            <Alert.Icon />
-            <Text
-              ml='3'
-              fontSize='md'
-              fontWeight='medium'
-              color={
-                variant === 'solid'
-                  ? 'lightText'
-                  : variant !== 'outline'
-                  ? 'darkText'
-                  : null
-              }
-            >
-              {title}
-            </Text>
-          </HStack>
-          {isClosable ? (
-            <IconButton
-              variant='unstyled'
-              icon={<CloseIcon size='3' />}
-              _icon={{
-                color: variant === 'solid' ? 'lightText' : 'darkText',
-              }}
-              onPress={() => toast.close(id)}
-            />
-          ) : null}
-        </HStack>
-        <Text
-          px='6'
-          color={
-            variant === 'solid'
-              ? 'lightText'
-              : variant !== 'outline'
-              ? 'darkText'
-              : null
-          }
-        >
-          {description}
-        </Text>
-      </VStack>
-    </Alert>
-  )
+  // const ToastAlert = ({
+  //   id,
+  //   status,
+  //   variant,
+  //   title,
+  //   description,
+  //   isClosable,
+  //   ...rest
+  // }) => (
+  //   <Alert
+  //     maxWidth='95%'
+  //     alignSelf='center'
+  //     flexDirection='row'
+  //     status={status ? status : 'info'}
+  //     variant={variant}
+  //     {...rest}
+  //   >
+  //     <VStack w='100%'>
+  //       <HStack alignItems='center' justifyContent='space-between'>
+  //         <HStack alignItems='center'>
+  //           <Alert.Icon />
+  //           <Text
+  //             ml='3'
+  //             fontSize='md'
+  //             fontWeight='medium'
+  //             color={
+  //               variant === 'solid'
+  //                 ? 'lightText'
+  //                 : variant !== 'outline'
+  //                 ? 'darkText'
+  //                 : null
+  //             }
+  //           >
+  //             {title}
+  //           </Text>
+  //         </HStack>
+  //         {isClosable ? (
+  //           <IconButton
+  //             variant='unstyled'
+  //             icon={<CloseIcon size='3' />}
+  //             _icon={{
+  //               color: variant === 'solid' ? 'lightText' : 'darkText',
+  //             }}
+  //             onPress={() => toast.close(id)}
+  //           />
+  //         ) : null}
+  //       </HStack>
+  //       <Text
+  //         px='6'
+  //         color={
+  //           variant === 'solid'
+  //             ? 'lightText'
+  //             : variant !== 'outline'
+  //             ? 'darkText'
+  //             : null
+  //         }
+  //       >
+  //         {description}
+  //       </Text>
+  //     </VStack>
+  //   </Alert>
+  // )
 
   return (
     <ScrollView>
