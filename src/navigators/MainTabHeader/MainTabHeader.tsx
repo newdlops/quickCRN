@@ -15,7 +15,7 @@ export default function MainTabHeader({ navigation, route, options }) {
 
   return (
     <HStack bg='green.300' alignItems='center'>
-      <Center flex={2 / 9} h={20} bg='yellow.100'>
+      <Center flex={2 / 9} h={10} w={10} bg='yellow.100'>
         <QCLogo />
       </Center>
       <Center _text={{ fontSize: 10 }}>{options.title}</Center>

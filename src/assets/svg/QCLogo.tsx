@@ -1,29 +1,17 @@
 import React from 'react'
 import { Svg, Path } from 'react-native-svg'
-import Logo from './QCLogo.svg'
-
 const logoColor = '#ffd700'
 
 export default function QCLogo() {
-  return <Logo />
   return (
     <Svg
       id='Layer_1'
-      xmlns='http://www.w3.org/2000/svg'
-      xmlnsXlink='http://www.w3.org/1999/xlink'
       x='0px'
       y='0px'
       width='100%'
+      height='100%'
       viewBox='0 0 1024 1024'
-      enableBackground='new 0 0 1024 1024'
-      xmlSpace='preserve'
     >
-      <Path
-        fill={logoColor}
-        opacity={1}
-        stroke='none'
-        d=' M0.999990,995.468628  C1.673506,995.694946 2.542020,997.100403 2.991013,996.977112  C8.759696,995.393921 7.974248,999.722595 8.061826,1002.740601  C8.268043,1009.846863 8.151135,1016.962524 8.082478,1024.537109  C5.694623,1025.000000 3.389246,1025.000000 1.000000,1025.000000  C1.000000,1015.312561 1.000000,1005.624939 0.999990,995.468628  z'
-      />
       <Path
         fill={logoColor}
         opacity={1}
