@@ -1,6 +1,7 @@
-name: quickC node server deploy
+name: quickC web app deploy
 
 on:
+  workflow_dispatch:
   push:
     branches:
       - master
@@ -8,6 +9,8 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    env:
+      IS_WEB: true
     steps:
     - uses: actions/checkout@v2
     - name: build server
@@ -23,12 +26,10 @@ jobs:
         key: ${{ secrets.EC2_SSH_KEY }}
         port: 22
         script: |
-          cd docker/quickback/app
-          rm -rf config
-          rm -rf src
-          rm -rf node_modules
+          cd docker/quickCweb/public
+          rm -rf *
           cd ..
-          docker stack rm qback
+          docker stack rm qweb
 
     - name: Copy file to EC2
       uses: appleboy/scp-action@v0.1.7
@@ -37,8 +38,8 @@ jobs:
         username: ${{ secrets.EC2_USER }}
         key: ${{ secrets.EC2_SSH_KEY }}
         port: 22
-        source: "build/config/*, build/src/*, node_modules/*"
-        target: "docker/quickback/app"
+        source: "public/*"
+        target: "docker/quickCweb/public"
 
     - name: Restart Docker Container
       uses: appleboy/ssh-action@master
@@ -48,11 +49,6 @@ jobs:
         key: ${{ secrets.EC2_SSH_KEY }}
         port: 22
         script: |
-          cd docker/quickback/app/build
-          cp -r src ..
-          cp -r config ..
-          cd ..
-          rm -rf build
-          cd ..
-          docker stack deploy -c docker-compose.yml qback
+          cd docker/quickCweb
+          docker stack deploy -c docker-compose.yml qweb
           
