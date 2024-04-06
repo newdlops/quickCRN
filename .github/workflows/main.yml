@@ -1,0 +1,58 @@
+name: quickC node server deploy
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: build server
+      run: |
+          npm install
+          npm run build
+
+    - name: clean app folder
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.EC2_HOST }}
+        username: ${{ secrets.EC2_USER }}
+        key: ${{ secrets.EC2_SSH_KEY }}
+        port: 22
+        script: |
+          cd docker/quickback/app
+          rm -rf config
+          rm -rf src
+          rm -rf node_modules
+          cd ..
+          docker stack rm qback
+
+    - name: Copy file to EC2
+      uses: appleboy/scp-action@v0.1.7
+      with:
+        host: ${{ secrets.EC2_HOST }}
+        username: ${{ secrets.EC2_USER }}
+        key: ${{ secrets.EC2_SSH_KEY }}
+        port: 22
+        source: "build/config/*, build/src/*, node_modules/*"
+        target: "docker/quickback/app"
+
+    - name: Restart Docker Container
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.EC2_HOST }}
+        username: ${{ secrets.EC2_USER }}
+        key: ${{ secrets.EC2_SSH_KEY }}
+        port: 22
+        script: |
+          cd docker/quickback/app/build
+          cp -r src ..
+          cp -r config ..
+          cd ..
+          rm -rf build
+          cd ..
+          docker stack deploy -c docker-compose.yml qback
+          
