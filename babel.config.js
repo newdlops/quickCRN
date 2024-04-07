@@ -1,7 +1,8 @@
 module.exports = function(api) {
   api.cache(true)
   const isweb = process.env.IS_WEB
-  const alias = {
+  console.log('isweb?', isweb)
+  let alias = {
     '~': './src',
     '@components': './src/components',
     '@navigators': './src/navigators',

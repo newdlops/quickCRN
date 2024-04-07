@@ -16,7 +16,7 @@ jobs:
     - name: build server
       run: |
           yarn install
-          yarn run build
+          npm run build
 
     - name: clean app folder
       uses: appleboy/ssh-action@master
