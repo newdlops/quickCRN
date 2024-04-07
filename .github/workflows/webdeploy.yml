@@ -39,7 +39,7 @@ jobs:
         key: ${{ secrets.EC2_SSH_KEY }}
         port: 22
         source: "public/*"
-        target: "docker/quickCweb/public"
+        target: "docker/quickCweb"
 
     - name: Restart Docker Container
       uses: appleboy/ssh-action@master
